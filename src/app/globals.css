@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-black: #1c1c1c;
+  --color-white: #ffffff;
+  --color-teal: #1a6b6b;
+  --color-orange: #e8622a;
+  --color-gray-light: #efefef;
+  --color-gray-mid: #888888;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-nunito), sans-serif;
+}
