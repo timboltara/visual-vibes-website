@@ -2,6 +2,8 @@
 const nextConfig = {
   output: "export",
   trailingSlash: true,
+  basePath: "/visual-vibes-website",
+  assetPrefix: "/visual-vibes-website",
   images: {
     unoptimized: true,
     remotePatterns: [
