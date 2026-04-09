@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
@@ -103,15 +104,13 @@ export default function ExitIntentPopup() {
                 </span>
               </button>
 
-              <a
-                href="https://visualvibesllc.com"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/shop"
                 onClick={dismiss}
                 className="block w-full bg-vv-orange text-white font-heading text-xs font-bold uppercase tracking-widest py-4 text-center hover:bg-orange-600 transition-colors mb-3"
               >
                 Shop Now & Save 15%
-              </a>
+              </Link>
 
               <button
                 onClick={dismiss}

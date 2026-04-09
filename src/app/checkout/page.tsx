@@ -18,7 +18,7 @@ const US_STATES = [
 ];
 
 export default function CheckoutPage() {
-  const { items, subtotal, closeDrawer } = useCart();
+  const { items, subtotal } = useCart();
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -270,7 +270,7 @@ export default function CheckoutPage() {
                 initial={false}
                 className="hidden lg:block"
               >
-                <SummaryPanel items={items} subtotal={subtotal} discount={discount} shipping={shipping} total={total} afterDiscount={afterDiscount} />
+                <SummaryPanel items={items} subtotal={subtotal} discount={discount} shipping={shipping} total={total} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -285,7 +285,7 @@ export default function CheckoutPage() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden lg:hidden"
               >
-                <SummaryPanel items={items} subtotal={subtotal} discount={discount} shipping={shipping} total={total} afterDiscount={afterDiscount} />
+                <SummaryPanel items={items} subtotal={subtotal} discount={discount} shipping={shipping} total={total} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -301,14 +301,12 @@ function SummaryPanel({
   discount,
   shipping,
   total,
-  afterDiscount,
 }: {
   items: ReturnType<typeof useCart>["items"];
   subtotal: number;
   discount: number;
   shipping: number;
   total: number;
-  afterDiscount: number;
 }) {
   return (
     <div className="bg-vv-gray/40 border border-gray-200 p-6">
