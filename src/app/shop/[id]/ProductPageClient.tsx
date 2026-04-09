@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
@@ -23,9 +24,15 @@ const categoryLabels: Record<string, string> = {
   jackets: "Jackets",
 };
 
-function getUrgency(id: string) {
-  const n = id.charCodeAt(1) + id.charCodeAt(2);
-  return { viewers: 3 + (n % 11), stock: 4 + (n % 7) };
+// Seeded by product id so numbers are stable per product but varied across them
+function getSocialProof(id: string) {
+  const a = id.charCodeAt(id.length - 1);
+  const b = id.charCodeAt(1);
+  const c = id.charCodeAt(0);
+  const viewing = 12 + ((a * 7 + b * 3) % 89);       // 12–100
+  const reviews = 38 + ((b * 11 + c * 5 + a) % 214); // 38–251
+  const rating = 4.6 + ((a + b) % 5) * 0.08;          // 4.6–4.9
+  return { viewing, reviews, rating: Math.min(rating, 5).toFixed(1) };
 }
 
 export default function ProductPageClient({
@@ -38,8 +45,9 @@ export default function ProductPageClient({
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [sizeError, setSizeError] = useState(false);
   const [toast, setToast] = useState(false);
-  const { addItem } = useCart();
-  const urgency = getUrgency(product.id);
+  const { addItem, closeDrawer } = useCart();
+  const router = useRouter();
+  const social = getSocialProof(product.id);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -50,6 +58,17 @@ export default function ProductPageClient({
     addItem(product, selectedSize);
     setToast(true);
     setTimeout(() => setToast(false), 3000);
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedSize) {
+      setSizeError(true);
+      setTimeout(() => setSizeError(false), 1400);
+      return;
+    }
+    addItem(product, selectedSize);
+    closeDrawer();
+    router.push("/checkout");
   };
 
   return (
@@ -117,14 +136,16 @@ export default function ProductPageClient({
             </div>
           </div>
 
-          {/* Stars row */}
+          {/* Stars + reviews */}
           <div className="flex items-center gap-2 -mt-2">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
                 <span key={i} className="text-vv-orange text-sm">★</span>
               ))}
             </div>
-            <span className="font-body text-xs text-vv-gray-mid">(4.9) · {urgency.viewers} reviews</span>
+            <span className="font-body text-xs text-vv-gray-mid">
+              ({social.rating}) · {social.reviews} reviews
+            </span>
           </div>
 
           {/* Live urgency */}
@@ -132,11 +153,11 @@ export default function ProductPageClient({
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-vv-teal animate-pulse" />
               <p className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid">
-                {urgency.viewers} viewing now
+                {social.viewing} viewing
               </p>
             </div>
             <p className="font-heading text-[10px] uppercase tracking-widest text-vv-orange font-semibold">
-              Only {urgency.stock} left
+              Low stock
             </p>
           </div>
 
@@ -191,14 +212,12 @@ export default function ProductPageClient({
             >
               {selectedSize ? `Add to Bag — ${selectedSize}` : "Add to Bag"}
             </button>
-            <a
-              href="https://visualvibesllc.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full font-heading text-sm font-bold uppercase tracking-widest2 py-4 bg-vv-orange text-white text-center hover:bg-orange-600 transition-colors duration-200 block"
+            <button
+              onClick={handleBuyNow}
+              className="w-full font-heading text-sm font-bold uppercase tracking-widest2 py-4 bg-vv-orange text-white hover:bg-orange-600 transition-colors duration-200"
             >
-              Buy Now → visualvibesllc.com
-            </a>
+              Buy Now
+            </button>
           </div>
 
           {/* Trust bar */}

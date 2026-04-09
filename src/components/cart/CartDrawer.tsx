@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { FiX, FiTrash2 } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
 
@@ -168,15 +169,13 @@ export default function CartDrawer() {
                 </div>
 
                 {/* Checkout CTA */}
-                <a
-                  href="https://visualvibesllc.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/checkout"
                   onClick={closeDrawer}
                   className="block w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest py-4 text-center hover:bg-vv-teal transition-colors duration-200"
                 >
                   Checkout Now →
-                </a>
+                </Link>
                 <p className="font-body text-[10px] text-vv-gray-mid text-center">
                   Secure checkout · Use <strong>BLESSED26</strong> at checkout for 15% off
                 </p>
