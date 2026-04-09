@@ -56,7 +56,7 @@ export default function FeaturedProducts() {
             initial="hidden"
             animate={inView ? "show" : "hidden"}
           >
-            <Link href="/shop" className="group block">
+            <Link href={`/shop/${product.id}`} className="group block">
               <div className="relative aspect-square bg-vv-gray overflow-hidden mb-3">
                 <Image
                   src={product.image}
