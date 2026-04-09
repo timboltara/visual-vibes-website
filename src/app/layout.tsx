@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -33,13 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} ${nunitoSans.variable}`}>
       <body className="bg-white text-vv-black font-body min-h-screen flex flex-col">
-        <CartProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-          <CartDrawer />
-          <ExitIntentPopup />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+            <CartDrawer />
+            <ExitIntentPopup />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

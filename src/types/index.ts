@@ -8,6 +8,7 @@ export interface Product {
   tag?: "New" | "Best Seller" | "Limited";
   description: string;
   sizes: string[];
+  gender?: "mens" | "womens" | "unisex";
 }
 
 export interface Collection {

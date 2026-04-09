@@ -12,6 +12,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "Heavyweight pullover hoodie. Bold faith message, everyday comfort.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p2",
@@ -23,6 +24,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Wear your belief boldly. Premium heavyweight fleece.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p3",
@@ -34,6 +36,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "He reigns. Heavyweight hoodie with bold crown graphic.",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    gender: "mens",
   },
   {
     id: "p4",
@@ -45,6 +48,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Matthew 5:14. Let your light shine.",
     sizes: ["XS", "S", "M", "L", "XL"],
+    gender: "womens",
   },
   {
     id: "p5",
@@ -56,6 +60,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "Go nuts for Jesus. Fan-favorite pullover hoodie.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p6",
@@ -67,6 +72,7 @@ export const products: Product[] = [
     tag: "New",
     description: "When life gives you lemons — trust Jesus.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p7",
@@ -78,6 +84,7 @@ export const products: Product[] = [
     tag: "Limited",
     description: "Premium heavyweight version. Thick, structured, built to last.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "mens",
   },
   {
     id: "p8",
@@ -89,6 +96,7 @@ export const products: Product[] = [
     tag: "Limited",
     description: "Crown design inspired by Revelation. Statement piece.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p9",
@@ -99,6 +107,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/20260209215319-1f10601b-ec6e-64b4-b4c4-524df11f3323.jpg",
     description: "Heavyweight crown hoodie. Premium fleece, bold statement.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "mens",
   },
   {
     id: "p10",
@@ -109,6 +118,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/6010536283424612389_2048.jpg",
     description: "Revelation 5:5. The Lion reigns — wear it with pride.",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    gender: "unisex",
   },
   {
     id: "p11",
@@ -119,6 +129,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/9065985695298214591_2048.jpg",
     description: "Proverbs 3:7. A daily reminder on your back.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   // ── T-SHIRTS ─────────────────────────────────────────────────────────────
   {
@@ -131,6 +142,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "Everyday tee with a message that hits every time.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p13",
@@ -142,6 +154,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Crown graphic tee. Clean, bold, faith-forward.",
     sizes: ["XS", "S", "M", "L", "XL"],
+    gender: "womens",
   },
   {
     id: "p14",
@@ -152,6 +165,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/10616985000529942591_2048.jpg",
     description: "Lightweight unisex tee. Say it loud, say it proud.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p15",
@@ -163,6 +177,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Your testimony on a tee. Simple, powerful, real.",
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p16",
@@ -173,6 +188,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/4666172227599182441_2048.jpg",
     description: "Ephesians 6:11. Dressed for the battle every day.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "mens",
   },
   {
     id: "p17",
@@ -183,6 +199,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/1329440796517930206_2048.jpg",
     description: "Heavy cotton unisex tee. Built to last.",
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+    gender: "unisex",
   },
   // ── SWEATERS ─────────────────────────────────────────────────────────────
   {
@@ -195,6 +212,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "Your testimony on your sleeve. Classic crewneck fit.",
     sizes: ["S", "M", "L", "XL"],
+    gender: "unisex",
   },
   {
     id: "p19",
@@ -206,6 +224,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Premium heavyweight version. Thick fleece, bold testimony.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p20",
@@ -217,6 +236,7 @@ export const products: Product[] = [
     tag: "Best Seller",
     description: "Crown design on a classic crewneck. Lightweight, all-day wear.",
     sizes: ["XS", "S", "M", "L", "XL"],
+    gender: "womens",
   },
   {
     id: "p21",
@@ -228,6 +248,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Heavyweight crewneck with crown graphic.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p22",
@@ -238,6 +259,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/17856712180125345036_2048.jpg",
     description: "Fan-favorite phrase on a clean crewneck.",
     sizes: ["S", "M", "L", "XL"],
+    gender: "womens",
   },
   {
     id: "p23",
@@ -249,6 +271,7 @@ export const products: Product[] = [
     tag: "Limited",
     description: "Heavyweight crewneck. Premium quality, faith-forward design.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
   {
     id: "p24",
@@ -260,6 +283,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Greatest of all time — always. Lightweight crewneck.",
     sizes: ["XS", "S", "M", "L", "XL"],
+    gender: "unisex",
   },
   {
     id: "p25",
@@ -270,6 +294,7 @@ export const products: Product[] = [
     image: "https://visualvibesllc.com/cdn/shop/files/17462046478362148972_2048.jpg",
     description: "Matthew 5:14. Classic pullover crewneck.",
     sizes: ["S", "M", "L", "XL"],
+    gender: "unisex",
   },
   // ── JERSEYS ──────────────────────────────────────────────────────────────
   {
@@ -282,6 +307,7 @@ export const products: Product[] = [
     tag: "New",
     description: "Rep the ultimate MVP. Baseball jersey, black & white.",
     sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    gender: "mens",
   },
   // ── JACKETS ──────────────────────────────────────────────────────────────
   {
@@ -294,6 +320,7 @@ export const products: Product[] = [
     tag: "Limited",
     description: "Varsity-style letterman jacket. Statement piece, faith-forward.",
     sizes: ["S", "M", "L", "XL", "2XL"],
+    gender: "unisex",
   },
 ];
 

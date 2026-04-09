@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiInstagram, FiFacebook, FiShoppingBag, FiSearch, FiUser, FiMenu, FiX } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import SearchOverlay from "@/components/ui/SearchOverlay";
 
 const navLinks = [
-  { label: "For Him", href: "/shop" },
-  { label: "For Her", href: "/shop" },
-  { label: "New Drop", href: "/shop" },
+  { label: "For Him", href: "/shop?gender=mens" },
+  { label: "For Her", href: "/shop?gender=womens" },
+  { label: "New Drop", href: "/shop?tag=New" },
   { label: "Collections", href: "/shop" },
   { label: "Our Faith", href: "/about" },
 ];
@@ -19,7 +21,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { count, openDrawer } = useCart();
+  const { user } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -27,7 +31,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -80,12 +83,23 @@ export default function Navbar() {
 
           {/* Right: icons */}
           <div className="flex items-center gap-4">
-            <button className="hidden sm:flex text-vv-black hover:text-vv-teal transition-colors" aria-label="Search">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="text-vv-black hover:text-vv-teal transition-colors"
+              aria-label="Search"
+            >
               <FiSearch size={18} />
             </button>
-            <button className="hidden sm:flex text-vv-black hover:text-vv-teal transition-colors" aria-label="Account">
+            <Link
+              href="/account"
+              className="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-teal transition-colors relative"
+              aria-label="Account"
+            >
               <FiUser size={18} />
-            </button>
+              {user && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-vv-teal rounded-full" />
+              )}
+            </Link>
             <button
               onClick={openDrawer}
               className="text-vv-black hover:text-vv-teal transition-colors relative"
@@ -123,7 +137,6 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               key="backdrop"
               initial={{ opacity: 0 }}
@@ -133,8 +146,6 @@ export default function Navbar() {
               className="fixed inset-0 bg-black/50 z-50 md:hidden"
               onClick={() => setMenuOpen(false)}
             />
-
-            {/* Drawer */}
             <motion.div
               key="drawer"
               initial={{ x: "-100%" }}
@@ -143,13 +154,9 @@ export default function Navbar() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 flex flex-col md:hidden shadow-2xl"
             >
-              {/* Drawer header */}
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <Link
-                  href="/"
-                  onClick={() => setMenuOpen(false)}
-                  className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black"
-                >
+                <Link href="/" onClick={() => setMenuOpen(false)}
+                  className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
                   Visual Vibes
                 </Link>
                 <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
@@ -157,27 +164,32 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Nav links */}
               <nav className="flex flex-col px-6 py-6 gap-1 flex-1">
                 {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + i * 0.06, duration: 0.3 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="block font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50"
-                    >
+                  <motion.div key={link.label} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.06, duration: 0.3 }}>
+                    <Link href={link.href} onClick={() => setMenuOpen(false)}
+                      className="block font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50">
                       {link.label}
                     </Link>
                   </motion.div>
                 ))}
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + navLinks.length * 0.06, duration: 0.3 }}>
+                  <Link href="/account" onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50">
+                    <FiUser size={14} /> {user ? `Hi, ${user.firstName}` : "Account"}
+                  </Link>
+                </motion.div>
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + (navLinks.length + 1) * 0.06, duration: 0.3 }}>
+                  <button onClick={() => { setMenuOpen(false); setSearchOpen(true); }}
+                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50 w-full text-left">
+                    <FiSearch size={14} /> Search
+                  </button>
+                </motion.div>
               </nav>
 
-              {/* Drawer footer */}
               <div className="px-6 py-6 border-t border-gray-100">
                 <p className="font-heading text-xs uppercase tracking-widest text-vv-gray-mid mb-1">First order discount</p>
                 <p className="font-heading font-semibold text-vv-orange text-base tracking-widest">BLESSED26</p>
@@ -194,6 +206,9 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Search overlay */}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }
