@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/data/products";
 import { Product } from "@/types";
@@ -25,33 +26,21 @@ const filters = [
 
 type FilterValue = (typeof filters)[number]["value"];
 
-// CSS filter to enhance product photos: boost contrast, brightness, and saturation
 const IMAGE_ENHANCE = "contrast(1.08) brightness(1.04) saturate(1.2)";
 
 export default function ShopPage() {
   const [activeFilter, setActiveFilter] = useState<FilterValue>("all");
   const [toast, setToast] = useState<string | null>(null);
-  const [quickView, setQuickView] = useState<Product | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const { addItem } = useCart();
 
   const filtered = products.filter(
     (p) => activeFilter === "all" || p.category === activeFilter
   );
 
-  const showToast = (name: string) => {
-    setToast(name);
-    setTimeout(() => setToast(null), 3000);
-  };
-
   const handleAddToCart = (product: Product, size: string) => {
     addItem(product, size);
-    showToast(product.name);
-  };
-
-  const openQuickView = (p: Product) => {
-    setQuickView(p);
-    setSelectedSize(null);
+    setToast(product.name);
+    setTimeout(() => setToast(null), 3000);
   };
 
   return (
@@ -103,8 +92,7 @@ export default function ShopPage() {
               <ProductCard
                 key={product.id}
                 product={product}
-                onQuickView={openQuickView}
-                onAddToCart={(p, size) => handleAddToCart(p, size)}
+                onAddToCart={handleAddToCart}
               />
             ))}
           </AnimatePresence>
@@ -113,124 +101,6 @@ export default function ShopPage() {
 
       {/* ── Email signup ─────────────────────────────────────── */}
       <EmailSignup />
-
-      {/* ── Quick View Modal ─────────────────────────────────── */}
-      <AnimatePresence>
-        {quickView && (
-          <motion.div
-            key="modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
-            onClick={() => setQuickView(null)}
-          >
-            <motion.div
-              key="modal-panel"
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "100%", opacity: 0 }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="bg-white w-full sm:max-w-2xl flex flex-col sm:flex-row sm:max-h-[85vh] overflow-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Image */}
-              <div className="relative w-full sm:w-5/12 aspect-square sm:aspect-auto sm:min-h-[420px] bg-vv-gray flex-shrink-0">
-                <Image
-                  src={quickView.image}
-                  alt={quickView.name}
-                  fill
-                  className="object-cover object-top"
-                  style={{ filter: IMAGE_ENHANCE }}
-                />
-                {quickView.tag && (
-                  <span className={`absolute top-3 left-3 text-[10px] font-heading font-semibold uppercase tracking-widest px-2 py-0.5 ${tagColors[quickView.tag]}`}>
-                    {quickView.tag}
-                  </span>
-                )}
-              </div>
-
-              {/* Details */}
-              <div className="p-6 sm:p-8 flex flex-col gap-5 flex-1">
-                <div>
-                  <p className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid mb-1">
-                    Visual Vibes LLC
-                  </p>
-                  <h3 className="font-heading font-black text-xl uppercase leading-tight text-vv-black">
-                    {quickView.name}
-                  </h3>
-                  <p className="font-heading text-2xl text-vv-black font-semibold mt-2">
-                    ${quickView.price.toFixed(2)}
-                  </p>
-                </div>
-
-                <p className="font-body text-sm text-vv-gray-mid leading-relaxed">
-                  {quickView.description}
-                </p>
-
-                {/* Size selector */}
-                <div>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold">
-                      Select Size
-                    </p>
-                    {!selectedSize && (
-                      <p className="font-body text-xs text-vv-orange">← Required</p>
-                    )}
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    {quickView.sizes.map((size) => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`font-heading text-xs uppercase tracking-wide px-4 py-2.5 border transition-all duration-150 ${
-                          selectedSize === size
-                            ? "border-vv-black bg-vv-black text-white"
-                            : "border-gray-200 text-vv-black hover:border-vv-black"
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA buttons */}
-                <div className="flex flex-col gap-2.5 mt-auto">
-                  <button
-                    onClick={() => {
-                      if (!selectedSize) return;
-                      handleAddToCart(quickView, selectedSize);
-                      setQuickView(null);
-                      setSelectedSize(null);
-                    }}
-                    disabled={!selectedSize}
-                    className={`w-full font-heading text-xs font-semibold uppercase tracking-widest py-4 transition-colors duration-200 ${
-                      selectedSize
-                        ? "bg-vv-black text-white hover:bg-vv-teal"
-                        : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    }`}
-                  >
-                    {selectedSize ? "Add to Bag" : "Select a Size"}
-                  </button>
-                  <a
-                    href="https://visualvibesllc.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full font-heading text-xs font-semibold uppercase tracking-widest py-4 bg-vv-orange text-white text-center hover:bg-orange-600 transition-colors duration-200"
-                  >
-                    Buy Now → visualvibesllc.com
-                  </a>
-                </div>
-
-                <p className="font-body text-[11px] text-vv-gray-mid text-center">
-                  Free shipping on orders $75+ · Easy returns
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* ── Toast ────────────────────────────────────────────── */}
       <AnimatePresence>
@@ -250,7 +120,6 @@ export default function ShopPage() {
   );
 }
 
-// Stable urgency numbers per product (seeded by product id so they don't flicker)
 function getUrgency(id: string) {
   const n = id.charCodeAt(1) + id.charCodeAt(2);
   return { viewers: 3 + (n % 11), stock: 4 + (n % 7) };
@@ -259,11 +128,9 @@ function getUrgency(id: string) {
 /* ── Product Card ──────────────────────────────────────────────────────── */
 function ProductCard({
   product,
-  onQuickView,
   onAddToCart,
 }: {
   product: Product;
-  onQuickView: (p: Product) => void;
   onAddToCart: (p: Product, size: string) => void;
 }) {
   const [hoveredSize, setHoveredSize] = useState<string | null>(null);
@@ -271,6 +138,7 @@ function ProductCard({
   const urgency = getUrgency(product.id);
 
   const handleSizePick = (e: React.MouseEvent, size: string) => {
+    e.preventDefault();
     e.stopPropagation();
     setPickedSize(size);
     setTimeout(() => {
@@ -289,10 +157,7 @@ function ProductCard({
       className="group"
     >
       {/* Image container */}
-      <div
-        className="relative aspect-square bg-vv-gray overflow-hidden mb-3 cursor-pointer"
-        onClick={() => onQuickView(product)}
-      >
+      <Link href={`/shop/${product.id}`} className="block relative aspect-square bg-vv-gray overflow-hidden mb-3">
         <Image
           src={product.image}
           alt={product.name}
@@ -332,10 +197,10 @@ function ProductCard({
             ))}
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* Info */}
-      <div className="cursor-pointer" onClick={() => onQuickView(product)}>
+      <Link href={`/shop/${product.id}`} className="block">
         <p className="font-heading text-[11px] uppercase tracking-widest text-vv-black font-medium leading-snug line-clamp-2">
           {product.name}
         </p>
@@ -350,7 +215,7 @@ function ProductCard({
         <p className="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mt-0.5">
           {urgency.viewers} viewing now
         </p>
-      </div>
+      </Link>
     </motion.div>
   );
 }
