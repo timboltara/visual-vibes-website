@@ -77,13 +77,13 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black relative">
               <Image
                 src="/visual-vibes-logo.png"
                 alt=""
-                width={36}
-                height={36}
-                className="w-full h-full object-cover"
+                fill
+                sizes="40px"
+                className="object-contain p-1"
                 priority
               />
             </div>
@@ -167,13 +167,13 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200">
+                  <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black relative">
                     <Image
                       src="/visual-vibes-logo.png"
                       alt=""
-                      width={32}
-                      height={32}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="36px"
+                      className="object-contain p-1"
                     />
                   </div>
                   <span className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
