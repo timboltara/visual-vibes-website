@@ -85,7 +85,7 @@ export default function ForHimPage() {
   const activeCount = filters.categories.length + filters.sizes.length + (filters.priceRange ? 1 : 0);
 
   const handleAddToCart = (product: Product, size: string) => {
-    addItem(product, size);
+    addItem(product, size, "Classic");
     setToast(product.name);
     setTimeout(() => setToast(null), 3000);
   };

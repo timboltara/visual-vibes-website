@@ -16,7 +16,7 @@ export default function NewDropPage() {
   const { addItem } = useCart();
 
   const handleAddToCart = (product: Product, size: string) => {
-    addItem(product, size);
+    addItem(product, size, "Classic");
     setToast(product.name);
     setTimeout(() => setToast(null), 3000);
   };

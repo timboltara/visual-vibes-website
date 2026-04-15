@@ -120,7 +120,7 @@ export default function CartDrawer() {
                           {item.product.name}
                         </p>
                         <p className="font-body text-xs text-vv-gray-mid mt-0.5">
-                          {item.fit} · Size: {item.size} · Qty: {item.quantity}
+                          {item.fit} · Size: {item.size}
                         </p>
                         <p className="font-heading text-sm text-vv-black font-semibold mt-1">
                           ${(item.product.price * item.quantity).toFixed(2)}

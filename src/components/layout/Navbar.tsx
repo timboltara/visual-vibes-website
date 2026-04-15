@@ -77,13 +77,13 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black relative">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-white flex items-center justify-center p-0.5">
               <Image
                 src="/visual-vibes-logo.png"
                 alt=""
-                fill
-                sizes="40px"
-                className="object-contain p-1"
+                width={36}
+                height={36}
+                style={{ width: "36px", height: "36px", objectFit: "contain" }}
                 priority
               />
             </div>
@@ -167,13 +167,13 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black relative">
+                  <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-white flex items-center justify-center p-0.5">
                     <Image
                       src="/visual-vibes-logo.png"
                       alt=""
-                      fill
-                      sizes="36px"
-                      className="object-contain p-1"
+                      width={32}
+                      height={32}
+                      style={{ width: "32px", height: "32px", objectFit: "contain" }}
                     />
                   </div>
                   <span className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
