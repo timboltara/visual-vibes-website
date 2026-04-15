@@ -11,10 +11,11 @@ import { useAuth } from "@/context/AuthContext";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 
 const navLinks = [
-  { label: "For Him", href: "/shop?gender=mens" },
-  { label: "For Her", href: "/shop?gender=womens" },
-  { label: "New Drop", href: "/shop?tag=New" },
-  { label: "Collections", href: "/shop" },
+  { label: "Shop All", href: "/shop" },
+  { label: "For Him", href: "/shop/mens" },
+  { label: "For Her", href: "/shop/womens" },
+  { label: "New Drop", href: "/shop/new" },
+  { label: "Collections", href: "/collections" },
   { label: "Our Faith", href: "/about" },
 ];
 
@@ -75,15 +76,20 @@ export default function Navbar() {
           </button>
 
           {/* Center: Logo */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <Image
-              src="/visual-vibes-logo.png"
-              alt="Visual Vibes"
-              width={160}
-              height={48}
-              className="h-10 w-auto object-contain"
-              priority
-            />
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200">
+              <Image
+                src="/visual-vibes-logo.png"
+                alt=""
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+                priority
+              />
+            </div>
+            <span className="font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black">
+              Visual Vibes
+            </span>
           </Link>
 
           {/* Right: icons */}
@@ -160,14 +166,19 @@ export default function Navbar() {
               className="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 flex flex-col md:hidden shadow-2xl"
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <Link href="/" onClick={() => setMenuOpen(false)}>
-                  <Image
-                    src="/visual-vibes-logo.png"
-                    alt="Visual Vibes"
-                    width={120}
-                    height={36}
-                    className="h-8 w-auto object-contain"
-                  />
+                <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200">
+                    <Image
+                      src="/visual-vibes-logo.png"
+                      alt=""
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
+                    Visual Vibes
+                  </span>
                 </Link>
                 <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
                   <FiX size={22} className="text-vv-black" />

@@ -11,7 +11,7 @@ import EmailSignup from "@/components/home/EmailSignup";
 import { useCart } from "@/context/CartContext";
 
 const tagColors: Record<string, string> = {
-  New: "bg-vv-teal text-white",
+  New: "bg-vv-black text-white",
   "Best Seller": "bg-vv-orange text-white",
   Limited: "bg-vv-black text-white",
 };
@@ -316,8 +316,8 @@ export default function ShopPage() {
       <div className="max-w-screen-xl mx-auto px-5 sm:px-10 py-6 flex gap-8 items-start">
 
         {/* Left sidebar (desktop only) */}
-        <aside className="hidden lg:block w-56 flex-shrink-0 sticky top-[145px]">
-          <div className="flex items-center justify-between mb-4">
+        <aside className="hidden lg:flex lg:flex-col w-56 flex-shrink-0 sticky top-[145px] max-h-[calc(100vh-170px)]">
+          <div className="flex items-center justify-between mb-4 flex-shrink-0">
             <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold flex items-center gap-2">
               <FiSliders size={12} /> Filters
               {activeCount > 0 && (
@@ -332,7 +332,9 @@ export default function ShopPage() {
               </button>
             )}
           </div>
-          {SidebarContent}
+          <div className="overflow-y-auto flex-1 pr-1">
+            {SidebarContent}
+          </div>
         </aside>
 
         {/* Product grid */}

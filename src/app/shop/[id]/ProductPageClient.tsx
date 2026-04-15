@@ -9,31 +9,12 @@ import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 
 const tagColors: Record<string, string> = {
-  New: "bg-vv-teal text-white",
+  New: "bg-vv-black text-white",
   "Best Seller": "bg-vv-orange text-white",
   Limited: "bg-vv-black text-white",
 };
 
 const IMAGE_ENHANCE = "contrast(1.08) brightness(1.04) saturate(1.2)";
-
-const categoryLabels: Record<string, string> = {
-  hoodies: "Hoodies",
-  tshirts: "T-Shirts",
-  sweaters: "Sweaters",
-  jerseys: "Jerseys",
-  jackets: "Jackets",
-};
-
-// Seeded by product id so numbers are stable per product but varied across them
-function getSocialProof(id: string) {
-  const a = id.charCodeAt(id.length - 1);
-  const b = id.charCodeAt(1);
-  const c = id.charCodeAt(0);
-  const viewing = 12 + ((a * 7 + b * 3) % 89);       // 12–100
-  const reviews = 38 + ((b * 11 + c * 5 + a) % 214); // 38–251
-  const rating = 4.6 + ((a + b) % 5) * 0.08;          // 4.6–4.9
-  return { viewing, reviews, rating: Math.min(rating, 5).toFixed(1) };
-}
 
 export default function ProductPageClient({
   product,
@@ -47,7 +28,11 @@ export default function ProductPageClient({
   const [toast, setToast] = useState(false);
   const { addItem, closeDrawer } = useCart();
   const router = useRouter();
-  const social = getSocialProof(product.id);
+
+  // Random 7–19, rerolled each time the product page is visited
+  const [viewing] = useState(() => Math.floor(Math.random() * 13) + 7);
+  const lowStock = viewing > 15;
+  const fanFavorite = viewing > 16;
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -74,23 +59,8 @@ export default function ProductPageClient({
   return (
     <div className="pt-[129px] min-h-screen bg-white">
 
-      {/* ── Breadcrumb ─────────────────────────────────────────── */}
-      <div className="max-w-screen-xl mx-auto px-5 sm:px-10 pt-6 pb-0">
-        <nav className="flex items-center gap-2 font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid">
-          <Link href="/" className="hover:text-vv-black transition-colors">Home</Link>
-          <span>/</span>
-          <Link href="/shop" className="hover:text-vv-black transition-colors">Shop</Link>
-          <span>/</span>
-          <Link href="/shop" className="hover:text-vv-black transition-colors">
-            {categoryLabels[product.category] ?? product.category}
-          </Link>
-          <span>/</span>
-          <span className="text-vv-black truncate max-w-[180px]">{product.name}</span>
-        </nav>
-      </div>
-
       {/* ── Main layout ────────────────────────────────────────── */}
-      <div className="max-w-screen-xl mx-auto px-5 sm:px-10 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start">
+      <div className="max-w-screen-xl mx-auto px-5 sm:px-10 py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start">
 
         {/* ── Left: Product Image ─────────────────────────────── */}
         <div className="lg:sticky lg:top-[145px]">
@@ -128,7 +98,7 @@ export default function ProductPageClient({
               <p className="font-heading font-bold text-3xl text-vv-black">
                 ${product.price.toFixed(2)}
               </p>
-              {product.tag === "Best Seller" && (
+              {fanFavorite && (
                 <span className="font-heading text-[10px] uppercase tracking-widest text-vv-orange">
                   Fan Favorite
                 </span>
@@ -136,29 +106,19 @@ export default function ProductPageClient({
             </div>
           </div>
 
-          {/* Stars + reviews */}
-          <div className="flex items-center gap-2 -mt-2">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-vv-orange text-sm">★</span>
-              ))}
-            </div>
-            <span className="font-body text-xs text-vv-gray-mid">
-              ({social.rating}) · {social.reviews} reviews
-            </span>
-          </div>
-
           {/* Live urgency */}
           <div className="flex items-center gap-5 border-y border-gray-100 py-3 -mt-1">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-vv-teal animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-vv-orange animate-pulse" />
               <p className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid">
-                {social.viewing} viewing
+                {viewing} viewing
               </p>
             </div>
-            <p className="font-heading text-[10px] uppercase tracking-widest text-vv-orange font-semibold">
-              Low stock
-            </p>
+            {lowStock && (
+              <p className="font-heading text-[10px] uppercase tracking-widest text-vv-orange font-semibold">
+                Low Stock
+              </p>
+            )}
           </div>
 
           {/* Description */}
@@ -208,7 +168,7 @@ export default function ProductPageClient({
           <div className="flex flex-col gap-3">
             <button
               onClick={handleAddToCart}
-              className="w-full font-heading text-sm font-bold uppercase tracking-widest2 py-4 bg-vv-black text-white hover:bg-vv-teal transition-colors duration-200"
+              className="w-full font-heading text-sm font-bold uppercase tracking-widest2 py-4 bg-vv-black text-white hover:bg-vv-orange transition-colors duration-200"
             >
               {selectedSize ? `Add to Bag — ${selectedSize}` : "Add to Bag"}
             </button>
@@ -229,7 +189,7 @@ export default function ProductPageClient({
               ["✓", "Sizes XS–3XL"],
             ].map(([icon, text]) => (
               <div key={text} className="flex items-center gap-2">
-                <span className="font-heading text-vv-teal text-xs font-bold">{icon}</span>
+                <span className="font-heading text-vv-orange text-xs font-bold">{icon}</span>
                 <span className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid">
                   {text}
                 </span>
@@ -313,7 +273,7 @@ export default function ProductPageClient({
             exit={{ opacity: 0, y: 20 }}
             className="fixed bottom-6 right-6 z-50 bg-vv-black text-white font-heading text-xs uppercase tracking-widest px-5 py-3 shadow-xl flex items-center gap-2"
           >
-            <span className="text-vv-teal font-bold">✓</span>
+            <span className="text-vv-orange font-bold">✓</span>
             Added to bag!
           </motion.div>
         )}
