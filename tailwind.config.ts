@@ -11,9 +11,9 @@ const config: Config = {
       colors: {
         "vv-black": "#1c1c1c",
         "vv-white": "#ffffff",
-        "vv-teal": "#1a6b6b",
+        "vv-teal": "#bf4f1e",
         "vv-orange": "#e8622a",
-        "vv-gray": "#efefef",
+        "vv-gray": "#f2f2f2",
         "vv-gray-mid": "#888888",
       },
       fontFamily: {

@@ -1,14 +1,14 @@
 import React from "react";
 
 const items = [
-  "Wear Your Faith",
-  "BLESSED26",
-  "Spring Drop 2025",
-  "Faith Over Fear",
-  "Visual Vibes",
+  "Faith You Can Wear",
+  "On Fire For Jesus",
+  "Bold Faith",
+  "Building Disciples Through Design",
   "Romans 1:16",
-  "New Arrivals",
-  "Shop Now",
+  "Faith is Not Passive",
+  "New Drop",
+  "Use Code BLESSED26",
 ];
 
 export default function MarqueeTicker() {
@@ -22,7 +22,7 @@ export default function MarqueeTicker() {
           to { transform: translateX(-33.333%); }
         }
         .marquee-track {
-          animation: marquee 22s linear infinite;
+          animation: marquee 26s linear infinite;
           width: max-content;
           display: flex;
         }
@@ -36,7 +36,7 @@ export default function MarqueeTicker() {
             <span className="font-heading text-xs uppercase tracking-widest2 text-white whitespace-nowrap px-6">
               {item}
             </span>
-            <span className="text-vv-orange text-xs">·</span>
+            <span className="text-vv-orange text-xs">✦</span>
           </span>
         ))}
       </div>

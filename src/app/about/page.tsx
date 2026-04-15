@@ -6,16 +6,16 @@ import { motion, useInView } from "framer-motion";
 
 const beliefs = [
   {
-    title: "The Gospel",
-    body: "We believe Jesus Christ died for our sins, rose on the third day, and offers eternal life to all who believe. This is the message behind every piece we create.",
+    title: "Bold Faith",
+    body: "Strong, unapologetic messages — not watered down. We create apparel that says exactly what believers feel in their hearts but are sometimes afraid to say out loud.",
   },
   {
-    title: "Our Mission",
-    body: "To create apparel that sparks conversations about faith. We want our customers to be bold ambassadors of the Gospel in their everyday lives.",
+    title: "Real Life Christianity",
+    body: "Faith outside of church. At work, the gym, in public. Visual Vibes is for believers who carry their faith into every part of their daily life.",
   },
   {
-    title: "Our Community",
-    body: "We stand with believers everywhere — praying with our customers and building a community rooted in love.",
+    title: "Energy & Fire",
+    body: "Passion. Urgency. Excitement. Christianity is not boring. It's on fire — and our designs reflect that.",
   },
 ];
 
@@ -48,11 +48,12 @@ export default function AboutPage() {
 
   return (
     <div className="pt-[129px] bg-white">
-      {/* Hero */}
+
+      {/* ── Hero ──────────────────────────────────────────────── */}
       <div className="relative bg-vv-black overflow-hidden" style={{ minHeight: "60vh" }}>
         <div
-          className="absolute inset-0 opacity-20"
-          style={{ backgroundImage: `radial-gradient(ellipse at 50% 50%, #1A6B6B 0%, transparent 70%)` }}
+          className="absolute inset-0 opacity-25"
+          style={{ backgroundImage: `radial-gradient(ellipse at 30% 65%, #e8622a 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, #bf4f1e 0%, transparent 45%)` }}
         />
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -60,7 +61,9 @@ export default function AboutPage() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 min-h-[60vh]"
         >
-          <p className="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-4">Visual Vibes</p>
+          <p className="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-4">
+            ON FIRE FOR JESUS
+          </p>
           <h1
             className="font-heading font-black text-white uppercase leading-none"
             style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
@@ -68,37 +71,31 @@ export default function AboutPage() {
             Our Story
           </h1>
           <p className="font-body text-gray-400 text-base max-w-md mx-auto mt-6">
-            A brand born from faith, built to glorify God one garment at a time.
+            A discipleship brand using apparel to spread the Gospel and spark bold faith.
           </p>
         </motion.div>
       </div>
 
-      {/* Brand story */}
+      {/* ── Brand story ───────────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-5 sm:px-10 py-20">
         <FadeUp>
           <div className="space-y-5 font-body text-lg text-vv-black leading-relaxed">
             <p>
-              Visual Vibes started as a simple idea: what if a piece of clothing could open
-              a door to talk about Jesus? What if your hoodie could spark a conversation that
-              changes someone&apos;s life?
+              Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God.
             </p>
             <p>
-              We launched with a small batch of tees and a big faith. Today, we&apos;re a
-              growing community of believers who refuse to keep their faith hidden. We wear
-              it boldly — on our chest, on our back, on our sleeves.
+              Visual Vibes is more than clothing. It&apos;s a movement to represent Christ boldly in everyday life. We create designs that challenge believers, spark conversations, and remind people to live on fire for God — not lukewarm.
             </p>
             <p>
-              Every collection we release is prayed over. Every design is intentional.
-              Visual Vibes is not just a clothing brand — it&apos;s a ministry in fabric form.
+              Clothing is the entry point — but the goal is impact. We want every piece to start a conversation, open a door, and plant a seed for the Gospel.
             </p>
           </div>
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <blockquote className="mt-12 border-l-2 border-vv-teal pl-6 py-1">
+          <blockquote className="mt-12 border-l-2 border-vv-orange pl-6 py-1">
             <p className="font-body text-lg italic text-vv-black leading-relaxed">
-              &ldquo;For I am not ashamed of the gospel, because it is the power of God
-              that brings salvation to everyone who believes.&rdquo;
+              &ldquo;For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes.&rdquo;
             </p>
             <cite className="font-heading text-vv-orange text-xs uppercase tracking-widest not-italic mt-2 block">
               Romans 1:16
@@ -107,7 +104,7 @@ export default function AboutPage() {
         </FadeUp>
       </section>
 
-      {/* What We Believe */}
+      {/* ── Brand pillars ─────────────────────────────────────── */}
       <section className="bg-vv-gray py-20 px-5 sm:px-10" ref={beliefsRef}>
         <div className="max-w-screen-xl mx-auto">
           <motion.h2
@@ -116,9 +113,9 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black mb-10"
           >
-            What We Believe
+            Our Brand Pillars
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {beliefs.map((b, i) => (
               <motion.div
                 key={b.title}
@@ -127,6 +124,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="bg-white p-8"
               >
+                <div className="w-8 h-0.5 bg-vv-orange mb-5" />
                 <h3 className="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black mb-4">
                   {b.title}
                 </h3>
@@ -137,39 +135,42 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Scripture banner */}
-      <section className="bg-vv-teal text-white py-24 px-6 text-center">
+      {/* ── Scripture banner ──────────────────────────────────── */}
+      <section className="bg-vv-black text-white py-24 px-6 text-center">
         <FadeUp>
+          <p className="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-6">
+            Faith is not passive. It&apos;s bold. It&apos;s alive. It&apos;s on fire.
+          </p>
           <p
             className="font-heading font-black uppercase leading-none text-white"
             style={{ fontSize: "clamp(2rem, 5vw, 4rem)" }}
           >
-            &ldquo;I can do all things through Christ who strengthens me.&rdquo;
+            &ldquo;I can do all things<br />through Christ.&rdquo;
           </p>
-          <p className="font-heading text-xs uppercase tracking-widest2 text-white/60 mt-4">
+          <p className="font-heading text-xs uppercase tracking-widest2 text-white/40 mt-4">
             Philippians 4:13
           </p>
           <Link
             href="/shop"
-            className="inline-block mt-10 bg-white text-vv-black font-heading text-xs font-semibold uppercase tracking-widest2 px-10 py-4 hover:bg-vv-black hover:text-white transition-colors duration-300"
+            className="inline-block mt-10 bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 px-10 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300"
           >
             Shop Now
           </Link>
         </FadeUp>
       </section>
 
-      {/* Prayer form */}
-      <section className="bg-vv-black py-20 px-5 sm:px-10" id="prayer">
+      {/* ── Prayer form ───────────────────────────────────────── */}
+      <section className="bg-vv-black py-20 px-5 sm:px-10 border-t border-white/5" id="prayer">
         <div className="max-w-lg mx-auto">
           <FadeUp>
-            <p className="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-3">Prayer Request</p>
+            <p className="font-heading text-xs uppercase tracking-widest2 text-vv-orange mb-3">Prayer Request</p>
             <h2 className="font-heading font-semibold text-lg uppercase tracking-widest text-white mb-8">
               Submit a Prayer
             </h2>
 
             {submitted ? (
               <div className="text-center py-10">
-                <p className="font-heading font-semibold uppercase tracking-widest text-vv-teal text-lg">
+                <p className="font-heading font-semibold uppercase tracking-widest text-vv-orange text-lg">
                   Prayer Submitted ✝
                 </p>
                 <p className="font-body text-gray-400 text-sm mt-2">
@@ -178,34 +179,17 @@ export default function AboutPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <input
-                  type="text"
-                  required
-                  placeholder="Your Name"
-                  value={formState.name}
+                <input type="text" required placeholder="Your Name" value={formState.name}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 transition-colors"
-                />
-                <input
-                  type="email"
-                  required
-                  placeholder="Email Address"
-                  value={formState.email}
+                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 transition-colors" />
+                <input type="email" required placeholder="Email Address" value={formState.email}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 transition-colors"
-                />
-                <textarea
-                  required
-                  rows={5}
-                  placeholder="Your prayer request..."
-                  value={formState.prayer}
+                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 transition-colors" />
+                <textarea required rows={5} placeholder="Your prayer request..." value={formState.prayer}
                   onChange={(e) => setFormState({ ...formState, prayer: e.target.value })}
-                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 resize-none transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="w-full bg-white text-vv-black font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-vv-teal hover:text-white transition-colors duration-300 mt-1"
-                >
+                  className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 resize-none transition-colors" />
+                <button type="submit"
+                  className="w-full bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300 mt-1">
                   Submit Prayer Request
                 </button>
               </form>

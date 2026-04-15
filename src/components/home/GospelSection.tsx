@@ -17,6 +17,7 @@ export default function GospelSection() {
   return (
     <section className="bg-vv-black text-white" id="gospel" ref={ref}>
       <div className="max-w-screen-xl mx-auto px-5 sm:px-10 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
         {/* Left: Faith Content */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -24,7 +25,7 @@ export default function GospelSection() {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <p className="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-5">
-            The Gospel
+            The Mission
           </p>
           <h2
             className="font-heading font-black text-white uppercase leading-none mb-8"
@@ -37,23 +38,39 @@ export default function GospelSection() {
 
           <div className="space-y-4 font-body text-gray-400 text-base leading-relaxed">
             <p>
-              Visual Vibes was founded on the belief that clothing can be a conversation
-              starter for the Gospel. Every piece we create is designed to spark a
-              question — and open a door.
+              Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God.
             </p>
             <p>
-              We believe in Jesus Christ as the only path to salvation. When you wear
-              Visual Vibes, you&apos;re not just wearing a brand. You&apos;re wearing a mission.
+              Faith is not passive. It&apos;s bold. It&apos;s alive. It&apos;s on fire. Every piece we create is designed to spark a conversation — and open a door to the Gospel.
+            </p>
+            <p>
+              Clothing is the entry point — but the goal is impact.
             </p>
           </div>
 
-          <blockquote className="mt-8 border-l-2 border-vv-teal pl-5">
+          {/* Brand pillars */}
+          <div className="mt-8 grid grid-cols-1 gap-4">
+            {[
+              { label: "Bold Faith", desc: "Strong, unapologetic messages. Not watered-down." },
+              { label: "Real Life Christianity", desc: "Faith outside of church — at work, the gym, in public." },
+              { label: "Energy / Fire", desc: "Passion. Urgency. Excitement for God." },
+            ].map((p) => (
+              <div key={p.label} className="flex gap-4 items-start">
+                <span className="w-1 h-1 rounded-full bg-vv-orange mt-2 flex-shrink-0" />
+                <div>
+                  <p className="font-heading text-xs uppercase tracking-widest text-vv-orange font-semibold">{p.label}</p>
+                  <p className="font-body text-sm text-gray-500 mt-0.5">{p.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <blockquote className="mt-8 border-l-2 border-vv-orange pl-5">
             <p className="font-body text-base text-white/80 italic leading-relaxed">
-              &ldquo;For God so loved the world that he gave his one and only Son, that
-              whoever believes in him shall not perish but have eternal life.&rdquo;
+              &ldquo;For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes.&rdquo;
             </p>
             <cite className="font-heading text-vv-orange text-xs uppercase tracking-widest not-italic mt-2 block">
-              John 3:16
+              Romans 1:16
             </cite>
           </blockquote>
         </motion.div>
@@ -74,7 +91,7 @@ export default function GospelSection() {
 
           {submitted ? (
             <div className="py-10 text-center">
-              <p className="font-heading font-semibold uppercase tracking-widest text-vv-teal text-lg">
+              <p className="font-heading font-semibold uppercase tracking-widest text-vv-orange text-lg">
                 Prayer Submitted ✝
               </p>
               <p className="font-body text-gray-400 text-sm mt-2">
@@ -89,7 +106,7 @@ export default function GospelSection() {
                 placeholder="Your Name"
                 value={formState.name}
                 onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 transition-colors"
+                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 transition-colors"
               />
               <input
                 type="email"
@@ -97,7 +114,7 @@ export default function GospelSection() {
                 placeholder="Email Address"
                 value={formState.email}
                 onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 transition-colors"
+                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 transition-colors"
               />
               <textarea
                 required
@@ -105,11 +122,11 @@ export default function GospelSection() {
                 placeholder="Your prayer request..."
                 value={formState.prayer}
                 onChange={(e) => setFormState({ ...formState, prayer: e.target.value })}
-                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-teal placeholder:text-gray-600 resize-none transition-colors"
+                className="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder:text-gray-600 resize-none transition-colors"
               />
               <button
                 type="submit"
-                className="w-full bg-white text-vv-black font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-vv-teal hover:text-white transition-colors duration-300 mt-1"
+                className="w-full bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300 mt-1"
               >
                 Submit Prayer Request
               </button>
