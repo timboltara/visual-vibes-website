@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -78,13 +77,11 @@ export default function Navbar() {
           {/* Center: Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-white flex items-center justify-center p-0.5">
-              <Image
-                src="/visual-vibes-logo.png"
-                alt=""
-                width={36}
-                height={36}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+                alt="Visual Vibes"
                 style={{ width: "36px", height: "36px", objectFit: "contain" }}
-                priority
               />
             </div>
             <span className="font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black">
@@ -168,11 +165,10 @@ export default function Navbar() {
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
                   <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-white flex items-center justify-center p-0.5">
-                    <Image
-                      src="/visual-vibes-logo.png"
-                      alt=""
-                      width={32}
-                      height={32}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+                      alt="Visual Vibes"
                       style={{ width: "32px", height: "32px", objectFit: "contain" }}
                     />
                   </div>

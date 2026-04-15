@@ -4,6 +4,9 @@ const nextConfig = {
   trailingSlash: true,
   basePath: "/visual-vibes-website",
   assetPrefix: "/visual-vibes-website",
+  env: {
+    NEXT_PUBLIC_BASEPATH: "/visual-vibes-website",
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
