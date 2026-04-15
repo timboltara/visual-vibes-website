@@ -316,7 +316,7 @@ function SummaryPanel({
       ) : (
         <ul className="divide-y divide-gray-200 mb-5">
           {items.map((item) => (
-            <li key={`${item.product.id}-${item.size}`} className="flex gap-3 py-4 first:pt-0 last:pb-0">
+            <li key={`${item.product.id}-${item.size}-${item.fit}`} className="flex gap-3 py-4 first:pt-0 last:pb-0">
               <div className="relative w-16 h-16 flex-shrink-0 bg-white overflow-hidden border border-gray-200">
                 <Image
                   src={item.product.image}
@@ -333,7 +333,7 @@ function SummaryPanel({
                 <p className="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold leading-tight line-clamp-2">
                   {item.product.name}
                 </p>
-                <p className="font-body text-xs text-vv-gray-mid mt-0.5">Size: {item.size}</p>
+                <p className="font-body text-xs text-vv-gray-mid mt-0.5">{item.fit} · Size: {item.size}</p>
               </div>
               <p className="font-heading text-sm font-bold text-vv-black flex-shrink-0">
                 ${(item.product.price * item.quantity).toFixed(2)}

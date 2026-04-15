@@ -62,14 +62,14 @@ export default function CartDrawer() {
               <div className="px-5 py-3 bg-vv-gray border-b border-gray-100">
                 <p className="font-heading text-[10px] uppercase tracking-widest text-vv-black mb-1.5">
                   {remainingForFreeShipping > 0 ? (
-                    <>Add <span className="text-vv-teal">${remainingForFreeShipping.toFixed(2)}</span> more for free shipping</>
+                    <>Add <span className="text-vv-orange">${remainingForFreeShipping.toFixed(2)}</span> more for free shipping</>
                   ) : (
-                    <span className="text-vv-teal">You qualify for free shipping!</span>
+                    <span className="text-vv-orange">You qualify for free shipping!</span>
                   )}
                 </p>
                 <div className="h-1 bg-gray-200 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-vv-teal rounded-full"
+                    className="h-full bg-vv-orange rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${shippingProgress}%` }}
                     transition={{ duration: 0.5 }}
@@ -78,7 +78,7 @@ export default function CartDrawer() {
               </div>
             )}
             {subtotal >= FREE_SHIPPING_THRESHOLD && (
-              <div className="px-5 py-2.5 bg-vv-teal text-white text-center">
+              <div className="px-5 py-2.5 bg-vv-orange text-white text-center">
                 <p className="font-heading text-[10px] uppercase tracking-widest">
                   ✓ Free shipping unlocked!
                 </p>
@@ -105,7 +105,7 @@ export default function CartDrawer() {
               ) : (
                 <ul className="divide-y divide-gray-50">
                   {items.map((item) => (
-                    <li key={`${item.product.id}-${item.size}`} className="flex gap-3 px-5 py-4">
+                    <li key={`${item.product.id}-${item.size}-${item.fit}`} className="flex gap-3 px-5 py-4">
                       <div className="relative w-16 h-16 flex-shrink-0 bg-vv-gray overflow-hidden">
                         <Image
                           src={item.product.image}
@@ -120,14 +120,14 @@ export default function CartDrawer() {
                           {item.product.name}
                         </p>
                         <p className="font-body text-xs text-vv-gray-mid mt-0.5">
-                          Size: {item.size} · Qty: {item.quantity}
+                          {item.fit} · Size: {item.size} · Qty: {item.quantity}
                         </p>
                         <p className="font-heading text-sm text-vv-black font-semibold mt-1">
                           ${(item.product.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                       <button
-                        onClick={() => removeItem(item.product.id, item.size)}
+                        onClick={() => removeItem(item.product.id, item.size, item.fit)}
                         className="text-gray-300 hover:text-vv-black transition-colors flex-shrink-0 mt-0.5"
                         aria-label="Remove item"
                       >
@@ -151,7 +151,7 @@ export default function CartDrawer() {
                     </p>
                     <p className="font-body text-xs text-vv-gray-mid mt-0.5">15% off your first order</p>
                   </div>
-                  <span className="font-heading text-xs text-vv-teal font-semibold">
+                  <span className="font-heading text-xs text-vv-orange font-semibold">
                     −${(subtotal * PROMO_DISCOUNT).toFixed(2)}
                   </span>
                 </div>
@@ -164,7 +164,7 @@ export default function CartDrawer() {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-heading text-sm uppercase tracking-widest text-vv-black font-semibold">Total after discount</span>
-                    <span className="font-heading text-sm text-vv-teal font-bold">${discounted.toFixed(2)}</span>
+                    <span className="font-heading text-sm text-vv-orange font-bold">${discounted.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -172,7 +172,7 @@ export default function CartDrawer() {
                 <Link
                   href="/checkout"
                   onClick={closeDrawer}
-                  className="block w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest py-4 text-center hover:bg-vv-teal transition-colors duration-200"
+                  className="block w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest py-4 text-center hover:bg-vv-orange transition-colors duration-200"
                 >
                   Checkout Now →
                 </Link>

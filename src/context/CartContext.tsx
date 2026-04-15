@@ -6,6 +6,7 @@ import { Product } from "@/types";
 export interface CartItem {
   product: Product;
   size: string;
+  fit: string;
   quantity: number;
 }
 
@@ -14,8 +15,8 @@ interface CartContextValue {
   count: number;
   subtotal: number;
   drawerOpen: boolean;
-  addItem: (product: Product, size: string) => void;
-  removeItem: (productId: string, size: string) => void;
+  addItem: (product: Product, size: string, fit: string) => void;
+  removeItem: (productId: string, size: string, fit: string) => void;
   openDrawer: () => void;
   closeDrawer: () => void;
 }
@@ -26,26 +27,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const addItem = useCallback((product: Product, size: string) => {
+  const addItem = useCallback((product: Product, size: string, fit: string) => {
     setItems((prev) => {
       const existing = prev.find(
-        (i) => i.product.id === product.id && i.size === size
+        (i) => i.product.id === product.id && i.size === size && i.fit === fit
       );
       if (existing) {
         return prev.map((i) =>
-          i.product.id === product.id && i.size === size
+          i.product.id === product.id && i.size === size && i.fit === fit
             ? { ...i, quantity: i.quantity + 1 }
             : i
         );
       }
-      return [...prev, { product, size, quantity: 1 }];
+      return [...prev, { product, size, fit, quantity: 1 }];
     });
     setDrawerOpen(true);
   }, []);
 
-  const removeItem = useCallback((productId: string, size: string) => {
+  const removeItem = useCallback((productId: string, size: string, fit: string) => {
     setItems((prev) =>
-      prev.filter((i) => !(i.product.id === productId && i.size === size))
+      prev.filter((i) => !(i.product.id === productId && i.size === size && i.fit === fit))
     );
   }, []);
 

@@ -16,6 +16,8 @@ const tagColors: Record<string, string> = {
 
 const IMAGE_ENHANCE = "contrast(1.08) brightness(1.04) saturate(1.2)";
 
+const FITS = ["Classic", "Oversized", "Heavyweight"] as const;
+
 export default function ProductPageClient({
   product,
   related,
@@ -23,7 +25,9 @@ export default function ProductPageClient({
   product: Product;
   related: Product[];
 }) {
+  const [selectedFit, setSelectedFit] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [fitError, setFitError] = useState(false);
   const [sizeError, setSizeError] = useState(false);
   const [toast, setToast] = useState(false);
   const { addItem, closeDrawer } = useCart();
@@ -34,24 +38,23 @@ export default function ProductPageClient({
   const lowStock = viewing > 15;
   const fanFavorite = viewing > 16;
 
+  const validate = () => {
+    let valid = true;
+    if (!selectedFit) { setFitError(true); setTimeout(() => setFitError(false), 1400); valid = false; }
+    if (!selectedSize) { setSizeError(true); setTimeout(() => setSizeError(false), 1400); valid = false; }
+    return valid;
+  };
+
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      setSizeError(true);
-      setTimeout(() => setSizeError(false), 1400);
-      return;
-    }
-    addItem(product, selectedSize);
+    if (!validate()) return;
+    addItem(product, selectedSize!, selectedFit!);
     setToast(true);
     setTimeout(() => setToast(false), 3000);
   };
 
   const handleBuyNow = () => {
-    if (!selectedSize) {
-      setSizeError(true);
-      setTimeout(() => setSizeError(false), 1400);
-      return;
-    }
-    addItem(product, selectedSize);
+    if (!validate()) return;
+    addItem(product, selectedSize!, selectedFit!);
     closeDrawer();
     router.push("/checkout");
   };
@@ -126,7 +129,45 @@ export default function ProductPageClient({
             {product.description}
           </p>
 
-          {/* Size selector */}
+          {/* ── Fit selector ───────────────────────────────────── */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold">
+                Select Fit
+              </p>
+              <AnimatePresence>
+                {fitError && (
+                  <motion.p
+                    initial={{ opacity: 0, x: 6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="font-heading text-[10px] uppercase tracking-widest text-vv-orange font-semibold"
+                  >
+                    Please select a fit
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {FITS.map((fit) => (
+                <button
+                  key={fit}
+                  onClick={() => { setSelectedFit(fit); setFitError(false); }}
+                  className={`font-heading text-xs uppercase tracking-wide px-5 h-12 border transition-all duration-150 ${
+                    selectedFit === fit
+                      ? "border-vv-black bg-vv-black text-white"
+                      : fitError
+                      ? "border-vv-orange/60 text-vv-black hover:border-vv-black"
+                      : "border-gray-200 text-vv-black hover:border-vv-black"
+                  }`}
+                >
+                  {fit}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Size selector ──────────────────────────────────── */}
           <div>
             <div className="flex items-center justify-between mb-3">
               <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold">
@@ -170,7 +211,9 @@ export default function ProductPageClient({
               onClick={handleAddToCart}
               className="w-full font-heading text-sm font-bold uppercase tracking-widest2 py-4 bg-vv-black text-white hover:bg-vv-orange transition-colors duration-200"
             >
-              {selectedSize ? `Add to Bag — ${selectedSize}` : "Add to Bag"}
+              {selectedSize && selectedFit
+                ? `Add to Bag — ${selectedFit} / ${selectedSize}`
+                : "Add to Bag"}
             </button>
             <button
               onClick={handleBuyNow}
