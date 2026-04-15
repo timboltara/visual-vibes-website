@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,10 +57,10 @@ export default function Navbar() {
         <div className="border-b border-gray-100 px-5 sm:px-10 h-14 flex items-center justify-between">
           {/* Left: social (desktop) */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="https://www.instagram.com/visualvibesl.l.c/" target="_blank" rel="noopener noreferrer" className="text-vv-black hover:text-vv-teal transition-colors">
+            <a href="https://www.instagram.com/visualvibesl.l.c/" target="_blank" rel="noopener noreferrer" className="text-vv-black hover:text-vv-orange transition-colors">
               <FiInstagram size={17} />
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61587157773896" target="_blank" rel="noopener noreferrer" className="text-vv-black hover:text-vv-teal transition-colors">
+            <a href="https://www.facebook.com/profile.php?id=61587157773896" target="_blank" rel="noopener noreferrer" className="text-vv-black hover:text-vv-orange transition-colors">
               <FiFacebook size={17} />
             </a>
           </div>
@@ -74,35 +75,39 @@ export default function Navbar() {
           </button>
 
           {/* Center: Logo */}
-          <Link
-            href="/"
-            className="absolute left-1/2 -translate-x-1/2 font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black hover:text-vv-teal transition-colors"
-          >
-            Visual Vibes
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+            <Image
+              src="/visual-vibes-logo.png"
+              alt="Visual Vibes"
+              width={160}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Right: icons */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSearchOpen(true)}
-              className="text-vv-black hover:text-vv-teal transition-colors"
+              className="text-vv-black hover:text-vv-orange transition-colors"
               aria-label="Search"
             >
               <FiSearch size={18} />
             </button>
             <Link
               href="/account"
-              className="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-teal transition-colors relative"
+              className="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-orange transition-colors relative"
               aria-label="Account"
             >
               <FiUser size={18} />
               {user && (
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-vv-teal rounded-full" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-vv-orange rounded-full" />
               )}
             </Link>
             <button
               onClick={openDrawer}
-              className="text-vv-black hover:text-vv-teal transition-colors relative"
+              className="text-vv-black hover:text-vv-orange transition-colors relative"
               aria-label="Cart"
             >
               <FiShoppingBag size={18} />
@@ -123,8 +128,8 @@ export default function Navbar() {
               href={link.href}
               className={`font-heading text-xs tracking-widest uppercase transition-colors duration-200 ${
                 pathname === link.href
-                  ? "text-vv-teal border-b border-vv-teal pb-px"
-                  : "text-vv-black hover:text-vv-teal"
+                  ? "text-vv-orange border-b border-vv-orange pb-px"
+                  : "text-vv-black hover:text-vv-orange"
               }`}
             >
               {link.label}
@@ -155,9 +160,14 @@ export default function Navbar() {
               className="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 flex flex-col md:hidden shadow-2xl"
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <Link href="/" onClick={() => setMenuOpen(false)}
-                  className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
-                  Visual Vibes
+                <Link href="/" onClick={() => setMenuOpen(false)}>
+                  <Image
+                    src="/visual-vibes-logo.png"
+                    alt="Visual Vibes"
+                    width={120}
+                    height={36}
+                    className="h-8 w-auto object-contain"
+                  />
                 </Link>
                 <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
                   <FiX size={22} className="text-vv-black" />
@@ -169,7 +179,7 @@ export default function Navbar() {
                   <motion.div key={link.label} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + i * 0.06, duration: 0.3 }}>
                     <Link href={link.href} onClick={() => setMenuOpen(false)}
-                      className="block font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50">
+                      className="block font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors py-3 border-b border-gray-50">
                       {link.label}
                     </Link>
                   </motion.div>
@@ -177,14 +187,14 @@ export default function Navbar() {
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + navLinks.length * 0.06, duration: 0.3 }}>
                   <Link href="/account" onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50">
+                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors py-3 border-b border-gray-50">
                     <FiUser size={14} /> {user ? `Hi, ${user.firstName}` : "Account"}
                   </Link>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 + (navLinks.length + 1) * 0.06, duration: 0.3 }}>
                   <button onClick={() => { setMenuOpen(false); setSearchOpen(true); }}
-                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-teal transition-colors py-3 border-b border-gray-50 w-full text-left">
+                    className="flex items-center gap-2 font-heading text-sm uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors py-3 border-b border-gray-50 w-full text-left">
                     <FiSearch size={14} /> Search
                   </button>
                 </motion.div>
@@ -195,10 +205,10 @@ export default function Navbar() {
                 <p className="font-heading font-semibold text-vv-orange text-base tracking-widest">BLESSED26</p>
                 <div className="flex gap-4 mt-4">
                   <a href="https://www.instagram.com/visualvibesl.l.c/" target="_blank" rel="noopener noreferrer">
-                    <FiInstagram size={20} className="text-vv-black hover:text-vv-teal transition-colors" />
+                    <FiInstagram size={20} className="text-vv-black hover:text-vv-orange transition-colors" />
                   </a>
                   <a href="https://www.facebook.com/profile.php?id=61587157773896" target="_blank" rel="noopener noreferrer">
-                    <FiFacebook size={20} className="text-vv-black hover:text-vv-teal transition-colors" />
+                    <FiFacebook size={20} className="text-vv-black hover:text-vv-orange transition-colors" />
                   </a>
                 </div>
               </div>
