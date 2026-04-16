@@ -15,7 +15,7 @@ const navLinks = [
   { label: "For Her", href: "/shop/womens" },
   { label: "New Drop", href: "/shop/new" },
   { label: "Collections", href: "/collections" },
-  { label: "Our Faith", href: "/about" },
+  { label: "Our Story", href: "/about" },
 ];
 
 export default function Navbar() {

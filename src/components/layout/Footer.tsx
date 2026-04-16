@@ -44,7 +44,7 @@ export default function Footer() {
             <p className="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Info</p>
             <div className="flex flex-col gap-3">
               {[
-                { label: "Our Faith", href: "/about" },
+                { label: "Our Story", href: "/about" },
                 { label: "Prayer Request", href: "/about#prayer" },
                 { label: "My Account", href: "/account" },
                 { label: "Contact Us", href: "/about" },
