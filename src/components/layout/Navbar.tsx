@@ -76,14 +76,12 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black flex items-center justify-center p-0.5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
-                alt="Visual Vibes"
-                style={{ width: "36px", height: "36px", objectFit: "contain" }}
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+              alt="Visual Vibes"
+              style={{ width: "40px", height: "40px", objectFit: "contain" }}
+            />
             <span className="font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black">
               Visual Vibes
             </span>
@@ -164,14 +162,12 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black flex items-center justify-center p-0.5">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
-                      alt="Visual Vibes"
-                      style={{ width: "32px", height: "32px", objectFit: "contain" }}
-                    />
-                  </div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+                    alt="Visual Vibes"
+                    style={{ width: "36px", height: "36px", objectFit: "contain" }}
+                  />
                   <span className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
                     Visual Vibes
                   </span>
