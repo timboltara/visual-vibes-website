@@ -1,0 +1,33 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Enter store password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "login_form_error": "Wrong password. Please try again."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "select_size": "Select a size",
+      "select_style": "Select a style"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Bag",
+      "empty": "Your bag is empty",
+      "checkout": "Checkout Now",
+      "continue_shopping": "Continue Shopping",
+      "remove": "Remove"
+    }
+  },
+  "search": {
+    "placeholder": "Search products...",
+    "no_results": "No results for"
+  }
+}

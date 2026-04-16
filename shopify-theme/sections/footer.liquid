@@ -1,0 +1,109 @@
+<footer class="bg-vv-black text-white border-t border-white/10">
+  <div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-16">
+
+    {%- comment -%} Logo + tagline {%- endcomment -%}
+    <div class="text-center mb-14">
+      <a href="{{ routes.root_url }}" class="font-heading font-semibold text-2xl uppercase tracking-widest2 text-white hover:text-vv-orange transition-colors">
+        {{ shop.name }}
+      </a>
+      <p class="font-heading text-xs text-vv-orange uppercase tracking-widest mt-1">{{ section.settings.tagline }}</p>
+      <p class="font-body text-xs text-gray-600 mt-1 uppercase tracking-widest">{{ section.settings.sub_tagline }}</p>
+    </div>
+
+    {%- comment -%} 3-col links {%- endcomment -%}
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-14">
+
+      {%- comment -%} Shop column {%- endcomment -%}
+      <div>
+        <p class="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Shop</p>
+        <div class="flex flex-col gap-3">
+          {%- for link in linklists[section.settings.shop_menu_handle].links -%}
+            <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Info column {%- endcomment -%}
+      <div>
+        <p class="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Info</p>
+        <div class="flex flex-col gap-3">
+          {%- for link in linklists[section.settings.info_menu_handle].links -%}
+            <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Follow + promo column {%- endcomment -%}
+      <div>
+        <p class="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Follow</p>
+        <div class="flex gap-4">
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+              {%- render 'icon-instagram', size: 20 -%}
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+              {%- render 'icon-facebook', size: 20 -%}
+            </a>
+          {%- endif -%}
+        </div>
+        {%- if settings.promo_code != blank -%}
+          <div class="mt-5 border border-white/10 p-4">
+            <p class="font-heading text-xs uppercase tracking-widest text-gray-500">First Order Discount</p>
+            <p class="font-heading font-semibold text-vv-orange text-lg tracking-widest mt-1">{{ settings.promo_code }}</p>
+            <p class="font-body text-xs text-gray-600 mt-1">15% off · Applied at checkout</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Bottom bar {%- endcomment -%}
+    <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p class="font-body text-xs text-gray-600">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+      </p>
+      <p class="font-heading text-xs uppercase tracking-widest text-gray-700">
+        {{ section.settings.footer_tagline }}
+      </p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Faith You Can Wear"
+    },
+    {
+      "type": "text",
+      "id": "sub_tagline",
+      "label": "Sub-tagline",
+      "default": "Building Disciples Through Design"
+    },
+    {
+      "type": "text",
+      "id": "footer_tagline",
+      "label": "Bottom tagline",
+      "default": "Romans 1:16 · Faith You Can Wear"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu_handle",
+      "label": "Shop Menu",
+      "default": "footer-shop"
+    },
+    {
+      "type": "link_list",
+      "id": "info_menu_handle",
+      "label": "Info Menu",
+      "default": "footer-info"
+    }
+  ]
+}
+{% endschema %}

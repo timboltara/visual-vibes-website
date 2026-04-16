@@ -1,0 +1,166 @@
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign current_tags = current_tags | default: ''
+-%}
+
+<div class="pt-0 min-h-screen bg-white">
+
+  {%- comment -%} Page header {%- endcomment -%}
+  <div class="px-5 sm:px-10 pt-10 pb-4 max-w-screen-xl mx-auto flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+    <div>
+      <h1 class="font-heading font-black text-4xl sm:text-5xl uppercase text-vv-black leading-none">
+        {{ collection.title }}
+      </h1>
+      {%- if collection.description != blank -%}
+        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mt-1">{{ collection.description }}</p>
+      {%- endif -%}
+    </div>
+    <p class="font-body text-sm text-vv-gray-mid" id="result-count">{{ collection.products_count }} products</p>
+  </div>
+
+  {%- comment -%} Trust bar {%- endcomment -%}
+  <div class="bg-vv-gray border-y border-gray-200">
+    <div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-2.5 flex flex-wrap gap-x-8 gap-y-1 justify-center sm:justify-start">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'trust_item' -%}
+          <span class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid flex items-center gap-1.5">
+            <span class="text-vv-orange">✓</span>{{ block.settings.text }}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Mobile filter bar {%- endcomment -%}
+  <div class="lg:hidden border-b border-gray-100 px-5 py-3 flex items-center justify-between sticky top-[129px] z-40 bg-white">
+    <button id="mobile-filter-btn" class="flex items-center gap-2 font-heading text-xs uppercase tracking-widest text-vv-black border border-gray-200 px-4 py-2.5 hover:border-vv-black transition-colors">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+      Filters
+      <span id="mobile-filter-count" class="w-4 h-4 bg-vv-orange text-white font-heading text-[9px] font-bold rounded-full items-center justify-center hidden">0</span>
+    </button>
+    <button id="mobile-filter-reset" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors hidden">Reset Filters</button>
+  </div>
+
+  {%- comment -%} Main: sidebar + grid {%- endcomment -%}
+  <div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-6 flex gap-8 items-start">
+
+    {%- comment -%} Desktop sidebar {%- endcomment -%}
+    <aside class="hidden lg:flex lg:flex-col w-56 flex-shrink-0 sticky top-[145px] max-h-[calc(100vh-170px)]">
+      <div class="flex items-center justify-between mb-4 flex-shrink-0">
+        <p class="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold flex items-center gap-2">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          Filters
+          <span id="desktop-filter-count" class="w-4 h-4 bg-vv-orange text-white font-heading text-[9px] font-bold rounded-full items-center justify-center hidden">0</span>
+        </p>
+      </div>
+      <div class="overflow-y-auto flex-1 pr-1" id="desktop-sidebar-content">
+        {%- render 'collection-filters', collection: collection -%}
+      </div>
+    </aside>
+
+    {%- comment -%} Product grid {%- endcomment -%}
+    <div class="flex-1 min-w-0">
+      <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          {%- for product in collection.products -%}
+            <div
+              class="vv-product-item"
+              data-tags="{{ product.tags | join: ',' | downcase }}"
+              data-price="{{ product.price }}"
+              data-type="{{ product.type | downcase }}"
+              data-sizes="{%- for variant in product.variants -%}{{ variant.option1 | downcase }},{%- endfor -%}"
+            >
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+
+          {%- if paginate.pages > 1 -%}
+            <div class="col-span-full mt-8 flex justify-center gap-2">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="font-heading text-xs uppercase tracking-widest px-6 py-2.5 border border-gray-200 text-vv-black hover:border-vv-black transition-colors">Previous</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="font-heading text-xs px-4 py-2.5 border border-gray-200 text-vv-black hover:border-vv-black transition-colors">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span class="font-heading text-xs px-4 py-2.5 border border-vv-black bg-vv-black text-white">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="font-heading text-xs px-4 py-2.5 text-vv-gray-mid">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="font-heading text-xs uppercase tracking-widest px-6 py-2.5 border border-gray-200 text-vv-black hover:border-vv-black transition-colors">Next</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+
+      {%- comment -%} Empty state {%- endcomment -%}
+      <div id="no-results" class="hidden flex flex-col items-center justify-center py-20 gap-4 text-center">
+        <p class="font-heading text-sm uppercase tracking-widest text-vv-gray-mid">No products match your filters</p>
+        <button id="reset-filters-empty" class="font-heading text-xs uppercase tracking-widest text-vv-orange hover:underline">Reset All Filters</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Mobile filter drawer {%- endcomment -%}
+<div id="mobile-filter-backdrop" class="fixed inset-0 bg-black/50 z-50 lg:hidden hidden"></div>
+<div id="mobile-filter-drawer" class="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 flex flex-col shadow-2xl lg:hidden translate-x-[-100%] transition-transform duration-300">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+    <p class="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold">Filters</p>
+    <button id="mobile-filter-close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto px-5 py-4" id="mobile-sidebar-content">
+    {%- render 'collection-filters', collection: collection -%}
+  </div>
+  <div class="px-5 py-4 border-t border-gray-100">
+    <button id="mobile-show-products" class="w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest py-4 hover:bg-vv-orange transition-colors">
+      Show Products
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust Bar Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Page",
+      "blocks": [
+        { "type": "trust_item", "settings": { "text": "Free shipping on orders $75+" } },
+        { "type": "trust_item", "settings": { "text": "Easy returns" } },
+        { "type": "trust_item", "settings": { "text": "Secure checkout" } },
+        { "type": "trust_item", "settings": { "text": "Sizes XS–3XL" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

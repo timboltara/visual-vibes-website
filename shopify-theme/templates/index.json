@@ -1,0 +1,81 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "ON FIRE FOR JESUS",
+        "heading_line1": "Faith You",
+        "heading_line2": "Can Wear",
+        "subheading": "Bold Christian apparel that helps people live on fire for God.",
+        "btn1_label": "Shop Now",
+        "btn2_label": "Our Story"
+      }
+    },
+    "marquee": {
+      "type": "marquee-ticker",
+      "blocks": {
+        "b1": { "type": "item", "settings": { "text": "Faith You Can Wear" } },
+        "b2": { "type": "item", "settings": { "text": "On Fire For Jesus" } },
+        "b3": { "type": "item", "settings": { "text": "Bold Faith" } },
+        "b4": { "type": "item", "settings": { "text": "Building Disciples Through Design" } },
+        "b5": { "type": "item", "settings": { "text": "Romans 1:16" } },
+        "b6": { "type": "item", "settings": { "text": "Faith is Not Passive" } },
+        "b7": { "type": "item", "settings": { "text": "New Drop" } },
+        "b8": { "type": "item", "settings": { "text": "Use Code BLESSED26" } }
+      },
+      "block_order": ["b1","b2","b3","b4","b5","b6","b7","b8"],
+      "settings": { "speed": 26 }
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "New Drop",
+        "product_count": 4,
+        "view_all_label": "View All"
+      }
+    },
+    "collections": {
+      "type": "collections-grid",
+      "blocks": {
+        "c1": { "type": "collection_tile", "settings": {} },
+        "c2": { "type": "collection_tile", "settings": {} },
+        "c3": { "type": "collection_tile", "settings": {} }
+      },
+      "block_order": ["c1","c2","c3"],
+      "settings": { "heading": "Shop by Collection" }
+    },
+    "gospel": {
+      "type": "gospel",
+      "blocks": {
+        "p1": { "type": "body_paragraph", "settings": { "text": "Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God." } },
+        "p2": { "type": "body_paragraph", "settings": { "text": "Faith is not passive. It's bold. It's alive. It's on fire. Every piece we create is designed to spark a conversation — and open a door to the Gospel." } },
+        "p3": { "type": "body_paragraph", "settings": { "text": "Clothing is the entry point — but the goal is impact." } },
+        "r1": { "type": "pillar", "settings": { "label": "Bold Faith", "desc": "Strong, unapologetic messages. Not watered-down." } },
+        "r2": { "type": "pillar", "settings": { "label": "Real Life Christianity", "desc": "Faith outside of church — at work, the gym, in public." } },
+        "r3": { "type": "pillar", "settings": { "label": "Energy / Fire", "desc": "Passion. Urgency. Excitement for God." } }
+      },
+      "block_order": ["p1","p2","p3","r1","r2","r3"],
+      "settings": {
+        "eyebrow": "The Mission",
+        "heading_line1": "More Than",
+        "heading_line2": "Clothing.",
+        "quote": "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes.",
+        "quote_ref": "Romans 1:16",
+        "form_eyebrow": "Prayer Request",
+        "form_heading": "We'd Love to Pray With You",
+        "form_btn_label": "Submit Prayer Request"
+      }
+    },
+    "email": {
+      "type": "email-signup",
+      "settings": {
+        "eyebrow": "Join the Movement",
+        "heading": "On Fire For Jesus",
+        "subheading": "Sign up and get 15% off your first order. New drops, faith stories, and community updates — straight to your inbox.",
+        "placeholder": "Enter your email",
+        "btn_label": "Subscribe"
+      }
+    }
+  },
+  "order": ["hero","marquee","featured","collections","gospel","email"]
+}

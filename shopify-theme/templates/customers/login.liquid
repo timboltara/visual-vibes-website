@@ -1,0 +1,36 @@
+<div class="min-h-[60vh] flex items-center justify-center px-5 py-20">
+  <div class="w-full max-w-md">
+    <h1 class="font-heading font-black text-3xl uppercase text-vv-black mb-8 text-center">Sign In</h1>
+
+    {%- form 'customer_login' -%}
+      {%- if form.errors -%}
+        <div class="bg-red-50 border border-red-200 text-red-700 font-body text-sm px-4 py-3 mb-6">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="flex flex-col gap-4">
+        <div>
+          <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1" for="customer_email">Email</label>
+          <input type="email" name="customer[email]" id="customer_email" autocomplete="email"
+            class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors">
+        </div>
+        <div>
+          <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1" for="customer_password">Password</label>
+          <input type="password" name="customer[password]" id="customer_password" autocomplete="current-password"
+            class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors">
+        </div>
+
+        <button type="submit"
+          class="w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest2 py-4 hover:bg-vv-orange transition-colors mt-2">
+          Sign In
+        </button>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <a href="{{ routes.root_url }}account/recover" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors">Forgot password?</a>
+        <a href="{{ routes.root_url }}account/register" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors">Create account</a>
+      </div>
+    {%- endform -%}
+  </div>
+</div>

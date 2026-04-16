@@ -1,0 +1,73 @@
+<div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-16">
+  <div class="flex justify-between items-center mb-10">
+    <h1 class="font-heading font-black text-3xl uppercase text-vv-black">My Account</h1>
+    <a href="{{ routes.account_logout_url }}" class="font-heading text-xs uppercase tracking-widest text-vv-gray-mid hover:text-vv-orange transition-colors">Sign Out</a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    {%- comment -%} Order History {%- endcomment -%}
+    <div class="lg:col-span-2">
+      <h2 class="font-heading text-sm uppercase tracking-widest text-vv-black mb-4">Order History</h2>
+
+      {%- if customer.orders.size == 0 -%}
+        <div class="border border-gray-200 p-8 text-center">
+          <p class="font-body text-sm text-vv-gray-mid mb-4">You haven't placed any orders yet.</p>
+          <a href="{{ routes.all_products_collection_url }}"
+            class="inline-block bg-vv-black text-white font-heading text-xs uppercase tracking-widest2 px-8 py-3 hover:bg-vv-orange transition-colors">
+            Start Shopping
+          </a>
+        </div>
+      {%- else -%}
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-left py-3">Order</th>
+              <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-left py-3">Date</th>
+              <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-left py-3">Status</th>
+              <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-right py-3">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for order in customer.orders -%}
+              <tr class="border-b border-gray-100">
+                <td class="py-3">
+                  <a href="{{ order.customer_url }}" class="font-heading text-[11px] uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors">
+                    {{ order.name }}
+                  </a>
+                </td>
+                <td class="py-3 font-body text-sm text-vv-gray-mid">{{ order.created_at | date: '%b %d, %Y' }}</td>
+                <td class="py-3 font-body text-sm text-vv-gray-mid">{{ order.financial_status_label }}</td>
+                <td class="py-3 font-heading text-sm font-semibold text-vv-black text-right">{{ order.total_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Account Details {%- endcomment -%}
+    <div>
+      <h2 class="font-heading text-sm uppercase tracking-widest text-vv-black mb-4">Account Details</h2>
+      <div class="border border-gray-200 p-6">
+        <p class="font-body text-sm text-vv-black">{{ customer.name }}</p>
+        <p class="font-body text-sm text-vv-gray-mid">{{ customer.email }}</p>
+
+        {%- if customer.default_address -%}
+          <div class="mt-4 pt-4 border-t border-gray-100">
+            <p class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid mb-2">Default Address</p>
+            <address class="font-body text-sm text-vv-black not-italic leading-relaxed">
+              {{ customer.default_address.address1 }}<br>
+              {%- if customer.default_address.address2 != blank -%}{{ customer.default_address.address2 }}<br>{%- endif -%}
+              {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
+              {{ customer.default_address.country }}
+            </address>
+          </div>
+        {%- endif -%}
+
+        <a href="{{ routes.account_addresses_url }}" class="inline-block mt-4 font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-orange transition-colors">
+          Manage Addresses →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

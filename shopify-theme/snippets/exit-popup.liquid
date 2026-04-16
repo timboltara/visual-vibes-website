@@ -1,0 +1,25 @@
+{%- comment -%} Exit Intent Popup {%- endcomment -%}
+<div id="exit-popup-backdrop" class="fixed inset-0 bg-black/70 z-[60] hidden" aria-hidden="true"></div>
+<div
+  id="exit-popup"
+  class="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-sm mx-auto bg-white z-[61] p-8 text-center shadow-2xl hidden"
+  role="dialog"
+  aria-modal="true"
+>
+  <button id="exit-popup-close" class="absolute top-3 right-3 text-vv-gray-mid hover:text-vv-black transition-colors" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mb-2">Wait — Don't Go Yet</p>
+  <h3 class="font-heading font-black text-2xl uppercase text-vv-black leading-tight mb-3">
+    Get 15% Off<br>Your First Order
+  </h3>
+  <p class="font-body text-sm text-vv-gray-mid mb-5">
+    Use code <strong class="text-vv-black">{{ settings.promo_code }}</strong> at checkout. One-time offer.
+  </p>
+  <button id="exit-popup-copy" class="w-full bg-vv-orange text-white font-heading text-xs font-bold uppercase tracking-widest2 py-4 hover:bg-vv-black transition-colors mb-3">
+    Copy Code: {{ settings.promo_code }}
+  </button>
+  <button id="exit-popup-dismiss" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors">
+    No thanks
+  </button>
+</div>

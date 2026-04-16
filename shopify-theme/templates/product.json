@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "t1": { "type": "trust_badge", "settings": { "text": "Free shipping on orders $75+" } },
+        "t2": { "type": "trust_badge", "settings": { "text": "Easy 30-day returns" } },
+        "t3": { "type": "trust_badge", "settings": { "text": "Secure checkout" } },
+        "t4": { "type": "trust_badge", "settings": { "text": "Sizes XS–3XL" } }
+      },
+      "block_order": ["t1","t2","t3","t4"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

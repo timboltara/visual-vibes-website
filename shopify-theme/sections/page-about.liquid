@@ -1,0 +1,135 @@
+{%- comment -%} About / Our Story page {%- endcomment -%}
+
+{%- comment -%} Hero {%- endcomment -%}
+<div class="relative bg-vv-black overflow-hidden" style="min-height: 60vh;">
+  <div class="absolute inset-0 opacity-25" style="background-image: radial-gradient(ellipse at 30% 65%, {{ settings.color_accent }} 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, #bf4f1e 0%, transparent 45%);"></div>
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 vv-fade-up" style="min-height: 60vh;">
+    <p class="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-4">{{ section.settings.eyebrow }}</p>
+    <h1 class="font-heading font-black text-white uppercase leading-none" style="font-size: clamp(3rem, 8vw, 7rem);">
+      {{ section.settings.hero_heading }}
+    </h1>
+    <p class="font-body text-gray-400 text-base max-w-md mx-auto mt-6">{{ section.settings.hero_subheading }}</p>
+  </div>
+</div>
+
+{%- comment -%} Brand story {%- endcomment -%}
+<section class="max-w-3xl mx-auto px-5 sm:px-10 py-20 vv-fade-up-section">
+  <div class="space-y-5 font-body text-lg text-vv-black leading-relaxed">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'story_paragraph' -%}
+        <p {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.pull_quote != blank -%}
+    <blockquote class="mt-12 border-l-2 border-vv-orange pl-6 py-1">
+      <p class="font-body text-lg italic text-vv-black leading-relaxed">&ldquo;{{ section.settings.pull_quote }}&rdquo;</p>
+      <cite class="font-heading text-vv-orange text-xs uppercase tracking-widest not-italic mt-2 block">{{ section.settings.pull_quote_ref }}</cite>
+    </blockquote>
+  {%- endif -%}
+</section>
+
+{%- comment -%} Brand pillars {%- endcomment -%}
+<section class="bg-vv-gray py-20 px-5 sm:px-10 vv-fade-up-section">
+  <div class="max-w-screen-xl mx-auto">
+    <h2 class="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black mb-10">{{ section.settings.pillars_heading }}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'pillar' -%}
+          <div class="bg-white p-8" {{ block.shopify_attributes }}>
+            <div class="w-8 h-0.5 bg-vv-orange mb-5"></div>
+            <h3 class="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black mb-4">{{ block.settings.title }}</h3>
+            <p class="font-body text-sm text-vv-gray-mid leading-relaxed">{{ block.settings.body }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Scripture banner {%- endcomment -%}
+<section class="bg-vv-black text-white py-24 px-6 text-center vv-fade-up-section">
+  <p class="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-6">{{ section.settings.scripture_eyebrow }}</p>
+  <p class="font-heading font-black uppercase leading-none text-white" style="font-size: clamp(2rem, 5vw, 4rem);">
+    &ldquo;{{ section.settings.scripture_text }}&rdquo;
+  </p>
+  <p class="font-heading text-xs uppercase tracking-widest2 text-white/40 mt-4">{{ section.settings.scripture_ref }}</p>
+  {%- if section.settings.scripture_btn_label != blank -%}
+    <a href="{{ section.settings.scripture_btn_url }}" class="inline-block mt-10 bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 px-10 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300">
+      {{ section.settings.scripture_btn_label }}
+    </a>
+  {%- endif -%}
+</section>
+
+{%- comment -%} Prayer form {%- endcomment -%}
+<section class="bg-vv-black py-20 px-5 sm:px-10 border-t border-white/5" id="prayer">
+  <div class="max-w-lg mx-auto vv-fade-up-section">
+    <p class="font-heading text-xs uppercase tracking-widest2 text-vv-orange mb-3">{{ section.settings.prayer_eyebrow }}</p>
+    <h2 class="font-heading font-semibold text-lg uppercase tracking-widest text-white mb-8">{{ section.settings.prayer_heading }}</h2>
+    {%- form 'contact' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="text-center py-10">
+          <p class="font-heading font-semibold uppercase tracking-widest text-vv-orange text-lg">Prayer Submitted ✝</p>
+          <p class="font-body text-gray-400 text-sm mt-2">We are believing with you. God hears every prayer.</p>
+        </div>
+      {%- else -%}
+        <input type="hidden" name="contact[tags]" value="prayer-request">
+        <div class="flex flex-col gap-3">
+          <input type="text" name="contact[name]" required placeholder="Your Name" class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 transition-colors">
+          <input type="email" name="contact[email]" required placeholder="Email Address" class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 transition-colors">
+          <textarea name="contact[body]" required rows="5" placeholder="Your prayer request..." class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 resize-none transition-colors"></textarea>
+          <button type="submit" class="w-full bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300 mt-1">{{ section.settings.prayer_btn }}</button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Hero Eyebrow", "default": "ON FIRE FOR JESUS" },
+    { "type": "text", "id": "hero_heading", "label": "Hero Heading", "default": "Our Story" },
+    { "type": "text", "id": "hero_subheading", "label": "Hero Subheading", "default": "A discipleship brand using apparel to spread the Gospel and spark bold faith." },
+    { "type": "text", "id": "pull_quote", "label": "Pull Quote" },
+    { "type": "text", "id": "pull_quote_ref", "label": "Pull Quote Reference", "default": "Romans 1:16" },
+    { "type": "text", "id": "pillars_heading", "label": "Pillars Section Heading", "default": "Our Brand Pillars" },
+    { "type": "text", "id": "scripture_eyebrow", "label": "Scripture Section Eyebrow" },
+    { "type": "text", "id": "scripture_text", "label": "Scripture Text", "default": "I can do all things through Christ." },
+    { "type": "text", "id": "scripture_ref", "label": "Scripture Reference", "default": "Philippians 4:13" },
+    { "type": "text", "id": "scripture_btn_label", "label": "Scripture CTA Label", "default": "Shop Now" },
+    { "type": "url", "id": "scripture_btn_url", "label": "Scripture CTA URL" },
+    { "type": "text", "id": "prayer_eyebrow", "label": "Prayer Form Eyebrow", "default": "Prayer Request" },
+    { "type": "text", "id": "prayer_heading", "label": "Prayer Form Heading", "default": "Submit a Prayer" },
+    { "type": "text", "id": "prayer_btn", "label": "Prayer Submit Button", "default": "Submit Prayer Request" }
+  ],
+  "blocks": [
+    {
+      "type": "story_paragraph",
+      "name": "Story Paragraph",
+      "settings": [{ "type": "textarea", "id": "text", "label": "Paragraph" }]
+    },
+    {
+      "type": "pillar",
+      "name": "Brand Pillar",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Pillar Title" },
+        { "type": "textarea", "id": "body", "label": "Pillar Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Page",
+      "blocks": [
+        { "type": "story_paragraph", "settings": { "text": "Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God." } },
+        { "type": "story_paragraph", "settings": { "text": "Visual Vibes is more than clothing. It's a movement to represent Christ boldly in everyday life." } },
+        { "type": "pillar", "settings": { "title": "Bold Faith", "body": "Strong, unapologetic messages — not watered down." } },
+        { "type": "pillar", "settings": { "title": "Real Life Christianity", "body": "Faith outside of church — at work, the gym, in public." } },
+        { "type": "pillar", "settings": { "title": "Energy & Fire", "body": "Passion. Urgency. Excitement. Christianity is not boring." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

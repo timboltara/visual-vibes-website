@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "t1": { "type": "trust_item", "settings": { "text": "Free shipping on orders $75+" } },
+        "t2": { "type": "trust_item", "settings": { "text": "Easy returns" } },
+        "t3": { "type": "trust_item", "settings": { "text": "Secure checkout" } },
+        "t4": { "type": "trust_item", "settings": { "text": "Sizes XS–3XL" } }
+      },
+      "block_order": ["t1","t2","t3","t4"],
+      "settings": { "products_per_page": 24 }
+    }
+  },
+  "order": ["main"]
+}

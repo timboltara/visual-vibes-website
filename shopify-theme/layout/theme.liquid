@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>
+    {%- if page_title == shop.name -%}
+      {{ page_title }}
+    {%- else -%}
+      {{ page_title }} — {{ shop.name }}
+    {%- endif -%}
+  </title>
+  <meta name="description" content="{{ page_description | escape }}">
+
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- endif -%}
+
+  {%- comment -%} Shopify required tag — must be inside <head> {%- endcomment -%}
+  {{ content_for_header }}
+
+  {%- comment -%} Google Fonts — Montserrat (heading) + Nunito Sans (body) {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&display=swap" rel="stylesheet">
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} CSS variables driven by theme settings {%- endcomment -%}
+  <style>
+    :root {
+      --vv-black:      {{ settings.color_primary }};
+      --vv-orange:     {{ settings.color_accent }};
+      --vv-bg:         {{ settings.color_bg }};
+      --vv-gray:       {{ settings.color_gray_light }};
+      --vv-gray-mid:   {{ settings.color_gray_mid }};
+      --font-montserrat: '{{ settings.font_heading.family }}', {{ settings.font_heading.fallback_families }};
+      --font-nunito:     '{{ settings.font_body.family }}', {{ settings.font_body.fallback_families }};
+    }
+  </style>
+
+  {%- comment -%} Shopify font preloads {%- endcomment -%}
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+</head>
+
+<body class="bg-white text-vv-black font-body min-h-screen flex flex-col" id="body">
+
+  <a class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-vv-black" href="#main-content">
+    Skip to content
+  </a>
+
+  {%- section 'header' -%}
+
+  <main id="main-content" class="flex-grow" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {%- section 'footer' -%}
+
+  {%- comment -%} Cart Drawer — always in DOM, shown/hidden via JS {%- endcomment -%}
+  {%- render 'cart-drawer' -%}
+
+  {%- comment -%} Exit intent popup {%- endcomment -%}
+  {%- render 'exit-popup' -%}
+
+  {%- comment -%} Search overlay {%- endcomment -%}
+  {%- render 'search-overlay' -%}
+
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

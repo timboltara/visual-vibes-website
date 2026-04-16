@@ -1,0 +1,109 @@
+{%- comment -%} Cart Drawer — shell. JS populates items dynamically via Shopify AJAX Cart API {%- endcomment -%}
+
+{%- assign free_shipping = settings.free_shipping_threshold | times: 100 -%}
+
+<div id="cart-backdrop" class="fixed inset-0 bg-black/50 z-50 hidden" aria-hidden="true"></div>
+
+<div
+  id="cart-drawer"
+  class="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-50 flex flex-col shadow-2xl translate-x-full transition-transform duration-300"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Shopping cart"
+>
+  {%- comment -%} Header {%- endcomment -%}
+  <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+    <div class="flex items-center gap-2">
+      <span class="font-heading text-sm font-semibold uppercase tracking-widest text-vv-black">Your Bag</span>
+      <span id="drawer-count-bubble" class="bg-vv-orange text-white font-heading text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden" id="drawer-item-count">0</span>
+    </div>
+    <button id="cart-close-btn" aria-label="Close cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  {%- comment -%} Free shipping bar {%- endcomment -%}
+  <div id="shipping-bar-wrap" class="px-5 py-3 bg-vv-gray border-b border-gray-100">
+    <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black mb-1.5" id="shipping-bar-text">
+      Add <span class="text-vv-orange" id="shipping-remaining"></span> more for free shipping
+    </p>
+    <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+      <div class="h-full bg-vv-orange rounded-full transition-all duration-500" id="shipping-bar-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  {%- comment -%} Free shipping unlocked banner {%- endcomment -%}
+  <div id="shipping-unlocked" class="px-5 py-2.5 bg-vv-orange text-white text-center hidden">
+    <p class="font-heading text-[10px] uppercase tracking-widest">✓ Free shipping unlocked!</p>
+  </div>
+
+  {%- comment -%} Items list {%- endcomment -%}
+  <div class="flex-1 overflow-y-auto py-3" id="cart-items-container">
+    {%- comment -%} Populated by JS {%- endcomment -%}
+    <div id="cart-empty-state" class="flex flex-col items-center justify-center h-full gap-3 px-5 text-center hidden">
+      <p class="font-heading text-sm uppercase tracking-widest text-vv-gray-mid">Your bag is empty</p>
+      <p class="font-body text-xs text-vv-gray-mid">Add some faith-forward pieces to get started.</p>
+      <button id="cart-continue-btn" class="mt-2 font-heading text-xs uppercase tracking-widest border border-vv-black px-6 py-2.5 hover:bg-vv-black hover:text-white transition-colors">
+        Continue Shopping
+      </button>
+    </div>
+    <ul id="cart-items-list" class="divide-y divide-gray-50"></ul>
+  </div>
+
+  {%- comment -%} Footer — shown when cart has items {%- endcomment -%}
+  <div id="cart-footer" class="border-t border-gray-100 px-5 pt-4 pb-5 space-y-3 bg-white hidden">
+    {%- comment -%} Promo {%- endcomment -%}
+    {%- if settings.promo_code != blank -%}
+      <div class="bg-vv-gray rounded px-3 py-2.5 flex items-center justify-between">
+        <div>
+          <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black">
+            Promo code <span class="text-vv-orange font-bold">{{ settings.promo_code }}</span> applied
+          </p>
+          <p class="font-body text-xs text-vv-gray-mid mt-0.5">{{ settings.promo_label }}</p>
+        </div>
+        <span class="font-heading text-xs text-vv-orange font-semibold" id="cart-discount-amount"></span>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Totals {%- endcomment -%}
+    <div class="space-y-1.5">
+      <div class="flex justify-between">
+        <span class="font-body text-sm text-vv-gray-mid">Subtotal</span>
+        <span class="font-body text-sm text-vv-gray-mid line-through" id="cart-subtotal"></span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-heading text-sm uppercase tracking-widest text-vv-black font-semibold">Total after discount</span>
+        <span class="font-heading text-sm text-vv-orange font-bold" id="cart-discounted-total"></span>
+      </div>
+    </div>
+
+    {%- comment -%} Checkout CTA {%- endcomment -%}
+    <a
+      href="{{ routes.cart_url }}"
+      id="checkout-btn"
+      class="block w-full bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest py-4 text-center hover:bg-vv-orange transition-colors duration-200"
+    >
+      Checkout Now →
+    </a>
+    <p class="font-body text-[10px] text-vv-gray-mid text-center">
+      Secure checkout · Use <strong>{{ settings.promo_code }}</strong> at checkout
+    </p>
+
+    {%- comment -%} Payment icons {%- endcomment -%}
+    <div class="flex items-center justify-center gap-2 pt-1">
+      {%- for method in shop.enabled_payment_types -%}
+        {{ method | payment_type_svg_tag: class: 'h-6' }}
+      {%- else -%}
+        {%- for m in 'VISA,MC,AMEX,PayPal' | split: ',' -%}
+          <span class="font-heading text-[9px] uppercase tracking-wider border border-gray-200 px-1.5 py-0.5 text-gray-400 rounded-sm">{{ m }}</span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%} Toast notification {%- endcomment -%}
+<div id="cart-toast" class="fixed bottom-6 right-6 z-50 bg-vv-black text-white font-heading text-xs uppercase tracking-widest px-5 py-3 shadow-xl flex items-center gap-2 translate-y-8 opacity-0 transition-all duration-300 pointer-events-none">
+  <span class="text-vv-orange font-bold">✓</span>
+  <span id="cart-toast-text">Added to bag!</span>
+</div>

@@ -1,0 +1,81 @@
+<section class="bg-vv-black py-16 px-5 sm:px-10 border-t border-white/5">
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="font-heading text-xs uppercase tracking-widest2 text-vv-orange mb-3">{{ section.settings.eyebrow }}</p>
+    <h2
+      class="font-heading font-black text-white uppercase leading-none mb-3"
+      style="font-size: clamp(2rem, 5vw, 3.5rem);"
+    >
+      {{ section.settings.heading }}
+    </h2>
+    <p class="font-body text-white/60 text-sm mb-8">{{ section.settings.subheading }}</p>
+
+    {%- form 'customer' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="py-4">
+          <p class="font-heading font-semibold uppercase tracking-widest text-vv-orange text-base">You're In ✝</p>
+          <p class="font-body text-white/50 text-sm mt-1">Check your inbox for your welcome code.</p>
+        </div>
+      {%- else -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input
+            type="email"
+            name="contact[email]"
+            required
+            placeholder="{{ section.settings.placeholder }}"
+            class="flex-1 bg-white/5 border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-white/30 transition-colors"
+          >
+          <button
+            type="submit"
+            class="bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 px-8 py-3 hover:bg-white hover:text-vv-black transition-colors duration-300 whitespace-nowrap"
+          >
+            {{ section.settings.btn_label }}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Email Signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Join the Movement"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "On Fire For Jesus"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Sign up and get 15% off your first order. New drops, faith stories, and community updates — straight to your inbox."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input Placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "Subscribe"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Email Signup"
+    }
+  ]
+}
+{% endschema %}

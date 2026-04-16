@@ -1,0 +1,23 @@
+{%- comment -%} Search Overlay {%- endcomment -%}
+<div id="search-overlay" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-start justify-center pt-28 px-5" role="dialog" aria-modal="true">
+  <div class="w-full max-w-2xl">
+    <form action="{{ routes.search_url }}" method="get" class="relative" role="search">
+      <input
+        type="search"
+        name="q"
+        id="search-input"
+        placeholder="Search products..."
+        autocomplete="off"
+        class="w-full bg-transparent border-b-2 border-white text-white font-heading text-2xl sm:text-4xl uppercase tracking-widest2 py-3 pr-12 focus:outline-none placeholder-white/30"
+      >
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:text-vv-orange transition-colors" aria-label="Search">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+    </form>
+    <p class="font-heading text-[10px] uppercase tracking-widest text-white/40 mt-4">Search for hoodies, tees, collections...</p>
+  </div>
+  <button id="search-close" class="absolute top-8 right-8 text-white hover:text-vv-orange transition-colors" aria-label="Close search">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>

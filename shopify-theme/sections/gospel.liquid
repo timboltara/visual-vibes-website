@@ -1,0 +1,177 @@
+<section class="bg-vv-black text-white" id="gospel">
+  <div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+    {%- comment -%} Left: Faith Content {%- endcomment -%}
+    <div class="vv-fade-up-section">
+      <p class="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-5">
+        {{ section.settings.eyebrow }}
+      </p>
+      <h2
+        class="font-heading font-black text-white uppercase leading-none mb-8"
+        style="font-size: clamp(2.5rem, 5vw, 4.5rem);"
+      >
+        {{ section.settings.heading_line1 }}<br>{{ section.settings.heading_line2 }}
+      </h2>
+
+      <div class="space-y-4 font-body text-gray-400 text-base leading-relaxed">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'body_paragraph' -%}
+            <p {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Brand pillars {%- endcomment -%}
+      <div class="mt-8 grid grid-cols-1 gap-4">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pillar' -%}
+            <div class="flex gap-4 items-start" {{ block.shopify_attributes }}>
+              <span class="w-1 h-1 rounded-full bg-vv-orange mt-2 flex-shrink-0"></span>
+              <div>
+                <p class="font-heading text-xs uppercase tracking-widest text-vv-orange font-semibold">{{ block.settings.label }}</p>
+                <p class="font-body text-sm text-gray-500 mt-0.5">{{ block.settings.desc }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="mt-8 border-l-2 border-vv-orange pl-5">
+          <p class="font-body text-base text-white/80 italic leading-relaxed">&ldquo;{{ section.settings.quote }}&rdquo;</p>
+          <cite class="font-heading text-vv-orange text-xs uppercase tracking-widest not-italic mt-2 block">{{ section.settings.quote_ref }}</cite>
+        </blockquote>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Right: Prayer form {%- endcomment -%}
+    <div id="prayer">
+      <p class="font-heading text-xs uppercase tracking-widest2 text-gray-400 mb-5">{{ section.settings.form_eyebrow }}</p>
+      <h3 class="font-heading font-semibold text-lg uppercase tracking-widest text-white mb-6">{{ section.settings.form_heading }}</h3>
+
+      {%- form 'contact' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="py-10 text-center">
+            <p class="font-heading font-semibold uppercase tracking-widest text-vv-orange text-lg">Prayer Submitted ✝</p>
+            <p class="font-body text-gray-400 text-sm mt-2">We are believing with you. God hears every prayer.</p>
+          </div>
+        {%- else -%}
+          <input type="hidden" name="contact[tags]" value="prayer-request">
+          <div class="flex flex-col gap-3">
+            <input type="text" name="contact[name]" required placeholder="Your Name"
+              class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 transition-colors">
+            <input type="email" name="contact[email]" required placeholder="Email Address"
+              class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 transition-colors">
+            <textarea name="contact[body]" required rows="4" placeholder="Your prayer request..."
+              class="w-full bg-transparent border border-white/20 text-white font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-orange placeholder-gray-600 resize-none transition-colors"></textarea>
+            <button type="submit"
+              class="w-full bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300 mt-1">
+              {{ section.settings.form_btn_label }}
+            </button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gospel / Mission",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Mission"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading Line 1",
+      "default": "More Than"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading Line 2",
+      "default": "Clothing."
+    },
+    {
+      "type": "text",
+      "id": "quote",
+      "label": "Pull Quote",
+      "default": "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes."
+    },
+    {
+      "type": "text",
+      "id": "quote_ref",
+      "label": "Quote Reference",
+      "default": "Romans 1:16"
+    },
+    {
+      "type": "header",
+      "content": "Prayer Form"
+    },
+    {
+      "type": "text",
+      "id": "form_eyebrow",
+      "label": "Form Eyebrow",
+      "default": "Prayer Request"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form Heading",
+      "default": "We'd Love to Pray With You"
+    },
+    {
+      "type": "text",
+      "id": "form_btn_label",
+      "label": "Submit Button Label",
+      "default": "Submit Prayer Request"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "body_paragraph",
+      "name": "Body Paragraph",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Paragraph Text"
+        }
+      ]
+    },
+    {
+      "type": "pillar",
+      "name": "Brand Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pillar Label"
+        },
+        {
+          "type": "text",
+          "id": "desc",
+          "label": "Pillar Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gospel / Mission",
+      "blocks": [
+        { "type": "body_paragraph", "settings": { "text": "Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God." } },
+        { "type": "body_paragraph", "settings": { "text": "Faith is not passive. It's bold. It's alive. It's on fire. Every piece we create is designed to spark a conversation — and open a door to the Gospel." } },
+        { "type": "pillar", "settings": { "label": "Bold Faith", "desc": "Strong, unapologetic messages. Not watered-down." } },
+        { "type": "pillar", "settings": { "label": "Real Life Christianity", "desc": "Faith outside of church — at work, the gym, in public." } },
+        { "type": "pillar", "settings": { "label": "Energy / Fire", "desc": "Passion. Urgency. Excitement for God." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

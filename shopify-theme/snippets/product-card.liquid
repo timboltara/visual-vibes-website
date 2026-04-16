@@ -1,0 +1,68 @@
+{%- comment -%}
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign img_filter = 'contrast(1.08) brightness(1.04) saturate(1.2)'
+  assign tag_label = ''
+  assign tag_class = ''
+  if product.tags contains 'Best Seller'
+    assign tag_label = 'Best Seller'
+    assign tag_class = 'bg-vv-orange text-white'
+  elsif product.tags contains 'New'
+    assign tag_label = 'New'
+    assign tag_class = 'bg-vv-black text-white'
+  elsif product.tags contains 'Limited'
+    assign tag_label = 'Limited'
+    assign tag_class = 'bg-vv-black text-white'
+  endif
+-%}
+
+<div class="group">
+  <a href="{{ product.url }}" class="block relative bg-vv-gray overflow-hidden mb-3" style="aspect-ratio: 1/1;">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag:
+        loading: 'lazy',
+        class: 'w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500',
+        style: 'filter:contrast(1.08) brightness(1.04) saturate(1.2);'
+      }}
+    {%- else -%}
+      <div class="w-full h-full bg-vv-gray flex items-center justify-center">
+        <span class="font-heading text-xs uppercase tracking-widest text-vv-gray-mid">No image</span>
+      </div>
+    {%- endif -%}
+
+    {%- if tag_label != '' -%}
+      <span class="absolute top-2 left-2 text-[10px] font-heading font-semibold uppercase tracking-widest px-2 py-0.5 {{ tag_class }}">
+        {{ tag_label }}
+      </span>
+    {%- endif -%}
+
+    {%- comment -%} Quick Add on hover {%- endcomment -%}
+    <div class="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/95 backdrop-blur-sm p-2">
+      <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-1.5 text-center">Quick Add</p>
+      <div class="flex gap-1 justify-center flex-wrap">
+        {%- for variant in product.variants -%}
+          {%- if variant.available -%}
+            <button
+              class="vv-quick-add-btn font-heading text-[10px] uppercase tracking-wide px-2 py-1 border border-gray-300 text-vv-black hover:border-vv-black hover:bg-vv-black hover:text-white transition-all duration-100"
+              data-variant-id="{{ variant.id }}"
+              data-product-title="{{ product.title | escape }}"
+            >
+              {{ variant.title | split: ' / ' | first }}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </a>
+
+  <a href="{{ product.url }}" class="block">
+    <p class="font-heading text-[11px] uppercase tracking-widest text-vv-black font-medium leading-snug line-clamp-2">
+      {{ product.title }}
+    </p>
+    <p class="font-body text-sm text-vv-black font-semibold mt-0.5">
+      {{ product.price | money }}
+    </p>
+  </a>
+</div>

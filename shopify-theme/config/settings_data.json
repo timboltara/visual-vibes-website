@@ -1,0 +1,18 @@
+{
+  "current": {
+    "color_primary": "#1c1c1c",
+    "color_accent": "#e8622a",
+    "color_bg": "#ffffff",
+    "color_gray_light": "#f2f2f2",
+    "color_gray_mid": "#888888",
+    "font_heading": "montserrat_n9",
+    "font_body": "nunito_sans_n4",
+    "logo_width": 40,
+    "promo_code": "BLESSED26",
+    "promo_label": "15% off your first order",
+    "free_shipping_threshold": 75,
+    "social_instagram": "https://www.instagram.com/visualvibesl.l.c/",
+    "social_facebook": "https://www.facebook.com/profile.php?id=61587157773896"
+  },
+  "presets": {}
+}

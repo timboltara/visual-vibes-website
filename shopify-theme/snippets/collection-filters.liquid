@@ -1,0 +1,110 @@
+{%- comment -%}
+  Client-side filter sidebar — identical to the React ShopFilterPage sidebar.
+  JS in theme.js reads these inputs and shows/hides .vv-product-item elements.
+{%- endcomment -%}
+
+<div class="flex flex-col gap-0" id="vv-filters">
+
+  {%- comment -%} Sort {%- endcomment -%}
+  <div class="border-b border-gray-100">
+    <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
+      Sort By <span class="vv-chevron">▲</span>
+    </button>
+    <div class="vv-filter-body pb-4">
+      {%- assign sort_options = 'Featured,price-asc,price-desc,newest' | split: ',' -%}
+      {%- assign sort_labels = 'Featured,Price: Low to High,Price: High to Low,Newest First' | split: ',' -%}
+      {%- for opt in sort_options -%}
+        <button class="vv-sort-btn flex items-center gap-2.5 w-full text-left py-1" data-sort="{{ opt }}">
+          <div class="w-3.5 h-3.5 rounded-full border border-gray-300 flex-shrink-0 flex items-center justify-center vv-radio">
+            <div class="w-2 h-2 rounded-full bg-vv-black hidden vv-radio-dot"></div>
+          </div>
+          <span class="font-body text-sm text-vv-black">{{ sort_labels[forloop.index0] }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Category (product type) {%- endcomment -%}
+  <div class="border-b border-gray-100">
+    <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
+      Category <span class="vv-chevron">▲</span>
+    </button>
+    <div class="vv-filter-body pb-4">
+      {%- assign categories = 'hoodies,tshirts,sweaters,jerseys,jackets' | split: ',' -%}
+      {%- assign cat_labels = 'Hoodies,T-Shirts,Sweaters,Jerseys,Jackets' | split: ',' -%}
+      {%- for cat in categories -%}
+        <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="{{ cat }}">
+          <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+            <span class="text-white font-bold hidden vv-check" style="font-size:9px;">✓</span>
+          </div>
+          <span class="font-body text-sm text-vv-black">{{ cat_labels[forloop.index0] }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Gender {%- endcomment -%}
+  <div class="border-b border-gray-100">
+    <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
+      For <span class="vv-chevron">▲</span>
+    </button>
+    <div class="vv-filter-body pb-4">
+      {%- assign genders = 'all,mens,womens' | split: ',' -%}
+      {%- assign gender_labels = 'Everyone,For Him,For Her' | split: ',' -%}
+      {%- for g in genders -%}
+        <button class="vv-gender-btn flex items-center gap-2.5 w-full text-left py-1" data-gender="{{ g }}">
+          <div class="w-3.5 h-3.5 rounded-full border border-gray-300 flex-shrink-0 flex items-center justify-center vv-radio">
+            <div class="w-2 h-2 rounded-full bg-vv-black hidden vv-radio-dot"></div>
+          </div>
+          <span class="font-body text-sm text-vv-black">{{ gender_labels[forloop.index0] }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Size {%- endcomment -%}
+  <div class="border-b border-gray-100">
+    <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
+      Size <span class="vv-chevron">▲</span>
+    </button>
+    <div class="vv-filter-body pb-4">
+      <div class="flex flex-wrap gap-1.5">
+        {%- assign sizes = 'XS,S,M,L,XL,2XL,3XL' | split: ',' -%}
+        {%- for sz in sizes -%}
+          <button
+            class="vv-size-btn font-heading text-[10px] uppercase tracking-wide px-3 py-2 border border-gray-200 text-vv-black hover:border-vv-black transition-all"
+            data-size="{{ sz | downcase }}"
+          >{{ sz }}</button>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Price {%- endcomment -%}
+  <div class="border-b border-gray-100">
+    <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="false">
+      Price <span class="vv-chevron">▼</span>
+    </button>
+    <div class="vv-filter-body pb-4 hidden">
+      {%- assign price_ranges = 'under25,25to50,50to75,over75' | split: ',' -%}
+      {%- assign price_labels = 'Under $25,$25 – $50,$50 – $75,Over $75' | split: ',' -%}
+      {%- assign price_mins = '0,2500,5000,7500' | split: ',' -%}
+      {%- assign price_maxs = '2499,4999,7499,99999' | split: ',' -%}
+      {%- for pr in price_ranges -%}
+        <button class="vv-price-btn flex items-center gap-2.5 w-full text-left py-1" data-price-min="{{ price_mins[forloop.index0] }}" data-price-max="{{ price_maxs[forloop.index0] }}">
+          <div class="w-3.5 h-3.5 rounded-full border border-gray-300 flex-shrink-0 flex items-center justify-center vv-radio">
+            <div class="w-2 h-2 rounded-full bg-vv-black hidden vv-radio-dot"></div>
+          </div>
+          <span class="font-body text-sm text-vv-black">{{ price_labels[forloop.index0] }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- comment -%} Reset button (shown when filters active) {%- endcomment -%}
+  <div class="pt-4 hidden" id="reset-btn-wrap">
+    <button id="vv-reset-filters" class="w-full font-heading text-[10px] uppercase tracking-widest text-white bg-vv-black py-2.5 hover:bg-vv-orange transition-colors">
+      Reset All Filters
+    </button>
+  </div>
+</div>

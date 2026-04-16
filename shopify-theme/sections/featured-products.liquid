@@ -1,0 +1,73 @@
+<section class="py-16 px-5 sm:px-10 max-w-screen-xl mx-auto vv-fade-up-section">
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black">
+      {{ section.settings.heading }}
+    </h2>
+    <a
+      href="{{ section.settings.view_all_url | default: routes.collections_url }}"
+      class="font-heading text-xs uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors border-b border-vv-gray-mid pb-px"
+    >
+      {{ section.settings.view_all_label }}
+    </a>
+  </div>
+
+  {%- assign featured_collection = collections[section.settings.collection] -%}
+  {%- assign product_limit = section.settings.product_count -%}
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+    {%- if featured_collection != blank -%}
+      {%- for product in featured_collection.products limit: product_limit -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- comment -%} Fallback: show recent products if no collection set {%- endcomment -%}
+      {%- for product in collections.all.products limit: product_limit -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "New Drop"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection to Feature"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "label": "Number of Products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All Link Text",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View All Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,69 @@
+{%- comment -%} Fallback cart page (customers who have JS disabled or prefer full page cart) {%- endcomment -%}
+<div class="max-w-3xl mx-auto px-5 sm:px-10 py-16">
+  <h1 class="font-heading font-black text-3xl uppercase text-vv-black mb-8">Your Bag</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="text-center py-16">
+      <p class="font-heading text-sm uppercase tracking-widest text-vv-gray-mid mb-6">Your bag is empty</p>
+      <a href="{{ routes.all_products_collection_url }}" class="inline-block font-heading text-xs font-bold uppercase tracking-widest2 px-10 py-4 bg-vv-black text-white hover:bg-vv-orange transition-colors">
+        Continue Shopping
+      </a>
+    </div>
+  {%- else -%}
+    {%- form 'cart' -%}
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-left py-3">Product</th>
+            <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-center py-3">Qty</th>
+            <th class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid text-right py-3">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr class="border-b border-gray-100">
+              <td class="py-4">
+                <div class="flex gap-4 items-start">
+                  {%- if item.image -%}
+                    <a href="{{ item.url }}" class="flex-shrink-0">
+                      {{ item.image | image_url: width: 100 | image_tag: width: 80, height: 80, class: 'object-cover object-top bg-vv-gray' }}
+                    </a>
+                  {%- endif -%}
+                  <div>
+                    <a href="{{ item.url }}" class="font-heading text-[11px] uppercase tracking-widest text-vv-black font-medium hover:text-vv-orange transition-colors">{{ item.product.title }}</a>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <p class="font-body text-xs text-vv-gray-mid mt-0.5">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+                    {%- for prop in item.properties -%}
+                      {%- unless prop.last == blank -%}
+                        <p class="font-body text-xs text-vv-gray-mid">{{ prop.first }}: {{ prop.last }}</p>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                    <a href="{{ routes.cart_url }}/change?line={{ forloop.index }}&quantity=0" class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid hover:text-red-500 transition-colors mt-1 inline-block">Remove</a>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4 text-center">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0"
+                  class="w-14 border border-gray-300 text-center font-body text-sm py-1 focus:outline-none focus:border-vv-black">
+              </td>
+              <td class="py-4 text-right font-heading text-sm font-semibold text-vv-black">{{ item.line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="mt-6 flex flex-col items-end gap-3">
+        <div class="flex justify-between w-full sm:w-64">
+          <span class="font-body text-sm text-vv-gray-mid">Subtotal</span>
+          <span class="font-heading text-sm font-semibold text-vv-black">{{ cart.total_price | money }}</span>
+        </div>
+        <p class="font-body text-xs text-vv-gray-mid">Shipping and taxes calculated at checkout.</p>
+        <button type="submit" name="update" class="font-heading text-xs uppercase tracking-widest border border-gray-300 px-6 py-2.5 text-vv-black hover:border-vv-black transition-colors">Update Cart</button>
+        <a href="{{ routes.checkout }}" class="w-full sm:w-64 block text-center bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest2 py-4 hover:bg-vv-orange transition-colors">
+          Checkout Now →
+        </a>
+      </div>
+    {%- endform -%}
+  {%- endif -%}
+</div>
