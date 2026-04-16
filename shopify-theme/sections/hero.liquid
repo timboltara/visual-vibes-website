@@ -1,22 +1,33 @@
-<section class="relative w-full overflow-hidden" style="height: calc(100vh - 88px);">
-  {%- comment -%} Background gradient {%- endcomment -%}
-  <div class="absolute inset-0" style="background: linear-gradient(135deg, {{ section.settings.bg_color }} 0%, #1a1a1a 50%, #262626 100%);"></div>
+<section id="vv-hero" class="relative w-full overflow-hidden" style="height: calc(100vh - 88px);">
 
-  {%- comment -%} Color overlay {%- endcomment -%}
-  <div
-    class="absolute inset-0"
-    style="opacity: 0.25; background-image: radial-gradient(ellipse at 25% 65%, {{ settings.color_accent }} 0%, transparent 50%), radial-gradient(ellipse at 78% 20%, #bf4f1e 0%, transparent 45%);"
-  ></div>
+  {%- comment -%} ── Video Background (future-ready) ─────────────────── {%- endcomment -%}
+  {%- if section.settings.video_url != blank -%}
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay muted loop playsinline
+      poster="{%- if section.settings.bg_image -%}{{ section.settings.bg_image | image_url: width: 2000 }}{%- endif -%}"
+    >
+      <source src="{{ section.settings.video_url }}" type="video/mp4">
+    </video>
+    <div class="absolute inset-0" style="background: rgba(0,0,0,{{ section.settings.video_overlay | divided_by: 100.0 }});"></div>
 
-  {%- comment -%} Background image (optional) {%- endcomment -%}
-  {%- if section.settings.bg_image -%}
+  {%- elsif section.settings.bg_image -%}
+    {%- comment -%} ── Static Background Image ───────────────────────── {%- endcomment -%}
     <div class="absolute inset-0">
-      {{ section.settings.bg_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'w-full h-full object-cover object-center' }}
+      {{ section.settings.bg_image | image_url: width: 2000 | image_tag:
+        loading: 'eager',
+        class: 'w-full h-full object-cover object-center'
+      }}
       <div class="absolute inset-0" style="background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
     </div>
+
+  {%- else -%}
+    {%- comment -%} ── Gradient Fallback ─────────────────────────────── {%- endcomment -%}
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, {{ section.settings.bg_color }} 0%, #1a1a1a 50%, #262626 100%);"></div>
+    <div class="absolute inset-0" style="opacity:0.25; background-image: radial-gradient(ellipse at 25% 65%, {{ settings.color_accent }} 0%, transparent 50%), radial-gradient(ellipse at 78% 20%, #bf4f1e 0%, transparent 45%);"></div>
   {%- endif -%}
 
-  {%- comment -%} Content {%- endcomment -%}
+  {%- comment -%} ── Content ──────────────────────────────────────────── {%- endcomment -%}
   <div class="absolute bottom-16 left-0 right-0 flex flex-col items-center gap-6 px-6 text-center vv-fade-up">
     {%- if section.settings.eyebrow != blank -%}
       <p class="font-heading text-vv-orange text-xs tracking-widest3 uppercase">{{ section.settings.eyebrow }}</p>
@@ -28,7 +39,7 @@
     >
       {{ section.settings.heading_line1 }}
       <br>
-      <span style="-webkit-text-stroke: 2px white; color: transparent;">
+      <span class="font-heading font-black" style="-webkit-text-stroke: 2px white; color: transparent; font-size: inherit; letter-spacing: inherit; line-height: inherit;">
         {{ section.settings.heading_line2 }}
       </span>
     </h1>
@@ -67,15 +78,19 @@
   "tag": "section",
   "settings": [
     {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
+      "label": "Background Color (used when no image/video)",
       "default": "#1c1c1c"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background Image (optional — overrides color)"
+      "label": "Background Image (overrides color)"
     },
     {
       "type": "range",
@@ -87,6 +102,29 @@
       "default": 50
     },
     {
+      "type": "header",
+      "content": "Video Background (overrides image)"
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (.mp4)",
+      "info": "Upload your video to Shopify Files or use a CDN URL. Leave blank to use image/color background."
+    },
+    {
+      "type": "range",
+      "id": "video_overlay",
+      "label": "Video Overlay Darkness (%)",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow Text",
@@ -95,7 +133,7 @@
     {
       "type": "text",
       "id": "heading_line1",
-      "label": "Heading Line 1",
+      "label": "Heading Line 1 (solid white)",
       "default": "Faith You"
     },
     {
@@ -109,6 +147,10 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "Bold Christian apparel that helps people live on fire for God."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
     },
     {
       "type": "text",

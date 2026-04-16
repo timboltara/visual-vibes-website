@@ -2,6 +2,12 @@
   assign current_variant = product.selected_or_first_available_variant
   assign featured_image = current_variant.featured_image | default: product.featured_image
   assign img_filter = 'contrast(1.08) brightness(1.04) saturate(1.2)'
+  assign has_color_option = false
+  for option in product.options
+    if option == 'Color' or option == 'color'
+      assign has_color_option = true
+    endif
+  endfor
 -%}
 
 <div class="pt-0 min-h-screen bg-white">
@@ -10,8 +16,9 @@
 
       {%- comment -%} ── Left: Media Gallery ────────────────────────────────────── {%- endcomment -%}
       <div class="lg:sticky lg:top-[145px]">
-        {%- comment -%} Main image {%- endcomment -%}
-        <div class="relative aspect-square bg-vv-gray overflow-hidden mb-3" id="main-product-image">
+
+        {%- comment -%} Main carousel image {%- endcomment -%}
+        <div class="relative bg-vv-gray overflow-hidden mb-3" id="main-product-image" style="aspect-ratio:1/1;">
           {%- if featured_image -%}
             {{ featured_image | image_url: width: 1200 | image_tag:
               loading: 'eager',
@@ -24,18 +31,40 @@
               <span class="font-heading text-sm uppercase tracking-widest text-vv-gray-mid">No image</span>
             </div>
           {%- endif -%}
+
+          {%- comment -%} Carousel arrows (only if multiple images) {%- endcomment -%}
+          {%- if product.images.size > 1 -%}
+            <button id="carousel-prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white flex items-center justify-center transition-all" aria-label="Previous image">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button id="carousel-next" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white flex items-center justify-center transition-all" aria-label="Next image">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            {%- comment -%} Dot indicators {%- endcomment -%}
+            <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5" id="carousel-dots">
+              {%- for image in product.images limit: 8 -%}
+                <button class="vv-carousel-dot w-1.5 h-1.5 rounded-full transition-all {% if forloop.first %}bg-vv-black{% else %}bg-gray-300{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}"></button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
 
         {%- comment -%} Thumbnail strip {%- endcomment -%}
         {%- if product.images.size > 1 -%}
-          <div class="grid grid-cols-4 gap-2">
-            {%- for image in product.images limit: 8 -%}
+          <div class="grid grid-cols-5 gap-1.5" id="thumbnail-strip">
+            {%- for image in product.images limit: 10 -%}
               <button
                 class="vv-thumb aspect-square bg-vv-gray overflow-hidden border-2 {% if forloop.first %}border-vv-black{% else %}border-transparent{% endif %} hover:border-vv-black transition-colors"
                 data-image-url="{{ image | image_url: width: 1200 }}"
                 data-image-alt="{{ image.alt | escape }}"
+                data-index="{{ forloop.index0 }}"
               >
-                {{ image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover object-top', style: 'filter:contrast(1.08) brightness(1.04) saturate(1.2);' }}
+                {{ image | image_url: width: 150 | image_tag:
+                  loading: 'lazy',
+                  class: 'w-full h-full object-cover object-top',
+                  style: 'filter:contrast(1.08) brightness(1.04) saturate(1.2);'
+                }}
               </button>
             {%- endfor -%}
           </div>
@@ -60,87 +89,157 @@
           endif
         -%}
         {%- if tag_label != '' -%}
-          <span class="inline-block text-[10px] font-heading font-semibold uppercase tracking-widest px-2 py-0.5 mb-3 {{ tag_class }}">
-            {{ tag_label }}
-          </span>
+          <span class="inline-block text-[10px] font-heading font-semibold uppercase tracking-widest px-2 py-0.5 mb-3 {{ tag_class }}">{{ tag_label }}</span>
         {%- endif -%}
 
-        <h1 class="font-heading font-black text-2xl sm:text-3xl uppercase text-vv-black leading-tight mb-2">
-          {{ product.title }}
-        </h1>
+        <h1 class="font-heading font-black text-2xl sm:text-3xl uppercase text-vv-black leading-tight mb-2">{{ product.title }}</h1>
+
+        {%- comment -%} Star rating {%- endcomment -%}
+        {%- assign rating_val = product.metafields.reviews.rating.value | times: 1 -%}
+        {%- assign rating_count = product.metafields.reviews.rating_count.value | times: 1 -%}
+        <div class="flex items-center gap-2 mb-3">
+          <div class="flex items-center gap-0.5" id="product-stars">
+            {%- if rating_val > 0 -%}
+              {%- for i in (1..5) -%}
+                <span style="font-size:15px; color:{%- if i <= rating_val -%}#e8622a{%- else -%}#e5e7eb{%- endif -%};">★</span>
+              {%- endfor -%}
+              <span class="font-body text-xs text-vv-gray-mid ml-1" id="review-count-label">({{ rating_count }} review{%- if rating_count != 1 -%}s{%- endif -%})</span>
+            {%- else -%}
+              {%- for i in (1..5) -%}
+                <span style="font-size:15px; color:#e5e7eb;">★</span>
+              {%- endfor -%}
+              <a href="#product-reviews" class="font-body text-xs text-vv-gray-mid ml-1 hover:text-vv-orange transition-colors">Be the first to review</a>
+            {%- endif -%}
+          </div>
+        </div>
 
         <div class="flex items-baseline gap-3 mb-4">
-          <span class="font-heading text-2xl font-black text-vv-black" id="product-price">
-            {{ current_variant.price | money }}
-          </span>
+          <span class="font-heading text-2xl font-black text-vv-black" id="product-price">{{ current_variant.price | money }}</span>
           {%- if current_variant.compare_at_price > current_variant.price -%}
             <span class="font-body text-sm text-vv-gray-mid line-through">{{ current_variant.compare_at_price | money }}</span>
           {%- endif -%}
         </div>
 
-        {%- comment -%} Social proof badges (JS randomizes on load) {%- endcomment -%}
+        {%- comment -%} Social proof badges {%- endcomment -%}
         <div class="flex flex-wrap gap-2 mb-5" id="social-proof-badges">
           <span id="viewing-badge" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid border border-gray-200 px-2.5 py-1"></span>
           <span id="low-stock-badge" class="font-heading text-[10px] uppercase tracking-widest text-vv-orange border border-vv-orange px-2.5 py-1 hidden">🔥 Low Stock</span>
           <span id="fan-fav-badge" class="font-heading text-[10px] uppercase tracking-widest text-vv-orange border border-vv-orange px-2.5 py-1 hidden">⭐ Fan Favorite</span>
         </div>
 
-        {%- comment -%} Add to Cart Form {%- endcomment -%}
-        {%- form 'product', product, id: 'product-form', data-product-id: product.id -%}
-          <input type="hidden" name="id" id="selected-variant-id" value="{{ current_variant.id }}">
-
-          {%- comment -%} Option selectors (Size, Style, etc.) {%- endcomment -%}
-          {%- unless product.has_only_default_variant -%}
-            {%- for option in product.options_with_values -%}
-              <div class="mb-5" data-option-index="{{ forloop.index0 }}">
-                <div class="flex items-center justify-between mb-2">
-                  <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold">
-                    {{ option.name }}
-                    <span class="text-vv-gray-mid font-normal" id="selected-{{ option.name | handleize }}-label">
-                      {%- if option.name == 'Size' -%}— Select a size{%- endif -%}
-                    </span>
-                  </p>
-                  {%- if option.name == 'Size' -%}
-                    <button type="button" id="size-guide-btn" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors underline">Size Guide</button>
-                  {%- endif -%}
-                </div>
-                <div class="flex flex-wrap gap-2">
+        {%- comment -%} ── Color Swatches ─────────────────────────────────────────── {%- endcomment -%}
+        <div class="mb-5">
+          <div class="flex items-center justify-between mb-2">
+            <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold">
+              Color
+              <span class="text-vv-gray-mid font-normal" id="selected-color-label"></span>
+            </p>
+          </div>
+          <div class="flex gap-2 flex-wrap" id="color-swatches">
+            {%- if has_color_option -%}
+              {%- comment -%} Real color variants from product {%- endcomment -%}
+              {%- for option in product.options_with_values -%}
+                {%- if option.name == 'Color' or option.name == 'color' -%}
                   {%- for value in option.values -%}
                     {%- liquid
-                      assign variant_for_value = nil
-                      for variant in product.variants
-                        if variant.option1 == value or variant.option2 == value or variant.option3 == value
-                          assign variant_for_value = variant
-                          break
-                        endif
-                      endfor
-                      assign is_available = false
-                      if variant_for_value and variant_for_value.available
-                        assign is_available = true
+                      assign color_hex = '#cccccc'
+                      assign color_lower = value | downcase
+                      if color_lower == 'black'
+                        assign color_hex = '#1c1c1c'
+                      elsif color_lower == 'white'
+                        assign color_hex = '#ffffff'
+                      elsif color_lower == 'red'
+                        assign color_hex = '#dc2626'
+                      elsif color_lower == 'grey' or color_lower == 'gray'
+                        assign color_hex = '#9ca3af'
+                      elsif color_lower == 'navy' or color_lower == 'navy blue'
+                        assign color_hex = '#1e3a5f'
+                      elsif color_lower == 'orange'
+                        assign color_hex = '#e8622a'
                       endif
                     -%}
                     <button
-                      type="button"
-                      class="vv-option-btn font-heading text-[11px] uppercase tracking-wide px-4 py-2.5 border transition-all {% if is_available %}border-gray-200 text-vv-black hover:border-vv-black{% else %}border-gray-100 text-gray-300 cursor-not-allowed{% endif %}"
+                      class="vv-color-swatch w-9 h-9 rounded-full border-2 border-transparent ring-1 ring-gray-200 transition-all hover:scale-110"
+                      data-color="{{ value | escape }}"
                       data-option-name="{{ option.name | escape }}"
-                      data-option-value="{{ value | escape }}"
                       data-option-index="{{ forloop.parentloop.index0 }}"
-                      {% unless is_available %}disabled{% endunless %}
-                    >
-                      {{ value }}
-                    </button>
+                      style="background-color:{{ color_hex }}; {% if color_lower == 'white' %}border-color:#e5e7eb;{% endif %}"
+                      title="{{ value }}"
+                      aria-label="{{ value }}"
+                    ></button>
                   {%- endfor -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Placeholder swatches — no color variants yet {%- endcomment -%}
+              {%- assign placeholder_colors = 'Black,Red,White,Grey' | split: ',' -%}
+              {%- assign placeholder_hexes  = '#1c1c1c,#dc2626,#ffffff,#9ca3af' | split: ',' -%}
+              {%- for pc in placeholder_colors -%}
+                <button
+                  class="vv-color-swatch-placeholder w-9 h-9 rounded-full border-2 border-transparent ring-1 ring-gray-200 transition-all opacity-50 cursor-default"
+                  style="background-color:{{ placeholder_hexes[forloop.index0] }}; {% if pc == 'White' %}border-color:#e5e7eb;{% endif %}"
+                  title="{{ pc }} — coming soon"
+                  aria-label="{{ pc }} (coming soon)"
+                  disabled
+                ></button>
+              {%- endfor -%}
+              <span class="font-body text-xs text-vv-gray-mid self-center">More colors coming soon</span>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment -%} ── Add to Cart Form ──────────────────────────────────────── {%- endcomment -%}
+        {%- form 'product', product, id: 'product-form', data-product-id: product.id -%}
+          <input type="hidden" name="id" id="selected-variant-id" value="{{ current_variant.id }}">
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              {%- comment -%} Skip Color option — handled by swatches above {%- endcomment -%}
+              {%- unless option.name == 'Color' or option.name == 'color' -%}
+                <div class="mb-5" data-option-index="{{ forloop.index0 }}">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold">
+                      {{ option.name }}
+                      <span class="text-vv-gray-mid font-normal" id="selected-{{ option.name | handleize }}-label">
+                        {%- if option.name == 'Size' -%}— Select a size{%- endif -%}
+                      </span>
+                    </p>
+                    {%- if option.name == 'Size' -%}
+                      <button type="button" id="size-guide-btn" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors underline">Size Guide</button>
+                    {%- endif -%}
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    {%- for value in option.values -%}
+                      {%- liquid
+                        assign is_available = false
+                        for variant in product.variants
+                          if variant.option1 == value or variant.option2 == value or variant.option3 == value
+                            if variant.available
+                              assign is_available = true
+                            endif
+                            break
+                          endif
+                        endfor
+                      -%}
+                      <button
+                        type="button"
+                        class="vv-option-btn font-heading text-[11px] uppercase tracking-wide px-4 py-2.5 border transition-all {% if is_available %}border-gray-200 text-vv-black hover:border-vv-black{% else %}border-gray-100 text-gray-300 cursor-not-allowed{% endif %}"
+                        data-option-name="{{ option.name | escape }}"
+                        data-option-value="{{ value | escape }}"
+                        data-option-index="{{ forloop.parentloop.index0 }}"
+                        {% unless is_available %}disabled{% endunless %}
+                      >{{ value }}</button>
+                    {%- endfor -%}
+                  </div>
                 </div>
-              </div>
+              {%- endunless -%}
             {%- endfor -%}
           {%- endunless -%}
 
-          {%- comment -%} Validation error {%- endcomment -%}
           <p id="option-error" class="font-heading text-[10px] uppercase tracking-widest text-red-500 mb-3 hidden">
             Please select all options before adding to bag.
           </p>
 
-          {%- comment -%} Add to Cart button {%- endcomment -%}
           <button
             type="submit"
             id="add-to-cart-btn"
@@ -159,9 +258,7 @@
         {%- if product.description != blank -%}
           <div class="mt-6 pt-6 border-t border-gray-100">
             <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold mb-3">Details</p>
-            <div class="font-body text-sm text-vv-gray-mid leading-relaxed prose">
-              {{ product.description }}
-            </div>
+            <div class="font-body text-sm text-vv-gray-mid leading-relaxed prose">{{ product.description }}</div>
           </div>
         {%- endif -%}
 
@@ -176,7 +273,162 @@
             {%- endif -%}
           {%- endfor -%}
         </div>
+
+      </div>{%- comment -%} end right col {%- endcomment -%}
+    </div>
+  </div>
+</div>
+
+{%- comment -%} ── You Might Also Like ────────────────────────────────────────── {%- endcomment -%}
+{%- assign rec_collection = product.collections.first -%}
+{%- if rec_collection and rec_collection.products_count > 1 -%}
+  <div class="border-t border-gray-100 py-14">
+    <div class="max-w-screen-xl mx-auto px-5 sm:px-10">
+      <h2 class="font-heading font-black text-xl uppercase text-vv-black mb-8 vv-fade-up-section">You Might Also Like</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {%- assign rec_count = 0 -%}
+        {%- for rec_product in rec_collection.products -%}
+          {%- unless rec_product.id == product.id -%}
+            {%- if rec_count < 4 -%}
+              <div class="vv-fade-up">
+                {%- render 'product-card', product: rec_product -%}
+                {%- comment -%} Quick size + add button {%- endcomment -%}
+                {%- assign rec_first_variant = rec_product.first_available_variant -%}
+                {%- if rec_product.variants.size > 1 and rec_product.has_only_default_variant == false -%}
+                  <div class="mt-2">
+                    <div class="flex gap-1 flex-wrap mb-1.5">
+                      {%- for v in rec_product.variants limit: 6 -%}
+                        {%- if v.available -%}
+                          <button
+                            class="vv-rec-size-btn font-heading text-[9px] uppercase tracking-wide px-2 py-1 border border-gray-200 text-vv-black hover:border-vv-black transition-all"
+                            data-variant-id="{{ v.id }}"
+                            data-product-id="{{ rec_product.id }}"
+                          >{{ v.title | split: ' / ' | first }}</button>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                    <button
+                      class="vv-rec-add-btn w-full font-heading text-[10px] uppercase tracking-widest border border-vv-black text-vv-black py-2 hover:bg-vv-black hover:text-white transition-colors duration-200 hidden"
+                      data-variant-id=""
+                    >Add to Bag</button>
+                  </div>
+                {%- else -%}
+                  <button
+                    class="vv-quick-add-btn w-full mt-2 font-heading text-[10px] uppercase tracking-widest border border-vv-black text-vv-black py-2 hover:bg-vv-black hover:text-white transition-colors duration-200"
+                    data-variant-id="{{ rec_first_variant.id }}"
+                    data-product-title="{{ rec_product.title | escape }}"
+                  >Add to Bag</button>
+                {%- endif -%}
+              </div>
+              {%- assign rec_count = rec_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
       </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment -%} ── Reviews Section ───────────────────────────────────────────── {%- endcomment -%}
+<div id="product-reviews" class="border-t border-gray-100 py-14">
+  <div class="max-w-screen-xl mx-auto px-5 sm:px-10">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-heading font-black text-xl uppercase text-vv-black vv-fade-up-section">Customer Reviews</h2>
+      <button
+        id="write-review-btn"
+        class="font-heading text-xs uppercase tracking-widest border border-vv-black text-vv-black px-6 py-2.5 hover:bg-vv-black hover:text-white transition-colors duration-200"
+      >Write a Review</button>
+    </div>
+
+    {%- comment -%} Summary bar {%- endcomment -%}
+    {%- if rating_val > 0 -%}
+      <div class="flex items-center gap-6 mb-8 pb-8 border-b border-gray-100">
+        <div class="text-center">
+          <p class="font-heading font-black text-5xl text-vv-black">{{ product.metafields.reviews.rating.value }}</p>
+          <div class="flex justify-center gap-0.5 my-1">
+            {%- for i in (1..5) -%}
+              <span style="font-size:14px; color:{%- if i <= rating_val -%}#e8622a{%- else -%}#e5e7eb{%- endif -%};">★</span>
+            {%- endfor -%}
+          </div>
+          <p class="font-body text-xs text-vv-gray-mid">{{ rating_count }} review{%- if rating_count != 1 -%}s{%- endif -%}</p>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Existing reviews from Product Reviews app {%- endcomment -%}
+    <div id="reviews-list">
+      {%- if product.metafields.reviews.rating.value != blank -%}
+        {%- comment -%}
+          The Shopify Product Reviews app (free) populates these metafields.
+          Without the app installed, this block won't render — graceful degradation.
+        {%- endcomment -%}
+        <p class="font-body text-sm text-vv-gray-mid">
+          Install the free Shopify <strong>Product Reviews</strong> app to display customer reviews here.
+        </p>
+      {%- else -%}
+        <div id="reviews-empty-state" class="text-center py-10">
+          <p class="font-heading text-sm uppercase tracking-widest text-vv-gray-mid mb-2">No reviews yet</p>
+          <p class="font-body text-sm text-vv-gray-mid">Be the first to share your experience with this product.</p>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Write a Review Form {%- endcomment -%}
+    <div id="review-form-wrap" class="hidden mt-8 pt-8 border-t border-gray-100">
+      <h3 class="font-heading font-black text-base uppercase text-vv-black mb-6">Write a Review</h3>
+
+      {%- form 'contact', id: 'product-review-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="bg-green-50 border border-green-200 text-green-700 font-body text-sm px-4 py-3 mb-4">
+            Thank you for your review! It will appear after moderation.
+          </div>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[tags]" value="product-review">
+        <input type="hidden" name="contact[product_title]" value="{{ product.title | escape }}">
+        <input type="hidden" name="contact[product_id]" value="{{ product.id }}">
+        <input type="hidden" name="contact[body_prefix]" id="review-rating-field" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1">Name *</label>
+            <input type="text" name="contact[name]" required
+              class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors">
+          </div>
+          <div>
+            <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1">Email *</label>
+            <input type="email" name="contact[email]" required
+              class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors">
+          </div>
+        </div>
+
+        {%- comment -%} Star rating selector {%- endcomment -%}
+        <div class="mb-4">
+          <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-2">Your Rating *</label>
+          <div class="flex gap-1" id="review-star-picker">
+            {%- for i in (1..5) -%}
+              <button type="button" class="vv-review-star text-3xl transition-colors text-gray-300 hover:text-vv-orange" data-rating="{{ i }}" aria-label="{{ i }} star{%- if i > 1 -%}s{%- endif -%}">★</button>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1">Review Title</label>
+          <input type="text" name="contact[review_title]" placeholder="Sum it up in a few words"
+            class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors">
+        </div>
+
+        <div class="mb-5">
+          <label class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid block mb-1">Your Review *</label>
+          <textarea name="contact[body]" required rows="4" placeholder="Tell others about your experience..."
+            class="w-full border border-gray-300 px-4 py-3 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors resize-none"></textarea>
+        </div>
+
+        <button type="submit"
+          class="bg-vv-black text-white font-heading text-xs font-bold uppercase tracking-widest2 px-10 py-4 hover:bg-vv-orange transition-colors duration-200">
+          Submit Review
+        </button>
+      {%- endform -%}
     </div>
   </div>
 </div>

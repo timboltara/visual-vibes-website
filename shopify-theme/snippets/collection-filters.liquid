@@ -1,5 +1,5 @@
 {%- comment -%}
-  Client-side filter sidebar — identical to the React ShopFilterPage sidebar.
+  Client-side filter sidebar.
   JS in theme.js reads these inputs and shows/hides .vv-product-item elements.
 {%- endcomment -%}
 
@@ -11,7 +11,7 @@
       Sort By <span class="vv-chevron">▲</span>
     </button>
     <div class="vv-filter-body pb-4">
-      {%- assign sort_options = 'Featured,price-asc,price-desc,newest' | split: ',' -%}
+      {%- assign sort_options = 'featured,price-asc,price-desc,newest' | split: ',' -%}
       {%- assign sort_labels = 'Featured,Price: Low to High,Price: High to Low,Newest First' | split: ',' -%}
       {%- for opt in sort_options -%}
         <button class="vv-sort-btn flex items-center gap-2.5 w-full text-left py-1" data-sort="{{ opt }}">
@@ -24,14 +24,52 @@
     </div>
   </div>
 
-  {%- comment -%} Category (product type) {%- endcomment -%}
+  {%- comment -%} Category with T-Shirt sub-categories {%- endcomment -%}
   <div class="border-b border-gray-100">
     <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
       Category <span class="vv-chevron">▲</span>
     </button>
     <div class="vv-filter-body pb-4">
-      {%- assign categories = 'hoodies,tshirts,sweaters,jerseys,jackets' | split: ',' -%}
-      {%- assign cat_labels = 'Hoodies,T-Shirts,Sweaters,Jerseys,Jackets' | split: ',' -%}
+
+      {%- comment -%} T-Shirts with expandable sub-categories {%- endcomment -%}
+      <div class="vv-cat-parent">
+        <div class="flex items-center justify-between">
+          <button class="vv-cat-btn flex items-center gap-2.5 flex-1 text-left py-1" data-cat="tshirts">
+            <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+              <span class="text-white font-bold hidden vv-check" style="font-size:9px;">✓</span>
+            </div>
+            <span class="font-body text-sm text-vv-black">T-Shirts</span>
+          </button>
+          <button class="vv-subcat-toggle font-heading text-[9px] text-vv-gray-mid hover:text-vv-black transition-colors px-1 py-1" aria-expanded="false" data-parent="tshirts">
+            <span class="vv-subcat-arrow">▶</span>
+          </button>
+        </div>
+        {%- comment -%} T-Shirt sub-categories {%- endcomment -%}
+        <div class="vv-subcat-body hidden pl-6 pb-1">
+          <button class="vv-subcat-btn flex items-center gap-2.5 w-full text-left py-1" data-subcat="tshirts-classic">
+            <div class="w-3 h-3 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+              <span class="text-white font-bold hidden vv-check" style="font-size:8px;">✓</span>
+            </div>
+            <span class="font-body text-xs text-vv-gray-mid">Classic Fit</span>
+          </button>
+          <button class="vv-subcat-btn flex items-center gap-2.5 w-full text-left py-1" data-subcat="tshirts-heavyweight">
+            <div class="w-3 h-3 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+              <span class="text-white font-bold hidden vv-check" style="font-size:8px;">✓</span>
+            </div>
+            <span class="font-body text-xs text-vv-gray-mid">Heavyweight</span>
+          </button>
+          <button class="vv-subcat-btn flex items-center gap-2.5 w-full text-left py-1" data-subcat="tshirts-oversized">
+            <div class="w-3 h-3 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+              <span class="text-white font-bold hidden vv-check" style="font-size:8px;">✓</span>
+            </div>
+            <span class="font-body text-xs text-vv-gray-mid">Oversized</span>
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} Other top-level categories {%- endcomment -%}
+      {%- assign categories = 'hoodies,sweaters,jerseys,jackets,tank-tops,pants,shorts,swimwear,hawaiian-shirts' | split: ',' -%}
+      {%- assign cat_labels  = 'Hoodies,Sweaters,Jerseys,Jackets,Tank Tops,Pants,Shorts,Swimwear,Hawaiian Shirts' | split: ',' -%}
       {%- for cat in categories -%}
         <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="{{ cat }}">
           <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
@@ -40,6 +78,7 @@
           <span class="font-body text-sm text-vv-black">{{ cat_labels[forloop.index0] }}</span>
         </button>
       {%- endfor -%}
+
     </div>
   </div>
 
@@ -88,8 +127,8 @@
     <div class="vv-filter-body pb-4 hidden">
       {%- assign price_ranges = 'under25,25to50,50to75,over75' | split: ',' -%}
       {%- assign price_labels = 'Under $25,$25 – $50,$50 – $75,Over $75' | split: ',' -%}
-      {%- assign price_mins = '0,2500,5000,7500' | split: ',' -%}
-      {%- assign price_maxs = '2499,4999,7499,99999' | split: ',' -%}
+      {%- assign price_mins   = '0,2500,5000,7500' | split: ',' -%}
+      {%- assign price_maxs   = '2499,4999,7499,99999' | split: ',' -%}
       {%- for pr in price_ranges -%}
         <button class="vv-price-btn flex items-center gap-2.5 w-full text-left py-1" data-price-min="{{ price_mins[forloop.index0] }}" data-price-max="{{ price_maxs[forloop.index0] }}">
           <div class="w-3.5 h-3.5 rounded-full border border-gray-300 flex-shrink-0 flex items-center justify-center vv-radio">
@@ -101,7 +140,7 @@
     </div>
   </div>
 
-  {%- comment -%} Reset button (shown when filters active) {%- endcomment -%}
+  {%- comment -%} Reset button {%- endcomment -%}
   <div class="pt-4 hidden" id="reset-btn-wrap">
     <button id="vv-reset-filters" class="w-full font-heading text-[10px] uppercase tracking-widest text-white bg-vv-black py-2.5 hover:bg-vv-orange transition-colors">
       Reset All Filters
