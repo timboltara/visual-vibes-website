@@ -18,6 +18,13 @@ const IMAGE_ENHANCE = "contrast(1.08) brightness(1.04) saturate(1.2)";
 
 const FITS = ["Classic", "Oversized", "Heavyweight"] as const;
 
+const COLORS = [
+  { label: "Black", hex: "#1c1c1c" },
+  { label: "White", hex: "#ffffff" },
+  { label: "Grey", hex: "#9ca3af" },
+  { label: "Red", hex: "#dc2626" },
+] as const;
+
 export default function ProductPageClient({
   product,
   related,
@@ -27,9 +34,14 @@ export default function ProductPageClient({
 }) {
   const [selectedFit, setSelectedFit] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string>("Black");
   const [fitError, setFitError] = useState(false);
   const [sizeError, setSizeError] = useState(false);
   const [toast, setToast] = useState(false);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewText, setReviewText] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviews, setReviews] = useState<{ name: string; text: string; rating: number }[]>([]);
   const { addItem, closeDrawer } = useCart();
   const router = useRouter();
 
@@ -128,6 +140,28 @@ export default function ProductPageClient({
           <p className="font-body text-sm text-vv-gray-mid leading-relaxed">
             {product.description}
           </p>
+
+          {/* ── Color swatches ─────────────────────────────────── */}
+          <div>
+            <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold mb-3">
+              Color — <span className="text-vv-gray-mid font-normal">{selectedColor}</span>
+            </p>
+            <div className="flex gap-2">
+              {COLORS.map((c) => (
+                <button
+                  key={c.label}
+                  onClick={() => setSelectedColor(c.label)}
+                  title={c.label}
+                  className={`w-8 h-8 rounded-full transition-all duration-150 ${
+                    selectedColor === c.label
+                      ? "ring-2 ring-offset-2 ring-vv-black scale-110"
+                      : "ring-1 ring-gray-200 hover:ring-gray-400"
+                  } ${c.hex === "#ffffff" ? "border border-gray-200" : ""}`}
+                  style={{ backgroundColor: c.hex }}
+                />
+              ))}
+            </div>
+          </div>
 
           {/* ── Fit selector ───────────────────────────────────── */}
           <div>
@@ -306,6 +340,107 @@ export default function ProductPageClient({
           </div>
         </section>
       )}
+
+      {/* ── Reviews ────────────────────────────────────────────── */}
+      <section className="border-t border-gray-100 py-14">
+        <div className="max-w-screen-xl mx-auto px-5 sm:px-10">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="font-heading font-semibold text-sm uppercase tracking-widest2 text-vv-black">
+              Customer Reviews
+            </h2>
+            <div className="flex items-center gap-1.5">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <span key={s} className="text-vv-orange text-base">★</span>
+              ))}
+              <span className="font-heading text-xs text-vv-gray-mid ml-2 uppercase tracking-widest">
+                {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+              </span>
+            </div>
+          </div>
+
+          {/* Existing reviews */}
+          {reviews.length > 0 ? (
+            <div className="flex flex-col gap-6 mb-10">
+              {reviews.map((r, i) => (
+                <div key={i} className="border-b border-gray-100 pb-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <span key={s} className={s <= r.rating ? "text-vv-orange" : "text-gray-200"}>★</span>
+                    ))}
+                    <span className="font-heading text-xs uppercase tracking-widest text-vv-black ml-2">{r.name}</span>
+                  </div>
+                  <p className="font-body text-sm text-vv-gray-mid leading-relaxed">{r.text}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="font-body text-sm text-vv-gray-mid mb-8">
+              No reviews yet — be the first to share your thoughts!
+            </p>
+          )}
+
+          {/* Write a review form */}
+          <div className="border border-gray-100 p-6 max-w-lg">
+            <p className="font-heading text-xs uppercase tracking-widest text-vv-black font-semibold mb-5">
+              Write a Review
+            </p>
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid mb-1.5 block">
+                  Your Rating
+                </label>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setReviewRating(s)}
+                      className={`text-2xl transition-colors ${s <= reviewRating ? "text-vv-orange" : "text-gray-200 hover:text-vv-orange"}`}
+                    >
+                      ★
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid mb-1.5 block">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  value={reviewName}
+                  onChange={(e) => setReviewName(e.target.value)}
+                  placeholder="Your name"
+                  className="w-full border border-gray-200 px-3 py-2.5 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors"
+                />
+              </div>
+              <div>
+                <label className="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid mb-1.5 block">
+                  Review
+                </label>
+                <textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="Share your experience..."
+                  rows={4}
+                  className="w-full border border-gray-200 px-3 py-2.5 font-body text-sm text-vv-black focus:outline-none focus:border-vv-black transition-colors resize-none"
+                />
+              </div>
+              <button
+                onClick={() => {
+                  if (!reviewName.trim() || !reviewText.trim()) return;
+                  setReviews((prev) => [...prev, { name: reviewName.trim(), text: reviewText.trim(), rating: reviewRating }]);
+                  setReviewName("");
+                  setReviewText("");
+                  setReviewRating(5);
+                }}
+                className="font-heading text-xs uppercase tracking-widest bg-vv-black text-white py-3 px-8 hover:bg-vv-orange transition-colors self-start"
+              >
+                Submit Review
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── Toast ──────────────────────────────────────────────── */}
       <AnimatePresence>

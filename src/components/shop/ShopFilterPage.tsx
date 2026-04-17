@@ -20,8 +20,19 @@ const CATEGORIES = [
   { label: "Hoodies", value: "hoodies" },
   { label: "T-Shirts", value: "tshirts" },
   { label: "Sweaters", value: "sweaters" },
+  { label: "Tank Tops", value: "tank-tops" },
   { label: "Jerseys", value: "jerseys" },
   { label: "Jackets", value: "jackets" },
+  { label: "Shorts", value: "shorts" },
+  { label: "Pants", value: "pants" },
+  { label: "Swimwear", value: "swimwear" },
+  { label: "Hawaiian Shirts", value: "hawaiian-shirts" },
+];
+
+const TSHIRT_SUBCATS = [
+  { label: "Classic Fit", value: "classic" },
+  { label: "Heavyweight", value: "heavyweight" },
+  { label: "Oversized", value: "oversized" },
 ];
 
 const ALL_SIZES = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
@@ -37,6 +48,7 @@ type SortOption = "featured" | "price-asc" | "price-desc" | "newest";
 
 interface Filters {
   categories: string[];
+  tshirtSubcats: string[];
   gender: "all" | "mens" | "womens";
   sizes: string[];
   priceRange: string | null;
@@ -45,6 +57,7 @@ interface Filters {
 
 const defaultFilters: Filters = {
   categories: [],
+  tshirtSubcats: [],
   gender: "all",
   sizes: [],
   priceRange: null,
@@ -54,6 +67,7 @@ const defaultFilters: Filters = {
 function countActiveFilters(f: Filters) {
   return (
     f.categories.length +
+    f.tshirtSubcats.length +
     (f.gender !== "all" ? 1 : 0) +
     f.sizes.length +
     (f.priceRange ? 1 : 0)
@@ -200,26 +214,60 @@ export default function ShopFilterPage({
       <FilterSection title="Category">
         <div className="flex flex-col gap-1">
           {CATEGORIES.map((c) => (
-            <button
-              key={c.value}
-              onClick={() => toggleCategory(c.value)}
-              className="flex items-center gap-2.5 w-full text-left py-1"
-            >
-              <div
-                className={`w-3.5 h-3.5 border flex-shrink-0 flex items-center justify-center ${
-                  filters.categories.includes(c.value)
-                    ? "border-vv-black bg-vv-black"
-                    : "border-gray-300"
-                }`}
+            <div key={c.value}>
+              <button
+                onClick={() => toggleCategory(c.value)}
+                className="flex items-center gap-2.5 w-full text-left py-1"
               >
-                {filters.categories.includes(c.value) && (
-                  <span className="text-white font-bold" style={{ fontSize: "9px" }}>
-                    ✓
-                  </span>
-                )}
-              </div>
-              <span className="font-body text-sm text-vv-black">{c.label}</span>
-            </button>
+                <div
+                  className={`w-3.5 h-3.5 border flex-shrink-0 flex items-center justify-center ${
+                    filters.categories.includes(c.value)
+                      ? "border-vv-black bg-vv-black"
+                      : "border-gray-300"
+                  }`}
+                >
+                  {filters.categories.includes(c.value) && (
+                    <span className="text-white font-bold" style={{ fontSize: "9px" }}>
+                      ✓
+                    </span>
+                  )}
+                </div>
+                <span className="font-body text-sm text-vv-black">{c.label}</span>
+              </button>
+
+              {/* T-Shirts sub-categories */}
+              {c.value === "tshirts" && filters.categories.includes("tshirts") && (
+                <div className="pl-6 mt-1 flex flex-col gap-1">
+                  {TSHIRT_SUBCATS.map((sub) => (
+                    <button
+                      key={sub.value}
+                      onClick={() =>
+                        setFilters((f) => ({
+                          ...f,
+                          tshirtSubcats: f.tshirtSubcats.includes(sub.value)
+                            ? f.tshirtSubcats.filter((s) => s !== sub.value)
+                            : [...f.tshirtSubcats, sub.value],
+                        }))
+                      }
+                      className="flex items-center gap-2 w-full text-left py-0.5"
+                    >
+                      <div
+                        className={`w-3 h-3 border flex-shrink-0 flex items-center justify-center ${
+                          filters.tshirtSubcats.includes(sub.value)
+                            ? "border-vv-orange bg-vv-orange"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        {filters.tshirtSubcats.includes(sub.value) && (
+                          <span className="text-white font-bold" style={{ fontSize: "8px" }}>✓</span>
+                        )}
+                      </div>
+                      <span className="font-body text-xs text-vv-gray-mid">{sub.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </FilterSection>

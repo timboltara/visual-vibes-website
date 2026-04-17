@@ -2,7 +2,7 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  category: "hoodies" | "tshirts" | "sweaters" | "jerseys" | "jackets";
+  category: "hoodies" | "tshirts" | "sweaters" | "jerseys" | "jackets" | "tank-tops" | "shorts" | "pants" | "swimwear" | "hawaiian-shirts";
   collection: string;
   image: string;
   tag?: "New" | "Best Seller" | "Limited";
