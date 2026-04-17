@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -178,13 +178,11 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <Image
-              src="/visual-vibes-logo-transparent.png"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo-transparent.png`}
               alt="Visual Vibes"
-              width={180}
-              height={44}
               style={{ height: "44px", width: "auto", objectFit: "contain" }}
-              priority
             />
           </Link>
 
@@ -323,11 +321,10 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <Link href="/" onClick={() => setMenuOpen(false)}>
-                  <Image
-                    src="/visual-vibes-logo-transparent.png"
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo-transparent.png`}
                     alt="Visual Vibes"
-                    width={140}
-                    height={36}
                     style={{ height: "36px", width: "auto", objectFit: "contain" }}
                   />
                 </Link>

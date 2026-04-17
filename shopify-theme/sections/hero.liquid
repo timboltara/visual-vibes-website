@@ -1,4 +1,4 @@
-<section id="vv-hero" class="relative w-full overflow-hidden" style="height: calc(100vh - 88px);">
+<section id="vv-hero" class="relative w-full overflow-hidden flex flex-col" style="height: calc(100vh - 88px); min-height: 520px;">
 
   {%- comment -%} ── Video Background (future-ready) ─────────────────── {%- endcomment -%}
   {%- if section.settings.video_url != blank -%}
@@ -27,27 +27,35 @@
     <div class="absolute inset-0" style="opacity:0.25; background-image: radial-gradient(ellipse at 25% 65%, {{ settings.color_accent }} 0%, transparent 50%), radial-gradient(ellipse at 78% 20%, #bf4f1e 0%, transparent 45%);"></div>
   {%- endif -%}
 
-  {%- comment -%} ── Content ──────────────────────────────────────────── {%- endcomment -%}
-  <div class="absolute bottom-16 left-0 right-0 flex flex-col items-center gap-6 px-6 text-center vv-fade-up">
+  {%- comment -%} ── Content — spread top/center/bottom ────────────────── {%- endcomment -%}
+  <div class="relative z-10 flex flex-col items-center justify-between h-full px-6 py-8 text-center vv-fade-up">
+
+    {%- comment -%} Top: eyebrow label {%- endcomment -%}
     {%- if section.settings.eyebrow != blank -%}
       <p class="font-heading text-vv-orange text-xs tracking-widest3 uppercase">{{ section.settings.eyebrow }}</p>
+    {%- else -%}
+      <span></span>
     {%- endif -%}
 
-    <h1
-      class="font-heading font-black text-white uppercase leading-none"
-      style="font-size: clamp(3.5rem, 10vw, 9rem); letter-spacing: -0.01em;"
-    >
-      {{ section.settings.heading_line1 }}
-      <br>
-      <span class="font-heading font-black" style="-webkit-text-stroke: 2px white; color: transparent; font-size: inherit; letter-spacing: inherit; line-height: inherit;">
-        {{ section.settings.heading_line2 }}
-      </span>
-    </h1>
+    {%- comment -%} Center: heading + subheading {%- endcomment -%}
+    <div class="flex flex-col items-center gap-4">
+      <h1
+        class="font-heading font-black text-white uppercase leading-tight"
+        style="font-size: clamp(2.8rem, 8vw, 7.5rem); letter-spacing: -0.01em;"
+      >
+        {{ section.settings.heading_line1 }}
+        <br>
+        <span class="font-heading font-black" style="-webkit-text-stroke: 2px white; -webkit-text-fill-color: transparent; color: transparent; font-size: inherit; letter-spacing: inherit;">
+          {{ section.settings.heading_line2 }}
+        </span>
+      </h1>
 
-    {%- if section.settings.subheading != blank -%}
-      <p class="font-body text-white/60 text-sm max-w-sm">{{ section.settings.subheading }}</p>
-    {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="font-body text-white/60 text-sm max-w-sm">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
 
+    {%- comment -%} Bottom: CTAs {%- endcomment -%}
     <div class="flex gap-3 flex-wrap justify-center">
       {%- if section.settings.btn1_label != blank -%}
         <a

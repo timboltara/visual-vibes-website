@@ -7,7 +7,7 @@ import EmailSignup from "@/components/home/EmailSignup";
 
 export default function HomePage() {
   return (
-    <div className="pt-[129px]">
+    <div className="pt-[88px] md:pt-[129px]">
       <HeroSection />
       <MarqueeTicker />
       <FeaturedProducts />
