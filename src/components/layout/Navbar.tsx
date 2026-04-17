@@ -75,16 +75,13 @@ export default function Navbar() {
           </button>
 
           {/* Center: Logo */}
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+              src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo-transparent.png`}
               alt="Visual Vibes"
-              style={{ width: "40px", height: "40px", objectFit: "contain" }}
+              style={{ height: "44px", width: "auto", objectFit: "contain" }}
             />
-            <span className="font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black">
-              Visual Vibes
-            </span>
           </Link>
 
           {/* Right: icons */}
@@ -161,16 +158,13 @@ export default function Navbar() {
               className="fixed top-0 left-0 bottom-0 w-72 bg-white z-50 flex flex-col md:hidden shadow-2xl"
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
+                <Link href="/" onClick={() => setMenuOpen(false)}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo.png`}
+                    src={`${process.env.NEXT_PUBLIC_BASEPATH || ""}/visual-vibes-logo-transparent.png`}
                     alt="Visual Vibes"
-                    style={{ width: "36px", height: "36px", objectFit: "contain" }}
+                    style={{ height: "36px", width: "auto", objectFit: "contain" }}
                   />
-                  <span className="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">
-                    Visual Vibes
-                  </span>
                 </Link>
                 <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
                   <FiX size={22} className="text-vv-black" />

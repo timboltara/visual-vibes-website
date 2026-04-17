@@ -38,15 +38,12 @@
     </button>
 
     {%- comment -%} Center: Logo {%- endcomment -%}
-    <a href="{{ routes.root_url }}" class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5">
-      <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black flex items-center justify-center p-0.5">
-        {%- if settings.logo -%}
-          {{ settings.logo | image_url: width: 80 | image_tag: loading: 'eager', width: 36, height: 36, style: 'width:36px;height:36px;object-fit:contain;' }}
-        {%- else -%}
-          <img src="{{ 'visual-vibes-logo.png' | asset_url }}" alt="{{ shop.name }}" style="width:36px;height:36px;object-fit:contain;">
-        {%- endif -%}
-      </div>
-      <span class="font-heading font-semibold text-xl sm:text-2xl tracking-widest2 uppercase text-vv-black">{{ shop.name }}</span>
+    <a href="{{ routes.root_url }}" class="absolute left-1/2 -translate-x-1/2">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 300 | image_tag: loading: 'eager', style: 'height:44px;width:auto;object-fit:contain;' }}
+      {%- else -%}
+        <img src="{{ 'visual-vibes-logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" style="height:44px;width:auto;object-fit:contain;">
+      {%- endif -%}
     </a>
 
     {%- comment -%} Right: action icons {%- endcomment -%}
@@ -276,15 +273,12 @@
   aria-modal="true"
 >
   <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-    <a href="{{ routes.root_url }}" class="flex items-center gap-2" id="mobile-menu-logo-link">
-      <div class="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 ring-1 ring-gray-200 bg-vv-black flex items-center justify-center p-0.5">
-        {%- if settings.logo -%}
-          {{ settings.logo | image_url: width: 64 | image_tag: width: 32, height: 32, style: 'width:32px;height:32px;object-fit:contain;' }}
-        {%- else -%}
-          <img src="{{ 'visual-vibes-logo.png' | asset_url }}" alt="{{ shop.name }}" style="width:32px;height:32px;object-fit:contain;">
-        {%- endif -%}
-      </div>
-      <span class="font-heading font-semibold text-lg uppercase tracking-widest2 text-vv-black">{{ shop.name }}</span>
+    <a href="{{ routes.root_url }}" id="mobile-menu-logo-link">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 200 | image_tag: style: 'height:36px;width:auto;object-fit:contain;' }}
+      {%- else -%}
+        <img src="{{ 'visual-vibes-logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" style="height:36px;width:auto;object-fit:contain;">
+      {%- endif -%}
     </a>
     <button id="mobile-menu-close" aria-label="Close menu">
       {%- render 'icon-x' -%}
