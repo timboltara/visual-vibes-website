@@ -6,24 +6,22 @@ import { motion } from "framer-motion";
 const container = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.14, delayChildren: 0.15 },
   },
 };
 
 const easing: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: easing } },
+  hidden: { opacity: 0, y: 32 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easing } },
 };
-
-const BASEPATH = process.env.NEXT_PUBLIC_BASEPATH || "";
 
 export default function HeroSection() {
   return (
     <section
       className="relative w-full overflow-hidden flex flex-col h-[calc(100vh-88px)] md:h-[calc(100vh-129px)]"
-      style={{ minHeight: "520px" }}
+      style={{ minHeight: "500px" }}
     >
       {/* Full-bleed background */}
       <div className="absolute inset-0 bg-gradient-to-br from-vv-black via-gray-900 to-neutral-900" />
@@ -37,14 +35,14 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Content — spread top-to-bottom */}
+      {/* Content — spread top / center / bottom so buttons are always visible */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 flex flex-col items-center justify-between h-full px-6 py-8 sm:py-10 text-center"
+        className="relative z-10 flex flex-col items-center justify-between h-full px-6 py-10 sm:py-14 text-center"
       >
-        {/* ── Top: label ─────────────────────────────── */}
+        {/* ── Top: eyebrow ────────────────────────── */}
         <motion.p
           variants={fadeUp}
           className="font-heading text-vv-orange text-xs tracking-widest3 uppercase"
@@ -52,26 +50,12 @@ export default function HeroSection() {
           On Fire For Jesus
         </motion.p>
 
-        {/* ── Center: logo + heading ──────────────────── */}
-        <div className="flex flex-col items-center gap-3 sm:gap-5">
-          {/* Large logo — white version for dark background */}
-          <motion.div variants={fadeUp}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`${BASEPATH}/visual-vibes-logo-transparent.png`}
-              alt="Visual Vibes"
-              style={{
-                width: "min(420px, 74vw)",
-                height: "auto",
-                filter: "brightness(0) invert(1)",
-              }}
-            />
-          </motion.div>
-
+        {/* ── Center: heading + tagline ────────────── */}
+        <div className="flex flex-col items-center gap-5">
           <motion.h1
             variants={fadeUp}
             className="font-heading font-black text-white uppercase leading-tight"
-            style={{ fontSize: "clamp(2.8rem, 8vw, 7.5rem)", letterSpacing: "-0.01em" }}
+            style={{ fontSize: "clamp(3.2rem, 10vw, 9rem)", letterSpacing: "-0.01em" }}
           >
             Faith You
             <br />
@@ -82,6 +66,7 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
                 color: "transparent",
                 fontSize: "inherit",
+                letterSpacing: "inherit",
               }}
             >
               Can Wear
@@ -96,11 +81,8 @@ export default function HeroSection() {
           </motion.p>
         </div>
 
-        {/* ── Bottom: CTAs ────────────────────────────── */}
-        <motion.div
-          variants={fadeUp}
-          className="flex gap-3 flex-wrap justify-center"
-        >
+        {/* ── Bottom: CTAs ────────────────────────── */}
+        <motion.div variants={fadeUp} className="flex gap-3 flex-wrap justify-center">
           <Link
             href="/shop"
             className="inline-block bg-vv-orange text-white font-heading text-xs font-semibold uppercase tracking-widest2 px-10 py-4 hover:bg-white hover:text-vv-black transition-colors duration-300"
