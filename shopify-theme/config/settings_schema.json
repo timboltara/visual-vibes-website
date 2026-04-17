@@ -70,11 +70,12 @@
       {
         "type": "range",
         "id": "logo_width",
-        "label": "Logo Width (px)",
-        "min": 40,
-        "max": 200,
+        "label": "Logo Max Width (px)",
+        "info": "Controls how wide the header logo appears. Increase if your logo is wide.",
+        "min": 80,
+        "max": 300,
         "step": 4,
-        "default": 40
+        "default": 160
       },
       {
         "type": "image_picker",
