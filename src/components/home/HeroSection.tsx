@@ -35,14 +35,14 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Content — spread top / center / bottom so buttons are always visible */}
+      {/* Content — top / center / bottom */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
         className="relative z-10 flex flex-col items-center justify-between h-full px-6 py-10 sm:py-14 text-center"
       >
-        {/* ── Top: eyebrow ────────────────────────── */}
+        {/* ── Top: eyebrow ─────────────────────── */}
         <motion.p
           variants={fadeUp}
           className="font-heading text-vv-orange text-xs tracking-widest3 uppercase"
@@ -50,28 +50,61 @@ export default function HeroSection() {
           On Fire For Jesus
         </motion.p>
 
-        {/* ── Center: heading + tagline ────────────── */}
+        {/* ── Center: heading + tagline ─────────── */}
         <div className="flex flex-col items-center gap-5">
-          <motion.h1
+          {/*
+           * The heading is split into two lines:
+           *  Line 1 "Faith You"  — solid white HTML text
+           *  Line 2 "Can Wear"   — SVG <text fill="none" stroke="white">
+           *
+           * Using SVG for line 2 gives a true hollow-outline effect:
+           * fill="none" means the letter interiors are fully transparent,
+           * so 'A', 'E', 'W' etc. have open counters with no overlapping
+           * strokes — impossible to achieve cleanly with -webkit-text-stroke.
+           */}
+          <motion.div
             variants={fadeUp}
-            className="font-heading font-black text-white uppercase leading-tight"
+            className="font-heading font-black uppercase leading-tight text-center"
             style={{ fontSize: "clamp(3.2rem, 10vw, 9rem)", letterSpacing: "-0.01em" }}
+            role="heading"
+            aria-level={1}
           >
-            Faith You
-            <br />
-            <span
-              className="font-heading font-black uppercase"
+            {/* Line 1 */}
+            <span className="block text-white">Faith You</span>
+
+            {/* Screen-reader text for line 2 */}
+            <span className="sr-only">Can Wear</span>
+
+            {/* Line 2 — SVG outlined text */}
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
               style={{
-                WebkitTextStroke: "2px white",
-                WebkitTextFillColor: "transparent",
-                color: "transparent",
-                fontSize: "inherit",
-                letterSpacing: "inherit",
+                display: "block",
+                width: "100%",
+                height: "1em",
+                overflow: "visible",
+                marginTop: "0.05em",
               }}
             >
-              Can Wear
-            </span>
-          </motion.h1>
+              <text
+                x="50%"
+                y="0.82em"
+                textAnchor="middle"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 900,
+                  fontSize: "1em",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                CAN WEAR
+              </text>
+            </svg>
+          </motion.div>
 
           <motion.p
             variants={fadeUp}
@@ -81,7 +114,7 @@ export default function HeroSection() {
           </motion.p>
         </div>
 
-        {/* ── Bottom: CTAs ────────────────────────── */}
+        {/* ── Bottom: CTAs ─────────────────────── */}
         <motion.div variants={fadeUp} className="flex gap-3 flex-wrap justify-center">
           <Link
             href="/shop"
