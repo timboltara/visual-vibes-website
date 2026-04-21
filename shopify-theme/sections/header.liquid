@@ -90,10 +90,10 @@
         {%- liquid
           assign link_slug = link.title | downcase | replace: ' ', '-'
           assign has_mega = false
-          if link.title contains 'Him' or link.title contains 'him'
+          if link.title contains 'Him' or link.title contains 'him' or link.title == 'Men' or link.title == 'MEN' or link.title contains 'For Him'
             assign has_mega = true
             assign mega_panel = 'for-him'
-          elsif link.title contains 'Her' or link.title contains 'her'
+          elsif link.title contains 'Her' or link.title contains 'her' or link.title == 'Women' or link.title == 'WOMEN' or link.title contains 'For Her'
             assign has_mega = true
             assign mega_panel = 'for-her'
           elsif link.title contains 'Collection' or link.title contains 'collection'
@@ -303,9 +303,9 @@
       {%- liquid
         assign is_him = false
         assign is_her = false
-        if link.title contains 'Him' or link.title contains 'him'
+        if link.title contains 'Him' or link.title contains 'him' or link.title == 'Men' or link.title == 'MEN'
           assign is_him = true
-        elsif link.title contains 'Her' or link.title contains 'her'
+        elsif link.title contains 'Her' or link.title contains 'her' or link.title == 'Women' or link.title == 'WOMEN'
           assign is_her = true
         endif
       -%}
