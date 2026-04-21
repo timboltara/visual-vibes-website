@@ -75,6 +75,17 @@
 
     {%- comment -%} Nav bar {%- endcomment -%}
     <nav class="flex items-center justify-center gap-8 px-10 h-10 border-b border-gray-100" aria-label="Main navigation">
+      {%- assign nav_links = main_menu.links -%}
+      {%- if nav_links.size == 0 -%}
+        {%- assign use_fallback_nav = true -%}
+      {%- endif -%}
+      {%- if use_fallback_nav -%}
+        <a href="/collections/all" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="shop-all">Shop All <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections/for-him" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-him">For Him <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections/for-her" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-her">For Her <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="collections">Collections <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/pages/about" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange">Our Story</a>
+      {%- else -%}
       {%- for link in main_menu.links -%}
         {%- liquid
           assign link_slug = link.title | downcase | replace: ' ', '-'
@@ -102,6 +113,7 @@
           {%- if has_mega -%}<span class="text-[8px] opacity-40 translate-y-px">▾</span>{%- endif -%}
         </a>
       {%- endfor -%}
+      {%- endif -%}
     </nav>
 
     {%- comment -%} ── Mega Menu Panels ────────────────────────────────── {%- endcomment -%}

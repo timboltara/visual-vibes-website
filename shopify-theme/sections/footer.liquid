@@ -17,9 +17,18 @@
       <div>
         <p class="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Shop</p>
         <div class="flex flex-col gap-3">
-          {%- for link in linklists[section.settings.shop_menu_handle].links -%}
-            <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
-          {%- endfor -%}
+          {%- assign shop_links = linklists[section.settings.shop_menu_handle].links -%}
+          {%- if shop_links.size > 0 -%}
+            {%- for link in shop_links -%}
+              <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/collections/all" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Shop All</a>
+            <a href="/collections/for-him" class="font-body text-sm text-gray-400 hover:text-white transition-colors">For Him</a>
+            <a href="/collections/for-her" class="font-body text-sm text-gray-400 hover:text-white transition-colors">For Her</a>
+            <a href="/collections/new-drop" class="font-body text-sm text-gray-400 hover:text-white transition-colors">New Arrivals</a>
+            <a href="/collections/faith-collection" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Faith Collection</a>
+          {%- endif -%}
         </div>
       </div>
 
@@ -27,9 +36,18 @@
       <div>
         <p class="font-heading text-xs uppercase tracking-widest2 text-gray-500 mb-5">Info</p>
         <div class="flex flex-col gap-3">
-          {%- for link in linklists[section.settings.info_menu_handle].links -%}
-            <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
-          {%- endfor -%}
+          {%- assign info_links = linklists[section.settings.info_menu_handle].links -%}
+          {%- if info_links.size > 0 -%}
+            {%- for link in info_links -%}
+              <a href="{{ link.url }}" class="font-body text-sm text-gray-400 hover:text-white transition-colors">{{ link.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="/pages/about" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Our Story</a>
+            <a href="/pages/contact" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Contact</a>
+            <a href="/policies/shipping-policy" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Shipping</a>
+            <a href="/policies/refund-policy" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Returns</a>
+            <a href="/policies/privacy-policy" class="font-body text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+          {%- endif -%}
         </div>
       </div>
 
