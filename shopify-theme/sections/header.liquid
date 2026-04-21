@@ -40,7 +40,8 @@
     {%- comment -%} Center: Logo {%- endcomment -%}
     <a href="{{ routes.root_url }}" class="absolute left-1/2 -translate-x-1/2">
       {%- if settings.logo -%}
-        {{ settings.logo | image_url: width: 400 | image_tag: loading: 'eager', style: 'height:44px;width:auto;max-width:{{ settings.logo_width }}px;object-fit:contain;' }}
+        {%- assign logo_style = 'height:44px;width:auto;max-width:' | append: settings.logo_width | append: 'px;object-fit:contain;' -%}
+        {{ settings.logo | image_url: width: 400 | image_tag: loading: 'eager', style: logo_style }}
       {%- else -%}
         <img src="{{ 'visual-vibes-logo-transparent.png' | asset_url }}" alt="{{ shop.name }}" style="height:44px;width:auto;object-fit:contain;">
       {%- endif -%}
