@@ -24,14 +24,34 @@
     </div>
   </div>
 
-  {%- comment -%} Category with T-Shirt sub-categories {%- endcomment -%}
+  {%- comment -%} Detect collection type to show only relevant categories {%- endcomment -%}
+  {%- assign col_h = collection.handle | downcase | default: 'all' -%}
+  {%- assign is_tshirts   = false -%}
+  {%- assign is_hoodies   = false -%}
+  {%- assign is_sweaters  = false -%}
+  {%- assign is_single    = false -%}
+  {%- if col_h contains 'tshirt' or col_h contains 't-shirt' -%}
+    {%- assign is_tshirts = true -%}{%- assign is_single = true -%}
+  {%- elsif col_h contains 'hoodie' -%}
+    {%- assign is_hoodies = true -%}{%- assign is_single = true -%}
+  {%- elsif col_h contains 'sweater' -%}
+    {%- assign is_sweaters = true -%}{%- assign is_single = true -%}
+  {%- elsif col_h contains 'tank' -%}
+    {%- assign is_single = true -%}
+  {%- elsif col_h contains 'pant' or col_h contains 'short' or col_h contains 'swim' -%}
+    {%- assign is_single = true -%}
+  {%- endif -%}
+
+  {%- comment -%} Category filter — hide on single-type collections {%- endcomment -%}
+  {%- unless is_single and is_tshirts == false and is_hoodies == false and is_sweaters == false -%}
   <div class="border-b border-gray-100">
     <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
       Category <span class="vv-chevron">▲</span>
     </button>
     <div class="vv-filter-body pb-4">
 
-      {%- comment -%} T-Shirts with expandable sub-categories {%- endcomment -%}
+      {%- comment -%} T-Shirts with sub-categories — show on all-product or t-shirt collections {%- endcomment -%}
+      {%- unless is_single and is_tshirts == false -%}
       <div class="vv-cat-parent">
         <div class="flex items-center justify-between">
           <button class="vv-cat-btn flex items-center gap-2.5 flex-1 text-left py-1" data-cat="tshirts">
@@ -44,7 +64,6 @@
             <span class="vv-subcat-arrow">▶</span>
           </button>
         </div>
-        {%- comment -%} T-Shirt sub-categories {%- endcomment -%}
         <div class="vv-subcat-body hidden pl-6 pb-1">
           <button class="vv-subcat-btn flex items-center gap-2.5 w-full text-left py-1" data-subcat="tshirts-classic">
             <div class="w-3 h-3 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
@@ -66,21 +85,39 @@
           </button>
         </div>
       </div>
+      {%- endunless -%}
 
-      {%- comment -%} Other top-level categories {%- endcomment -%}
-      {%- assign categories = 'hoodies,sweaters,jerseys,jackets,tank-tops,pants,shorts,swimwear,hawaiian-shirts' | split: ',' -%}
-      {%- assign cat_labels  = 'Hoodies,Sweaters,Jerseys,Jackets,Tank Tops,Pants,Shorts,Swimwear,Hawaiian Shirts' | split: ',' -%}
-      {%- for cat in categories -%}
-        <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="{{ cat }}">
+      {%- comment -%} Other categories — hidden on single-type collections {%- endcomment -%}
+      {%- unless is_single -%}
+        {%- assign categories = 'hoodies,sweaters,jerseys,jackets,tank-tops,pants,shorts,swimwear,hawaiian-shirts' | split: ',' -%}
+        {%- assign cat_labels  = 'Hoodies,Sweaters,Jerseys,Jackets,Tank Tops,Pants,Shorts,Swimwear,Hawaiian Shirts' | split: ',' -%}
+        {%- for cat in categories -%}
+          <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="{{ cat }}">
+            <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+              <span class="text-white font-bold hidden vv-check" style="font-size:9px;">✓</span>
+            </div>
+            <span class="font-body text-sm text-vv-black">{{ cat_labels[forloop.index0] }}</span>
+          </button>
+        {%- endfor -%}
+      {%- elsif is_hoodies -%}
+        <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="hoodies">
           <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
             <span class="text-white font-bold hidden vv-check" style="font-size:9px;">✓</span>
           </div>
-          <span class="font-body text-sm text-vv-black">{{ cat_labels[forloop.index0] }}</span>
+          <span class="font-body text-sm text-vv-black">Hoodies</span>
         </button>
-      {%- endfor -%}
+      {%- elsif is_sweaters -%}
+        <button class="vv-cat-btn flex items-center gap-2.5 w-full text-left py-1" data-cat="sweaters">
+          <div class="w-3.5 h-3.5 border border-gray-300 flex-shrink-0 flex items-center justify-center vv-checkbox">
+            <span class="text-white font-bold hidden vv-check" style="font-size:9px;">✓</span>
+          </div>
+          <span class="font-body text-sm text-vv-black">Sweaters</span>
+        </button>
+      {%- endif -%}
 
     </div>
   </div>
+  {%- endunless -%}
 
   {%- comment -%} Gender {%- endcomment -%}
   <div class="border-b border-gray-100">

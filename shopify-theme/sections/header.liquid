@@ -52,15 +52,13 @@
       <button id="search-btn" class="text-vv-black hover:text-vv-orange transition-colors" aria-label="Search">
         {%- render 'icon-search' -%}
       </button>
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-           class="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-orange transition-colors relative" aria-label="Account">
-          {%- render 'icon-user' -%}
-          {%- if customer -%}
-            <span class="absolute -top-1 -right-1 w-2 h-2 bg-vv-orange rounded-full"></span>
-          {%- endif -%}
-        </a>
-      {%- endif -%}
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+         class="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-orange transition-colors relative" aria-label="Account">
+        {%- render 'icon-user' -%}
+        {%- if customer -%}
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-vv-orange rounded-full"></span>
+        {%- endif -%}
+      </a>
       <button id="cart-drawer-btn" class="text-vv-black hover:text-vv-orange transition-colors relative" aria-label="Cart">
         {%- render 'icon-bag' -%}
         <span id="cart-count-bubble" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-vv-orange rounded-full flex items-center justify-center{%- if cart.item_count == 0 %} hidden{%- endif -%}">
@@ -396,8 +394,7 @@
     {
       "type": "link_list",
       "id": "main_menu_handle",
-      "label": "Main Menu",
-      "default": "main-menu"
+      "label": "Main Menu"
     }
   ]
 }

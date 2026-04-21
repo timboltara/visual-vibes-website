@@ -60,15 +60,20 @@
     <div class="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/95 backdrop-blur-sm p-2 z-10">
       <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-1.5 text-center">Quick Add</p>
       <div class="flex gap-1 justify-center flex-wrap">
+        {%- assign shown_sizes = '' -%}
         {%- for variant in product.variants -%}
           {%- if variant.available -%}
-            <button
-              class="vv-quick-add-btn font-heading text-[10px] uppercase tracking-wide px-2 py-1 border border-gray-300 text-vv-black hover:border-vv-black hover:bg-vv-black hover:text-white transition-all duration-100"
-              data-variant-id="{{ variant.id }}"
-              data-product-title="{{ product.title | escape }}"
-            >
-              {{ variant.title | split: ' / ' | first }}
-            </button>
+            {%- assign size_label = variant.title | split: ' / ' | first -%}
+            {%- unless shown_sizes contains size_label -%}
+              <button
+                class="vv-quick-add-btn font-heading text-[10px] uppercase tracking-wide px-2 py-1 border border-gray-300 text-vv-black hover:border-vv-black hover:bg-vv-black hover:text-white transition-all duration-100"
+                data-variant-id="{{ variant.id }}"
+                data-product-title="{{ product.title | escape }}"
+              >
+                {{ size_label }}
+              </button>
+              {%- assign shown_sizes = shown_sizes | append: size_label | append: '|' -%}
+            {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
