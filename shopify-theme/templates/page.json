@@ -1,29 +1,9 @@
 {
   "sections": {
     "main": {
-      "type": "page-about",
-      "blocks": {
-        "s1": { "type": "story_paragraph", "settings": { "text": "Visual Vibes exists to spread the Gospel by creating bold apparel that inspires people to live on fire for God." } },
-        "s2": { "type": "story_paragraph", "settings": { "text": "Visual Vibes is more than clothing. It's a movement to represent Christ boldly in everyday life." } },
-        "s3": { "type": "story_paragraph", "settings": { "text": "Clothing is the entry point — but the goal is impact. We want every piece to start a conversation, open a door, and plant a seed for the Gospel." } },
-        "p1": { "type": "pillar", "settings": { "title": "Bold Faith", "body": "Strong, unapologetic messages — not watered down. We create apparel that says exactly what believers feel in their hearts but are sometimes afraid to say out loud." } },
-        "p2": { "type": "pillar", "settings": { "title": "Real Life Christianity", "body": "Faith outside of church. At work, the gym, in public. Visual Vibes is for believers who carry their faith into every part of their daily life." } },
-        "p3": { "type": "pillar", "settings": { "title": "Energy & Fire", "body": "Passion. Urgency. Excitement. Christianity is not boring. It's on fire — and our designs reflect that." } }
-      },
-      "block_order": ["s1","s2","s3","p1","p2","p3"],
+      "type": "main-page",
       "settings": {
-        "eyebrow": "ON FIRE FOR JESUS",
-        "hero_heading": "Our Story",
-        "hero_subheading": "A discipleship brand using apparel to spread the Gospel and spark bold faith.",
-        "pull_quote": "For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes.",
-        "pull_quote_ref": "Romans 1:16",
-        "pillars_heading": "Our Brand Pillars",
-        "scripture_text": "I can do all things through Christ.",
-        "scripture_ref": "Philippians 4:13",
-        "scripture_btn_label": "Shop Now",
-        "prayer_eyebrow": "Prayer Request",
-        "prayer_heading": "Submit a Prayer",
-        "prayer_btn": "Submit Prayer Request"
+        "show_title": true
       }
     }
   },
