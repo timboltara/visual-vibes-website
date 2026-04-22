@@ -6,7 +6,7 @@
         "eyebrow": "ON FIRE FOR JESUS",
         "heading_line1": "Faith You",
         "heading_line2": "Can Wear",
-        "subheading": "Bold Christian apparel that helps people live on fire for God.",
+        "subheading": "Bold Christian Apparel That Helps People Live On Fire For God.",
         "btn1_label": "Shop Now",
         "btn1_url": "/collections/all",
         "btn2_label": "Our Story",
@@ -68,6 +68,43 @@
         "form_btn_label": "Submit Prayer Request"
       }
     },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "I wore the Faith Over Fear tee to work and my coworker asked me about it. Led to a 20-minute conversation about Jesus. This brand is literally a ministry.",
+            "name": "Marcus T.",
+            "location": "Atlanta, GA"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The Oversized Grace Sweater is everything. Soft, beautiful, and every time I wear it someone asks where I got it. Love that it opens doors to share my faith.",
+            "name": "Destiny R.",
+            "location": "Houston, TX"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Bought the Vintage Grace Hoodie and it exceeded every expectation. Premium quality, meaningful design. Visual Vibes is the real deal \u2014 bold faith, clean drip.",
+            "name": "Jordan K.",
+            "location": "Chicago, IL"
+          }
+        }
+      },
+      "block_order": ["t1","t2","t3"],
+      "settings": {
+        "eyebrow": "What People Are Saying",
+        "heading": "Real People. Real Faith."
+      }
+    },
     "email": {
       "type": "email-signup",
       "settings": {
@@ -79,5 +116,5 @@
       }
     }
   },
-  "order": ["hero","marquee","featured","collections","gospel","email"]
+  "order": ["hero","marquee","featured","collections","gospel","testimonials","email"]
 }
