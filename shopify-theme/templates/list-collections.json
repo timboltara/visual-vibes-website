@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "list-collections",
+      "settings": {
+        "heading": "All Collections",
+        "subheading": "Faith You Can Wear"
+      }
+    }
+  },
+  "order": ["main"]
+}
