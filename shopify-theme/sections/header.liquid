@@ -2,18 +2,18 @@
   assign main_menu = linklists[section.settings.main_menu_handle]
 -%}
 
-{%- comment -%} Announcement Bar {%- endcomment -%}
-{%- if section.settings.show_announcement -%}
-<div class="bg-vv-black text-white text-center py-2 px-4">
-  <p class="font-heading text-xs tracking-widest2 uppercase">
-    Use code
-    <span class="text-vv-orange font-semibold">{{ settings.promo_code }}</span>
-    — {{ settings.promo_label }}
-  </p>
-</div>
-{%- endif -%}
-
 <header id="site-header" class="fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300">
+
+  {%- comment -%} Announcement Bar — inside fixed header so it stays at top {%- endcomment -%}
+  {%- if section.settings.show_announcement -%}
+  <div class="bg-vv-black text-white text-center py-2 px-4">
+    <p class="font-heading text-xs tracking-widest2 uppercase">
+      Use code
+      <span class="text-vv-orange font-semibold">{{ settings.promo_code }}</span>
+      — {{ settings.promo_label }}
+    </p>
+  </div>
+  {%- endif -%}
 
   {%- comment -%} Top row: social | logo | icons {%- endcomment -%}
   <div class="border-b border-gray-100 px-5 sm:px-10 h-14 flex items-center justify-between">
