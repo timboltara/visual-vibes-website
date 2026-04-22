@@ -52,8 +52,8 @@
       <button id="search-btn" class="text-vv-black hover:text-vv-orange transition-colors" aria-label="Search">
         {%- render 'icon-search' -%}
       </button>
-      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-         class="hidden sm:flex items-center gap-1 text-vv-black hover:text-vv-orange transition-colors relative" aria-label="Account">
+      <a href="/account"
+         class="flex items-center gap-1 text-vv-black hover:text-vv-orange transition-colors relative" aria-label="Account">
         {%- render 'icon-user' -%}
         {%- if customer -%}
           <span class="absolute -top-1 -right-1 w-2 h-2 bg-vv-orange rounded-full"></span>
