@@ -79,8 +79,9 @@
       {%- endif -%}
       {%- if use_fallback_nav -%}
         <a href="/collections/all" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="shop-all">Shop All <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
-        <a href="/collections/for-him" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-him">For Him <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
-        <a href="/collections/for-her" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-her">For Her <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections/all/mens" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-him">For Him <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections/all/womens" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="for-her">For Her <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
+        <a href="/collections/all/new" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange">New Drop</a>
         <a href="/collections" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange" data-mega="collections">Collections <span class="text-[8px] opacity-40 translate-y-px">▾</span></a>
         <a href="/pages/about" class="vv-nav-link font-heading text-xs tracking-widest uppercase transition-colors duration-200 text-vv-black hover:text-vv-orange">Our Story</a>
       {%- else -%}
@@ -121,27 +122,27 @@
       <div class="vv-mega-panel hidden" data-panel="for-him">
         <div class="max-w-screen-xl mx-auto px-10 py-8 grid grid-cols-2 gap-10" style="max-width:600px;">
           <div>
-            <a href="/collections/all" class="block font-heading text-sm font-black uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors mb-4">Shop All Men's →</a>
+            <a href="/collections/all/mens" class="block font-heading text-sm font-black uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors mb-4">Shop All Men's →</a>
             <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-2">Tops</p>
             <div class="flex flex-col gap-0.5">
-              <a href="/collections/all?filter.p.tag=tshirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">T-Shirts</a>
-              <a href="/collections/all?filter.p.tag=tshirts-classic" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Classic Fit</a>
-              <a href="/collections/all?filter.p.tag=tshirts-heavyweight" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Heavyweight</a>
-              <a href="/collections/all?filter.p.tag=tshirts-oversized" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Oversized</a>
-              <a href="/collections/all?filter.p.tag=tank-tops" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Tank Tops</a>
-              <a href="/collections/all?filter.p.tag=hoodies" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hoodies</a>
-              <a href="/collections/all?filter.p.tag=sweaters" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Sweaters</a>
-              <a href="/collections/all?filter.p.tag=jerseys" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jerseys</a>
-              <a href="/collections/all?filter.p.tag=jackets" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jackets</a>
+              <a href="/collections/all/tshirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">T-Shirts</a>
+              <a href="/collections/all/tshirts-classic" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Classic Fit</a>
+              <a href="/collections/all/tshirts-heavyweight" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Heavyweight</a>
+              <a href="/collections/all/tshirts-oversized" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Oversized</a>
+              <a href="/collections/all/tank-tops" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Tank Tops</a>
+              <a href="/collections/all/hoodies" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hoodies</a>
+              <a href="/collections/all/sweaters" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Sweaters</a>
+              <a href="/collections/all/jerseys" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jerseys</a>
+              <a href="/collections/all/jackets" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jackets</a>
             </div>
           </div>
           <div>
             <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-2 mt-10">Bottoms &amp; More</p>
             <div class="flex flex-col gap-0.5">
-              <a href="/collections/all?filter.p.tag=pants" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Pants</a>
-              <a href="/collections/all?filter.p.tag=shorts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Shorts</a>
-              <a href="/collections/all?filter.p.tag=swimwear" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Swimwear</a>
-              <a href="/collections/all?filter.p.tag=hawaiian-shirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hawaiian Shirts</a>
+              <a href="/collections/all/pants" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Pants</a>
+              <a href="/collections/all/shorts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Shorts</a>
+              <a href="/collections/all/swimwear" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Swimwear</a>
+              <a href="/collections/all/hawaiian-shirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hawaiian Shirts</a>
             </div>
           </div>
         </div>
@@ -151,27 +152,27 @@
       <div class="vv-mega-panel hidden" data-panel="for-her">
         <div class="max-w-screen-xl mx-auto px-10 py-8 grid grid-cols-2 gap-10" style="max-width:600px;">
           <div>
-            <a href="/collections/all" class="block font-heading text-sm font-black uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors mb-4">Shop All Women's →</a>
+            <a href="/collections/all/womens" class="block font-heading text-sm font-black uppercase tracking-widest text-vv-black hover:text-vv-orange transition-colors mb-4">Shop All Women's →</a>
             <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-2">Tops</p>
             <div class="flex flex-col gap-0.5">
-              <a href="/collections/all?filter.p.tag=tshirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">T-Shirts</a>
-              <a href="/collections/all?filter.p.tag=tshirts-classic" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Classic Fit</a>
-              <a href="/collections/all?filter.p.tag=tshirts-heavyweight" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Heavyweight</a>
-              <a href="/collections/all?filter.p.tag=tshirts-oversized" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Oversized</a>
-              <a href="/collections/all?filter.p.tag=tank-tops" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Tank Tops</a>
-              <a href="/collections/all?filter.p.tag=hoodies" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hoodies</a>
-              <a href="/collections/all?filter.p.tag=sweaters" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Sweaters</a>
-              <a href="/collections/all?filter.p.tag=jerseys" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jerseys</a>
-              <a href="/collections/all?filter.p.tag=jackets" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jackets</a>
+              <a href="/collections/all/tshirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">T-Shirts</a>
+              <a href="/collections/all/tshirts-classic" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Classic Fit</a>
+              <a href="/collections/all/tshirts-heavyweight" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Heavyweight</a>
+              <a href="/collections/all/tshirts-oversized" class="font-body text-xs text-vv-gray-mid hover:text-vv-orange transition-colors py-0.5 pl-3">— Oversized</a>
+              <a href="/collections/all/tank-tops" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Tank Tops</a>
+              <a href="/collections/all/hoodies" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hoodies</a>
+              <a href="/collections/all/sweaters" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Sweaters</a>
+              <a href="/collections/all/jerseys" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jerseys</a>
+              <a href="/collections/all/jackets" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Jackets</a>
             </div>
           </div>
           <div>
             <p class="font-heading text-[9px] uppercase tracking-widest text-vv-gray-mid mb-2 mt-10">Bottoms &amp; More</p>
             <div class="flex flex-col gap-0.5">
-              <a href="/collections/all?filter.p.tag=pants" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Pants</a>
-              <a href="/collections/all?filter.p.tag=shorts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Shorts</a>
-              <a href="/collections/all?filter.p.tag=swimwear" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Swimwear</a>
-              <a href="/collections/all?filter.p.tag=hawaiian-shirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hawaiian Shirts</a>
+              <a href="/collections/all/pants" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Pants</a>
+              <a href="/collections/all/shorts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Shorts</a>
+              <a href="/collections/all/swimwear" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Swimwear</a>
+              <a href="/collections/all/hawaiian-shirts" class="font-body text-sm text-vv-black hover:text-vv-orange transition-colors py-0.5">Hawaiian Shirts</a>
             </div>
           </div>
         </div>

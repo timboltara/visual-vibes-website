@@ -1,6 +1,62 @@
 {%- liquid
   assign sort_by = collection.sort_by | default: collection.default_sort_by
-  assign current_tags = current_tags | default: ''
+  assign page_heading = collection.title
+  assign page_desc = collection.description
+  if current_tags.size > 0
+    assign first_tag = current_tags | first
+    case first_tag
+      when 'mens'
+        assign page_heading = "For Him"
+        assign page_desc = "Men's Faith Apparel"
+      when 'womens'
+        assign page_heading = "For Her"
+        assign page_desc = "Women's Faith Apparel"
+      when 'tshirts'
+        assign page_heading = "T-Shirts"
+        assign page_desc = "Faith You Can Wear"
+      when 'tshirts-classic'
+        assign page_heading = "Classic Fit T-Shirts"
+        assign page_desc = "Faith You Can Wear"
+      when 'tshirts-heavyweight'
+        assign page_heading = "Heavyweight T-Shirts"
+        assign page_desc = "Faith You Can Wear"
+      when 'tshirts-oversized'
+        assign page_heading = "Oversized T-Shirts"
+        assign page_desc = "Faith You Can Wear"
+      when 'hoodies'
+        assign page_heading = "Hoodies"
+        assign page_desc = "Faith You Can Wear"
+      when 'sweaters'
+        assign page_heading = "Sweaters"
+        assign page_desc = "Faith You Can Wear"
+      when 'tank-tops'
+        assign page_heading = "Tank Tops"
+        assign page_desc = "Faith You Can Wear"
+      when 'jackets'
+        assign page_heading = "Jackets"
+        assign page_desc = "Faith You Can Wear"
+      when 'jerseys'
+        assign page_heading = "Jerseys"
+        assign page_desc = "Faith You Can Wear"
+      when 'pants'
+        assign page_heading = "Pants"
+        assign page_desc = "Faith You Can Wear"
+      when 'shorts'
+        assign page_heading = "Shorts"
+        assign page_desc = "Faith You Can Wear"
+      when 'swimwear'
+        assign page_heading = "Swimwear"
+        assign page_desc = "Faith You Can Wear"
+      when 'hawaiian-shirts'
+        assign page_heading = "Hawaiian Shirts"
+        assign page_desc = "Faith You Can Wear"
+      when 'new', 'New'
+        assign page_heading = "New Arrivals"
+        assign page_desc = "Just Dropped"
+      else
+        assign page_heading = first_tag | replace: '-', ' ' | capitalize
+    endcase
+  endif
 -%}
 
 <div class="pt-0 min-h-screen bg-white">
@@ -9,10 +65,10 @@
   <div class="px-5 sm:px-10 pt-10 pb-4 max-w-screen-xl mx-auto flex flex-col sm:flex-row sm:items-end justify-between gap-2">
     <div>
       <h1 class="font-heading font-black text-4xl sm:text-5xl uppercase text-vv-black leading-none">
-        {{ collection.title }}
+        {{ page_heading }}
       </h1>
-      {%- if collection.description != blank -%}
-        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mt-1">{{ collection.description }}</p>
+      {%- if page_desc != blank -%}
+        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mt-1">{{ page_desc }}</p>
       {%- endif -%}
     </div>
     <p class="font-body text-sm text-vv-gray-mid" id="result-count">{{ collection.products_count }} products</p>
