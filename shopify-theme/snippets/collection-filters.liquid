@@ -42,8 +42,12 @@
     {%- assign is_single = true -%}
   {%- endif -%}
 
-  {%- comment -%} Category filter — hide on single-type collections {%- endcomment -%}
-  {%- unless is_single and is_tshirts == false and is_hoodies == false and is_sweaters == false -%}
+  {%- comment -%} Category filter — hide on single-type collections that aren't clothing categories {%- endcomment -%}
+  {%- assign show_category = true -%}
+  {%- if is_single and is_tshirts == false and is_hoodies == false and is_sweaters == false -%}
+    {%- assign show_category = false -%}
+  {%- endif -%}
+  {%- if show_category -%}
   <div class="border-b border-gray-100">
     <button class="vv-filter-toggle flex items-center justify-between w-full py-3 font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold" aria-expanded="true">
       Category <span class="vv-chevron">▲</span>
@@ -117,7 +121,7 @@
 
     </div>
   </div>
-  {%- endunless -%}
+  {%- endif -%}
 
   {%- comment -%} Gender {%- endcomment -%}
   <div class="border-b border-gray-100">

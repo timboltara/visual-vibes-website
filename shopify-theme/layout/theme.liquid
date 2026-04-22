@@ -36,14 +36,10 @@
       --vv-bg:         {{ settings.color_bg }};
       --vv-gray:       {{ settings.color_gray_light }};
       --vv-gray-mid:   {{ settings.color_gray_mid }};
-      --font-montserrat: '{{ settings.font_heading.family }}', {{ settings.font_heading.fallback_families }};
-      --font-nunito:     '{{ settings.font_body.family }}', {{ settings.font_body.fallback_families }};
+      --font-montserrat: 'Montserrat', sans-serif;
+      --font-nunito:     'Nunito Sans', sans-serif;
     }
   </style>
-
-  {%- comment -%} Shopify font preloads {%- endcomment -%}
-  {{ settings.font_heading | font_face: font_display: 'swap' }}
-  {{ settings.font_body | font_face: font_display: 'swap' }}
 </head>
 
 <body class="bg-white text-vv-black font-body min-h-screen flex flex-col" id="body">
