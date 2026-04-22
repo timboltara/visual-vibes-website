@@ -47,20 +47,8 @@
         {%- comment -%} Line 1 — solid white {%- endcomment -%}
         <span class="block text-white">{{ section.settings.heading_line1 }}</span>
 
-        {%- comment -%}
-          Line 2 — SVG outlined text.
-          fill="none" means letter interiors are fully transparent.
-          No overlapping strokes inside A / E / W counters.
-        {%- endcomment -%}
-        <span class="sr-only">{{ section.settings.heading_line2 }}</span>
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-          style="display:block;width:100%;height:clamp(2.8rem,8vw,7.5rem);overflow:visible;margin-top:0.05em;">
-          <text x="50%" y="0.82em" text-anchor="middle"
-            fill="none" stroke="white" stroke-width="2"
-            style="font-family:Montserrat,sans-serif;font-weight:900;font-size:clamp(2.8rem,8vw,7.5rem);letter-spacing:-0.01em;text-transform:uppercase;">
-            {{ section.settings.heading_line2 }}
-          </text>
-        </svg>
+        {%- comment -%} Line 2 — hollow outlined text via CSS text-stroke {%- endcomment -%}
+        <span class="block" style="-webkit-text-stroke: 2px #ffffff; color: transparent;">{{ section.settings.heading_line2 }}</span>
       </div>
 
       {%- if section.settings.subheading != blank -%}
