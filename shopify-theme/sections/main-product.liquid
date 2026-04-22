@@ -204,9 +204,6 @@
                         {%- if option.name == 'Size' -%}— Select a size{%- endif -%}
                       </span>
                     </p>
-                    {%- if option.name == 'Size' -%}
-                      <button type="button" id="size-guide-btn" class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid hover:text-vv-black transition-colors underline">Size Guide</button>
-                    {%- endif -%}
                   </div>
                   <div class="flex flex-wrap gap-2">
                     {%- for value in option.values -%}
@@ -253,14 +250,6 @@
             {%- endif -%}
           </button>
         {%- endform -%}
-
-        {%- comment -%} Description {%- endcomment -%}
-        {%- if product.description != blank -%}
-          <div class="mt-6 pt-6 border-t border-gray-100">
-            <p class="font-heading text-[10px] uppercase tracking-widest text-vv-black font-semibold mb-3">Details</p>
-            <div class="font-body text-sm text-vv-gray-mid leading-relaxed prose">{{ product.description }}</div>
-          </div>
-        {%- endif -%}
 
         {%- comment -%} Trust badges {%- endcomment -%}
         <div class="mt-6 pt-4 border-t border-gray-100 grid grid-cols-2 gap-2">
