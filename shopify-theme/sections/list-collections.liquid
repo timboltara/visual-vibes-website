@@ -1,88 +1,179 @@
-<div class="min-h-screen bg-white">
-
-  {%- comment -%} Page header {%- endcomment -%}
-  <div class="px-5 sm:px-10 pt-10 pb-6 max-w-screen-xl mx-auto">
-    <h1 class="font-heading font-black text-4xl sm:text-5xl uppercase text-vv-black leading-none">
+{%- comment -%} Hero banner {%- endcomment -%}
+<div class="relative bg-vv-black overflow-hidden" style="min-height: 38vh;">
+  <div class="absolute inset-0" style="background: linear-gradient(135deg, #1a0800 0%, #1c1c1c 55%, #2a1a0a 100%);"></div>
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(ellipse at 20% 70%, #e8622a 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, #bf4f1e 0%, transparent 45%);"></div>
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 vv-fade-up" style="min-height: 38vh; padding-top: 4rem; padding-bottom: 4rem;">
+    <h1 class="font-heading font-black text-white uppercase leading-none" style="font-size: clamp(3.5rem, 12vw, 9rem); letter-spacing: -0.02em;">
       {{ section.settings.heading }}
     </h1>
     {%- if section.settings.subheading != blank -%}
-      <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mt-2">{{ section.settings.subheading }}</p>
+      <p class="font-body text-white/60 text-base max-w-md mx-auto mt-5">{{ section.settings.subheading }}</p>
     {%- endif -%}
   </div>
+</div>
 
-  {%- comment -%} Trust bar {%- endcomment -%}
-  <div class="bg-vv-gray border-y border-gray-200 mb-10">
-    <div class="max-w-screen-xl mx-auto px-5 sm:px-10 py-2.5 flex flex-wrap gap-x-8 gap-y-1 justify-center sm:justify-start">
-      <span class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid flex items-center gap-1.5"><span class="text-vv-orange">✓</span>Free shipping on orders $75+</span>
-      <span class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid flex items-center gap-1.5"><span class="text-vv-orange">✓</span>Easy returns</span>
-      <span class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid flex items-center gap-1.5"><span class="text-vv-orange">✓</span>Secure checkout</span>
-      <span class="font-heading text-[10px] uppercase tracking-widest text-vv-gray-mid flex items-center gap-1.5"><span class="text-vv-orange">✓</span>Sizes XS–3XL</span>
-    </div>
-  </div>
+{%- comment -%} Collection cards grid {%- endcomment -%}
+<div class="bg-white py-16 px-5 sm:px-10">
+  <div class="max-w-screen-xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'collection_card' -%}
+          {%- assign col = collections[block.settings.collection_handle] -%}
+          {%- if col != blank -%}
+          <a href="{{ col.url }}" class="group relative block overflow-hidden" style="aspect-ratio: 4/3;" {{ block.shopify_attributes }}>
 
-  {%- comment -%} Collections grid {%- endcomment -%}
-  <div class="max-w-screen-xl mx-auto px-5 sm:px-10 pb-16">
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      {%- for collection in collections -%}
-        {%- unless collection.handle == 'frontpage' or collection.handle == 'featured' -%}
-        <a href="{{ collection.url }}" class="group block vv-fade-up">
-          <div class="relative bg-vv-gray overflow-hidden mb-3" style="aspect-ratio: 1/1;">
-            {%- if collection.image -%}
-              {{ collection.image | image_url: width: 600 | image_tag:
+            {%- comment -%} Background image {%- endcomment -%}
+            {%- if col.image -%}
+              {{ col.image | image_url: width: 900 | image_tag:
                 loading: 'lazy',
-                class: 'w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105',
-                style: 'filter:contrast(1.05) brightness(1.02) saturate(1.1);'
+                class: 'absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
               }}
-            {%- elsif collection.products.first and collection.products.first.featured_image -%}
-              {{ collection.products.first.featured_image | image_url: width: 600 | image_tag:
+            {%- elsif col.products.first and col.products.first.featured_image -%}
+              {{ col.products.first.featured_image | image_url: width: 900 | image_tag:
                 loading: 'lazy',
-                class: 'w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105',
-                style: 'filter:contrast(1.05) brightness(1.02) saturate(1.1);'
+                class: 'absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105'
               }}
             {%- else -%}
-              <div class="w-full h-full bg-vv-gray flex items-center justify-center">
-                <span class="font-heading text-xs uppercase tracking-widest text-vv-gray-mid">{{ collection.title | truncate: 12 }}</span>
-              </div>
+              <div class="absolute inset-0 bg-vv-black"></div>
             {%- endif -%}
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-vv-orange">
-              <p class="font-heading text-[10px] uppercase tracking-widest text-white text-center">Shop Now</p>
+
+            {%- comment -%} Gradient overlay {%- endcomment -%}
+            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15) 100%);"></div>
+
+            {%- comment -%} Content {%- endcomment -%}
+            <div class="absolute inset-0 flex flex-col justify-end p-7 sm:p-10">
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="font-heading text-vv-orange text-[10px] uppercase tracking-widest2 mb-2 flex items-center gap-2">
+                  {%- if block.settings.show_cross -%}<span style="font-size:12px;">✝</span>{%- endif -%}
+                  {{ block.settings.eyebrow }}
+                </p>
+              {%- endif -%}
+              <h2 class="font-heading font-black text-white uppercase leading-tight mb-3" style="font-size: clamp(1.6rem, 3.5vw, 2.5rem);">
+                {{ col.title }}
+              </h2>
+              {%- if col.description != blank -%}
+                <p class="font-body text-white/70 text-sm leading-relaxed max-w-xs mb-6">{{ col.description | strip_html | truncate: 130 }}</p>
+              {%- elsif block.settings.description != blank -%}
+                <p class="font-body text-white/70 text-sm leading-relaxed max-w-xs mb-6">{{ block.settings.description }}</p>
+              {%- endif -%}
+              <div class="flex items-center gap-5">
+                <span class="inline-block bg-vv-orange text-white font-heading text-[10px] font-semibold uppercase tracking-widest2 px-7 py-3 group-hover:bg-white group-hover:text-vv-black transition-colors duration-300">
+                  Shop Collection
+                </span>
+                <span class="font-heading text-white/50 text-[10px] uppercase tracking-widest">
+                  {{ col.products_count }} pieces
+                </span>
+              </div>
             </div>
-          </div>
-          <p class="font-heading text-[11px] uppercase tracking-widest text-vv-black font-semibold leading-snug">{{ collection.title }}</p>
-          <p class="font-body text-xs text-vv-gray-mid mt-0.5">{{ collection.products_count }} products</p>
-        </a>
-        {%- endunless -%}
+
+          </a>
+          {%- endif -%}
+        {%- endif -%}
       {%- endfor -%}
     </div>
-  </div>
 
+    {%- comment -%} Browse all CTA {%- endcomment -%}
+    {%- if section.settings.browse_label != blank -%}
+      <div class="mt-16 text-center">
+        {%- if section.settings.browse_subtext != blank -%}
+          <p class="font-body text-vv-gray-mid text-sm mb-5">{{ section.settings.browse_subtext }}</p>
+        {%- endif -%}
+        <a href="{{ section.settings.browse_url }}" class="inline-block border border-vv-black text-vv-black font-heading text-[10px] font-semibold uppercase tracking-widest2 px-10 py-4 hover:bg-vv-black hover:text-white transition-colors duration-300">
+          {{ section.settings.browse_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
 </div>
 
 {% schema %}
 {
-  "name": "Collections List",
+  "name": "Collections Page",
   "settings": [
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "All Collections"
+      "label": "Hero Heading",
+      "default": "Collections"
     },
     {
       "type": "text",
       "id": "subheading",
-      "label": "Subheading",
-      "default": "Faith You Can Wear"
+      "label": "Hero Subheading",
+      "default": "Each collection tells a story of faith. Find yours."
+    },
+    {
+      "type": "text",
+      "id": "browse_subtext",
+      "label": "Browse CTA subtext",
+      "default": "Looking for something specific?"
+    },
+    {
+      "type": "text",
+      "id": "browse_label",
+      "label": "Browse CTA button label",
+      "default": "Browse All Products"
+    },
+    {
+      "type": "url",
+      "id": "browse_url",
+      "label": "Browse CTA button URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_handle",
+          "label": "Collection Handle",
+          "info": "Enter the collection handle (found in the URL, e.g. 'faith-collection')"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow / Scripture Reference",
+          "default": "Romans 1:16"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cross",
+          "label": "Show cross icon (✝)",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (fallback if collection has no description)"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Collections List",
-      "settings": {
-        "heading": "All Collections",
-        "subheading": "Faith You Can Wear"
-      }
+      "name": "Collections Page",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "collection_handle": "faith-collection",
+            "eyebrow": "Romans 1:16",
+            "show_cross": true,
+            "description": "Scripture-inspired designs for the believer who carries their faith into every part of daily life."
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "collection_handle": "kings-collection",
+            "eyebrow": "Revelation 19:16",
+            "show_cross": true,
+            "description": "Crown and royalty-themed pieces for those who know who they belong to — the King of Kings."
+          }
+        }
+      ]
     }
   ]
 }

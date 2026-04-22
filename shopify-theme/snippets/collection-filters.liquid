@@ -91,8 +91,8 @@
       </div>
       {%- endunless -%}
 
-      {%- comment -%} Other categories — hidden on single-type collections {%- endcomment -%}
-      {%- unless is_single -%}
+      {%- comment -%} Other categories {%- endcomment -%}
+      {%- if is_single == false -%}
         {%- assign categories = 'hoodies,sweaters,jerseys,jackets,tank-tops,pants,shorts,swimwear,hawaiian-shirts' | split: ',' -%}
         {%- assign cat_labels  = 'Hoodies,Sweaters,Jerseys,Jackets,Tank Tops,Pants,Shorts,Swimwear,Hawaiian Shirts' | split: ',' -%}
         {%- for cat in categories -%}

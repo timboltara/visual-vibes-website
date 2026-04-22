@@ -1,0 +1,139 @@
+{%- comment -%} Contact Page {%- endcomment -%}
+
+{%- comment -%} Hero {%- endcomment -%}
+<div class="relative bg-vv-black overflow-hidden" style="min-height: 32vh;">
+  <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(ellipse at 25% 65%, {{ settings.color_accent }} 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, #bf4f1e 0%, transparent 45%);"></div>
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20 vv-fade-up">
+    <p class="font-heading text-vv-orange text-xs uppercase tracking-widest2 mb-3">{{ section.settings.eyebrow }}</p>
+    <h1 class="font-heading font-black text-white uppercase leading-none" style="font-size: clamp(2.8rem, 8vw, 6rem);">{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="font-body text-gray-400 text-sm max-w-sm mx-auto mt-4">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%} Contact form + info {%- endcomment -%}
+<div class="bg-white py-16 px-5 sm:px-10">
+  <div class="max-w-screen-md mx-auto vv-fade-up-section">
+
+    {%- form 'contact', id: 'ContactForm' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="text-center py-16">
+          <p class="font-heading font-semibold uppercase tracking-widest text-vv-orange text-xl mb-3">Message Sent ✝</p>
+          <p class="font-body text-vv-gray-mid text-sm">We'll get back to you as soon as possible. God bless!</p>
+        </div>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="mb-6 border border-red-300 bg-red-50 p-4">
+            <p class="font-heading text-xs uppercase tracking-widest text-red-600">Please fix the following errors:</p>
+            <ul class="mt-2 list-disc list-inside font-body text-sm text-red-600">
+              {%- for field in form.errors -%}
+                <li>{{ field | capitalize }} {{ form.errors.messages[field] }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="flex flex-col gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="ContactForm-name" class="font-heading text-[10px] uppercase tracking-widest text-vv-black block mb-1.5">Name <span class="text-vv-orange">*</span></label>
+              <input
+                type="text"
+                name="contact[name]"
+                id="ContactForm-name"
+                required
+                autocomplete="name"
+                value="{{ form.name }}"
+                placeholder="Your full name"
+                class="w-full border border-gray-200 text-vv-black font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-black transition-colors placeholder-gray-400"
+              >
+            </div>
+            <div>
+              <label for="ContactForm-email" class="font-heading text-[10px] uppercase tracking-widest text-vv-black block mb-1.5">Email <span class="text-vv-orange">*</span></label>
+              <input
+                type="email"
+                name="contact[email]"
+                id="ContactForm-email"
+                required
+                autocomplete="email"
+                value="{{ form.email }}"
+                placeholder="your@email.com"
+                class="w-full border border-gray-200 text-vv-black font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-black transition-colors placeholder-gray-400"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label for="ContactForm-subject" class="font-heading text-[10px] uppercase tracking-widest text-vv-black block mb-1.5">Subject</label>
+            <input
+              type="text"
+              name="contact[subject]"
+              id="ContactForm-subject"
+              value="{{ form.subject }}"
+              placeholder="Order question, sizing, general inquiry..."
+              class="w-full border border-gray-200 text-vv-black font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-black transition-colors placeholder-gray-400"
+            >
+          </div>
+
+          <div>
+            <label for="ContactForm-body" class="font-heading text-[10px] uppercase tracking-widest text-vv-black block mb-1.5">Message <span class="text-vv-orange">*</span></label>
+            <textarea
+              name="contact[body]"
+              id="ContactForm-body"
+              required
+              rows="6"
+              placeholder="How can we help you?"
+              class="w-full border border-gray-200 text-vv-black font-body text-sm px-4 py-3 focus:outline-none focus:border-vv-black transition-colors resize-none placeholder-gray-400"
+            >{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-vv-black text-white font-heading text-xs font-semibold uppercase tracking-widest2 py-4 hover:bg-vv-orange transition-colors duration-300 mt-1">
+            {{ section.settings.btn_label }}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- comment -%} Info strip {%- endcomment -%}
+    <div class="mt-16 pt-10 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mb-1">Email Us</p>
+        <p class="font-body text-sm text-vv-black">{{ section.settings.email }}</p>
+      </div>
+      <div>
+        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mb-1">Response Time</p>
+        <p class="font-body text-sm text-vv-black">Within 1–2 business days</p>
+      </div>
+      <div>
+        <p class="font-heading text-[10px] uppercase tracking-widest text-vv-orange mb-1">Follow Us</p>
+        <p class="font-body text-sm text-vv-black">@visualvibesl.l.c</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "GET IN TOUCH" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact Us" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "We'd love to hear from you. Reach out anytime." },
+    { "type": "text", "id": "btn_label", "label": "Submit Button", "default": "Send Message" },
+    { "type": "text", "id": "email", "label": "Contact Email", "default": "hello@visualvibes.com" }
+  ],
+  "presets": [
+    {
+      "name": "Contact Page",
+      "settings": {
+        "eyebrow": "GET IN TOUCH",
+        "heading": "Contact Us",
+        "subheading": "We'd love to hear from you. Reach out anytime.",
+        "btn_label": "Send Message"
+      }
+    }
+  ]
+}
+{% endschema %}

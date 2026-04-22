@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-contact",
+      "settings": {
+        "eyebrow": "GET IN TOUCH",
+        "heading": "Contact Us",
+        "subheading": "We'd love to hear from you. Reach out anytime.",
+        "btn_label": "Send Message",
+        "email": "hello@visualvibes.com"
+      }
+    }
+  },
+  "order": ["main"]
+}

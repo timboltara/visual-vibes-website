@@ -2,9 +2,33 @@
   "sections": {
     "main": {
       "type": "list-collections",
+      "blocks": {
+        "c1": {
+          "type": "collection_card",
+          "settings": {
+            "collection_handle": "faith-collection",
+            "eyebrow": "Romans 1:16",
+            "show_cross": true,
+            "description": "Scripture-inspired designs for the believer who carries their faith into every part of daily life."
+          }
+        },
+        "c2": {
+          "type": "collection_card",
+          "settings": {
+            "collection_handle": "kings-collection",
+            "eyebrow": "Revelation 19:16",
+            "show_cross": true,
+            "description": "Crown and royalty-themed pieces for those who know who they belong to — the King of Kings."
+          }
+        }
+      },
+      "block_order": ["c1", "c2"],
       "settings": {
-        "heading": "All Collections",
-        "subheading": "Faith You Can Wear"
+        "heading": "Collections",
+        "subheading": "Each collection tells a story of faith. Find yours.",
+        "browse_subtext": "Looking for something specific?",
+        "browse_label": "Browse All Products",
+        "browse_url": "/collections/all"
       }
     }
   },
